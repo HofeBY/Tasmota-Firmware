@@ -1,5 +1,8 @@
 # Tasmota-Firmware
-Some of my compiled Tasmota Firmware Images
+Einige meiner compilierten Tasmota Firmware Images
 
-This is my compiled version of Tasmota based on Code of projekt github.com/aredst/Tasmota
+Dies sind meine compilierten Tasmota Firmware Images basierend auf dem Code des Projektes https://github.com/aredst/Tasmota
+Diese wurden unter Windows 10 mit Microsoft Visual Studio Code erstellt. Alle Rechte bleiben bei den Rechtinhabern.
+
+
 
