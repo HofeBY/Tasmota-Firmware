@@ -1,0 +1,77 @@
+ESP32 Firmware Tasmota 13.0.0.2 von https://github.com/arendst/Tasmota wurde unter
+"Windows10" mit Microsoft "Visual Studio Code" compiliert.
+Ich verwende zum testen ein AZ-Delivery ESP32 DevKitCv4 Board
+
+Der Source kann in Version siehe oben geladen werden und die mitgelieferten Konfigurationsfiles
+sollten auch in neue Source Version angepasst angewendet werden können.
+ 
+Diverse Dateien wurden hierzu angepasst und liegen in den Unterverzeichnissen.
+Suchbegiff "byHofeBY" in diesen Dateien zeigt an wo ich was geändert habe.
+
+Folgende Funktionen/Treiber sollten vorhanden sein und funktionieren.
+Bitte Info falls nicht:
+
+Deutsche Sprache & Zeitzone incl. DE NTP Client konfiguration
+MQTT
+Zeitplan
+TASMESH Tasmota Mesh
+KNX
+DOMOTICZ
+SCRIPT
+BERRY
+SENDMAIL
+SML Smart Meter Language für Stromzähler auslesen
+ESP32 Internes und SDCARD Filesystem mit http Zugriff zum speichern von Logfiles
+Ping Support in Console
+ESP32
+I2C, SPI, I2S, etc.pp
+Hall und CPU Temperatur Sensor
+IR senden und empfangen
+
+DS18x20 mit parasite Power T 
+DS3231 RTC mit NTP-Server support und internem Temperatursensor I2C
+BMP-085-180-280/BME280 RH/T/P/Taupunkt I2C
+AHT2x z.B. AHT21D RH/T/Taupunkt 2-5,5V I2C ist günstiger zu bekommen
+PCF8574 8Bit I2C zu TTL IO Adapter
+MCP23008/MCP23017 8/16 Bit IO I2C zu TTL IO Adapter
+PCA9685 16xfach HW PWM Driver I2C zu IO Adapter
+
+und noch viele weitere Treiber und Fuktionen.
+Sehen Sie sich das .\build_output\firmware\CompilerLog.txt an.
+Im gleichen Ordner liegen die Firmware (.bin) Files, welche man OTA auf den ESP32 einspielen kann.
+
+Einmalig ESP32 habe ich zuvor mittels Chrome Browser https://tasmota.github.io/install/ Firmware Grundinstallation installiert.
+Nun kann die firmware.bin von hier über Oberfläche eingesielt werden.
+Jeweils nach FW Installtion im WLAN nach "tasmota-xxxxx" suchen und verbinden, im Browser 192.168.4.1 öffnen und für Home WLAN Einbindung konfigurieren.
+öffnen Sie nun im Home WLAN die angegebene IP im Home WLAN.
+
+
+Was ich festgestellt habe, das es noch nicht richtig funktioniert:
+MATTER (leider), falls jemand es löst bitte um Info
+WIFI_RANGE_EXTENDER, falls jemand es löst bitte um Info
+
+
+Ich verwende zum testen ein AZ-Delivery ESP32 DevKitCv4 Board, bei dem ich
+unter Einstellungen -> Sonstige Konfiguration Haken(Vorlage) aktivieren &  speichern
+
+unter Einstellungen -> Vorlage konfigurieren die GPIO Ports belege ich wie folgend:
+
+GPIO0 noch nicht belegt, aber dieser GPIO wird beim Programmieren benützt! z.B. als Taster bedienbar belegen
+GPIO1 Serial Tx (geht ans USB zu TTL Programmier Adapter Rx) Logge so Console via Putty
+GPIO3 Serial Rx (geht ans USB zu TTL Programmier Adapter Tx) Logge so Console via Putty
+GPIO21 I2C SDA 1 (ist als I2C auf dem Board vorbelegt)
+GPIO22 I2C SCL 1 (ist als I2C auf dem Board vorbelegt)
+GPIO36 HallEffect 1 (Interner Hall Sensor für erste Werte) mit Magnet auf Blechschirmung
+GPIO39 HallEffect 2 (Interner Hall Sensor für erste Werte) verändert den Hall Wert.
+Dann in Console "SO146 1" um auch die CPU Temperatur anzuzeigen
+
+unter Einstellungen -> Gerät konfigurieren können Sie dann die restlichen GPIO´s selbst belegen.
+
+zurück ins Hauptmenü um erste Ergebnisse der Sensoren zu sehen.
+
+HofeBY
+
+
+
+
+
