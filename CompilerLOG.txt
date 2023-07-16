@@ -1,0 +1,363 @@
+ *  Executing task: C:\Users\Station\.platformio\penv\Scripts\platformio.exe run --environment tasmota32 
+
+Processing tasmota32 (framework: arduino; platform: https://github.com/tasmota/platform-espressif32/releases/download/2023.06.04/platform-espressif32.zip; board: esp32)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Tool Manager: Installing https://github.com/tasmota/esptool/releases/download/v4.6.2/esptool-4.6.2.zip
+Unpacking  [####################################]  100%
+Tool Manager: tool-esptoolpy@1.40602.0 has been installed!
+Verbose mode can be enabled via `-v, --verbose` option
+*** use provided user_config_override.h as planned ***
+*** use provided platformio_override.ini as planned ***
+*** use provided platformio_tasmota_cenv.ini as planned ***
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32.html
+PLATFORM: Espressif 32 (2023.6.4) > Espressif Generic ESP32 >= 4M Flash PSRAM, Tasmota 2880k Code/OTA, 320k FS
+HARDWARE: ESP32 160MHz, 320KB RAM, 4MB Flash
+DEBUG: Current (cmsis-dap) External (cmsis-dap, esp-bridge, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+PACKAGES:
+ - framework-arduinoespressif32 @ 2.0.10       
+ - tool-esptoolpy @ 1.40602.0 (4.6.2)
+ - tool-mklittlefs @ 1.203.210628 (2.3)        
+ - tool-mkspiffs @ 2.230.0 (2.30)
+ - toolchain-xtensa-esp32 @ 8.4.0+2021r2-patch5
+Converting tasmota.ino
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ strict
+Found 129 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- Adafruit CCS811 Library @ 1.0.0        
+|-- Adafruit LittlevGL Glue Library @ 2.0.0
+|-- Adafruit MAX31865 library @ 1.0.1      
+|-- Adafruit MCP9808 Library @ 1.1.2       
+|-- Adafruit PM25 AQI Sensor @ 1.0.6       
+|-- Adafruit seesaw Library @ 1.3.1        
+|-- Adafruit SGP30 Sensor @ 1.2.0
+|-- Adafruit SGP40 Sensor @ 1.1.0
+|-- Adafruit VEML7700 Library @ 1.0.0
+|-- ESP8266Audio @ 1.9.5
+|-- Berry @ 7.0
+|-- Berry Matter protocol implementation @ 0.1
+|-- Berry Tasmota mapping @ 1.0
+|-- Berry int64 implementation for 32 bits architceture @ 1.0
+|-- Berry mapping to C @ 1.0
+|-- BME8563
+|-- headers
+|-- ccronexpr
+|-- EEPROM 24C128_256_521
+|-- ESP32-to-ESP8266-compat @ 0.0.2
+|-- FFat @ 2.0.0
+|-- FS @ 2.0.0
+|-- ams @ 1.0
+|-- HttpClient light @ 1.0
+|-- I2Cdevlib-Core
+|-- LibTeleinfo @ 1.1.5
+|-- lvgl @ 8.3.8
+|-- Berry mapping to LVGL @ 1.0
+|-- arduino-mcp2515-1.0.1
+|-- MPU6050 I2C
+|-- Mutichannel_Gas_Sensor @ 0.0.1
+|-- NimBLE-Arduino @ 1.4.0
+|-- NTP Library
+|-- OpenTherm Library @ 0.9.0
+|-- Process_control @ 1.0.0
+|-- re1.5 @ 0.9
+|-- Sensirion I2C SGP41 @ 0.1.0
+|-- SevenSegmentTM1637 @ 1.1.0
+|-- LVGL_assets @ 7.0
+|-- UdpListener @ 1.0
+|-- Unishox Compressor Decompressor highly customized and optimized for ESP8266 and Tasmota @ 1.0
+|-- VL53L0X @ 1.0.2
+|-- VL53L1X @ 1.0.1
+|-- TLS mini client derived from Arduino @ 1.0
+|-- Zip-readonly-FS @ 1.0
+|-- A4988_Stepper @ 0.0.1
+|-- Adafruit Fingerprint Sensor Library @ 2.1.0
+|-- Adafruit GFX Library @ 1.5.6
+|-- Adafruit LED Backpack Library @ 1.1.6
+|-- Adafruit SH1106-gemu-1.0 @ 1.0
+|-- Adafruit SSD1306 @ 1.3.0
+|-- Adafruit SSD1331 OLED Driver Library for Arduino @ 1.2.0
+|-- Adafruit TSL2591
+|-- Arduino ST7789 Library @ 0.9.5
+|-- TTGO TWatch Library @ 1.2.0
+|-- base64 @ 1.1.1
+|-- BME68x
+|-- Micro-RTSP @ 0.1.6
+|-- DHT sensor library @ 1.4.3
+|-- DNSServer @ 2.0.0
+|-- DS2480 Library @ 0.1.0
+|-- Waveshare esp 2.9 inch e-paper display driver @ 1.0
+|-- Waveshare esp 4.2 inch e-paper display driver @ 1.0
+|-- Display renderer @ 1.0
+|-- ES7210 @ 1.0.0
+|-- ES7243e @ 1.0.0
+|-- ES8156 @ 1.0.0
+|-- ES8311 @ 1.0.0
+|-- ESP KNX IP Library @ 0.5.2
+|-- ESP8266SAM @ 1.0.1
+|-- ESP Mail Client @ 1.2.0
+|-- Ethernet @ 2.0.0
+|-- Ext-printf @ 1.0
+|-- FrogmoreScd30
+|-- FrogmoreScd40
+|-- FT5206_Library @ 1.0.0
+|-- GT911
+|-- HPMA115S0 Arduino Library @ 1.0.0
+|-- ILI9341 @ 1.0.0
+|-- IRremoteESP8266 @ 2.8.5
+|-- JSMN JSON parser customized and optimized for ESP8266 and Tasmota @ 1.0
+|-- KeeloqLib @ 1.1
+|-- mp3_shine_esp32 @ 1.0.0
+|-- LedControl @ 1.0.6
+|-- LinkedList
+|-- LiquidCrystal_I2C
+|-- LittleFS @ 2.0.0
+|-- TasmotaLList @ 1.0
+|-- LOLIN_HP303B @ 1.0.0
+|-- MFRC522 @ 1.4.7
+|-- MLX90640
+|-- MPU_accel
+|-- NeoPixelBus @ 2.6.7
+|-- NewPing @ 1.9.1
+|-- OneWire @ 2.3.2
+|-- PubSubClient @ 2.8
+|-- RA8876 @ 1.0.2
+|-- rc-switch @ 1.0.0
+|-- RF24 @ 1.3.3
+|-- SD @ 2.0.0
+|-- SD_MMC @ 2.0.0
+|-- Sensirion I2C SEN5X @ 0.2.0
+|-- SPI @ 2.0.0
+|-- SSD3115 @ 1.0
+|-- TasmotaModbus @ 3.6.0
+|-- TasmotaSerial @ 3.6.0
+|-- Ticker @ 2.0.0
+|-- TM1638plus @ 1.7.0
+|-- Joba_Tsl2561 @ 2.0.10
+|-- BearSSL @ 0.6
+|-- universal display Library @ 0.1
+|-- WebServer @ 2.0.0
+|-- WiFiClientSecure @ 2.0.0
+|-- Wire @ 2.0.0
+|-- WM8960 @ 1.0.0
+|-- XPT2046_Touchscreen
+|-- ESP32-HomeKit @ 1.0.0
+Building in release mode
+Compiling .pio\build\tasmota32\src\tasmota.ino.cpp.o
+Compiling .pio\build\tasmota32\lib2b1\Display_Renderer-gemu-1.0\epdpaint.cpp.o
+Compiling .pio\build\tasmota32\lib2b1\Display_Renderer-gemu-1.0\renderer.cpp.o
+Compiling .pio\build\tasmota32\libf68\default\be_modtab.c.o
+Compiling .pio\build\tasmota32\libf68\default\be_port.c.o
+Compiling .pio\build\tasmota32\libf68\default\be_re_lib.c.o
+Compiling .pio\build\tasmota32\libf68\default\berry.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_api.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_baselib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_bytecode.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_byteslib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_class.c.o
+D:/Tasmota-development-arendst-13.0.0.2A/tasmota/tasmota_xdrv_driver/xdrv_58_range_extender.ino:65:2: warning: #warning **** USE_WIFI_RANGE_EXTENDER is enabled **** [-Wcpp]
+ #warning **** USE_WIFI_RANGE_EXTENDER is enabled ****
+  ^~~~~~~
+Compiling .pio\build\tasmota32\libf68\berry\be_code.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_debug.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_debuglib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_exec.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_filelib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_func.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_gc.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_gclib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_globallib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_introspectlib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_jsonlib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_lexer.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_libs.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_list.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_listlib.c.o
+Archiving .pio\build\tasmota32\lib2b1\libDisplay_Renderer-gemu-1.0.a
+Compiling .pio\build\tasmota32\libf68\berry\be_map.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_maplib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_mathlib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_mem.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_module.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_object.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_oslib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_parser.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_rangelib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_repl.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_solidifylib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_strictlib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_string.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_strlib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_syslib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_timelib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_undefinedlib.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_var.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_vector.c.o
+Compiling .pio\build\tasmota32\libf68\berry\be_vm.c.o
+Compiling .pio\build\tasmota32\lib8a3\berry_mapping\be_cb_module.c.o
+Compiling .pio\build\tasmota32\lib8a3\berry_mapping\be_class_wrapper.c.o
+Compiling .pio\build\tasmota32\lib8a3\berry_mapping\be_const_members.c.o
+Compiling .pio\build\tasmota32\lib8a3\berry_mapping\be_mapping_utils.c.o
+Compiling .pio\build\tasmota32\lib8a3\berry_mapping\be_raisef.c.o
+Compiling .pio\build\tasmota32\lib541\ESP32-to-ESP8266-compat\ESP32Wifi.cpp.o
+Archiving .pio\build\tasmota32\libf68\libberry.a
+Archiving .pio\build\tasmota32\lib8a3\libberry_mapping.a
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_MI32_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_TFL_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_ULP_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_animate_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_audio_opus_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_autoconf_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_crc32_module.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_cron_class.cpp.o
+Archiving .pio\build\tasmota32\lib541\libESP32-to-ESP8266-compat.a
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_crypto_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_ctypes.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_display_lib.cpp.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_driverlib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_dyn_class.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_energy_ctypes_definitions.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_energylib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_flash_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_gpio_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_hue_bridge_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_hue_lib.cpp.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_i2c_axp192_axp202_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_i2c_driverlib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_i2s_audio_lib.cpp.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_leds_animator_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_leds_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_leds_ntv_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_light_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_light_state_class.cpp.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_lv_haspmota.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_lv_tasmota_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_lv_tasmota_widgets_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_md5_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_mdns_module.cpp.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_mqtt_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_onewire_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_partition_core_module.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_path_tasmota_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_persist_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_port.cpp.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_python_compat.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_serial_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_tapp_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_tasmota_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_tasmota_log_reader_class.cpp.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_tcpclient_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_tcpclientasyc_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_tcpserver_class.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_trigger_class.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_udp_lib.cpp.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_unishox_lib.cpp.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_uuid_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_webclient_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_webserver_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_wire_lib.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_zigbee.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_zigbee_zb_coord.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_zigbee_zcl_attribute_list_ntv.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_zigbee_zcl_attribute_ntv.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_zigbee_zcl_attributes.c.o
+Compiling .pio\build\tasmota32\lib5b3\berry_tasmota\be_zigbee_zcl_frame.c.o
+Compiling .pio\build\tasmota32\lib491\generate\be_lvgl_module.c.o
+Compiling .pio\build\tasmota32\lib491\generate\be_lvgl_widgets_lib.c.o
+Compiling .pio\build\tasmota32\lib491\lv_binding_berry\be_lv_extra.c.o
+Compiling .pio\build\tasmota32\lib491\lv_binding_berry\be_lvgl_ctypes_definitions.c.o
+Compiling .pio\build\tasmota32\lib491\lv_binding_berry\be_lvgl_glob_lib.c.o
+Compiling .pio\build\tasmota32\lib491\lv_binding_berry\lv_berry.c.o
+Compiling .pio\build\tasmota32\lib70d\Adafruit_LvGL_Glue-shadinger\Adafruit_LvGL_Glue.cpp.o
+Compiling .pio\build\tasmota32\libc3a\berry_matter\be_matter_counter.cpp.o
+Compiling .pio\build\tasmota32\libc3a\berry_matter\be_matter_misc.cpp.o
+Compiling .pio\build\tasmota32\libc3a\berry_matter\be_matter_module.c.o
+Archiving .pio\build\tasmota32\lib70d\libAdafruit_LvGL_Glue-shadinger.a
+Archiving .pio\build\tasmota32\lib491\liblv_binding_berry.a
+Archiving .pio\build\tasmota32\lib5b3\libberry_tasmota.a
+Compiling .pio\build\tasmota32\libc3a\berry_matter\be_matter_qrcode.c.o
+Compiling .pio\build\tasmota32\libc3a\berry_matter\be_matter_verhoeff.cpp.o
+Compiling .pio\build\tasmota32\libdec\berry_int64\be_int64_class.c.o
+Compiling .pio\build\tasmota32\lib9d3\ams\GcmParser.cpp.o
+Compiling .pio\build\tasmota32\liba14\tls_mini\StackThunk_light.cpp.o
+Compiling .pio\build\tasmota32\liba14\tls_mini\WiFiClientSecureLightBearSSL.cpp.o
+Archiving .pio\build\tasmota32\libc3a\libberry_matter.a
+Archiving .pio\build\tasmota32\libdec\libberry_int64.a
+Compiling .pio\build\tasmota32\lib0ae\HttpClientLight\HTTPUpdateLight.cpp.o
+Compiling .pio\build\tasmota32\lib0ae\HttpClientLight\HttpClientLight.cpp.o
+Compiling .pio\build\tasmota32\lib5f6\Adafruit_SH1106-gemu-1.0\Adafruit_SH1106.cpp.o
+Compiling .pio\build\tasmota32\lib7ac\Adafruit_SSD1306-1.3.0-gemu-1.1\Adafruit_SSD1306.cpp.o
+Compiling .pio\build\tasmota32\lib754\Adafruit_SSD1331-1.2.0\Adafruit_SPITFT_Renderer.cpp.o
+Compiling .pio\build\tasmota32\lib754\Adafruit_SSD1331-1.2.0\Adafruit_SSD1331.cpp.o
+Compiling .pio\build\tasmota32\libe3c\Arduino_ST7789-gemu-1.0\Arduino_ST7789.cpp.o
+Compiling .pio\build\tasmota32\libbf3\Epaper_29-gemu-1.0\epd2in9.cpp.o
+Archiving .pio\build\tasmota32\libe3c\libArduino_ST7789-gemu-1.0.a
+Archiving .pio\build\tasmota32\lib754\libAdafruit_SSD1331-1.2.0.a
+Archiving .pio\build\tasmota32\lib7ac\libAdafruit_SSD1306-1.3.0-gemu-1.1.a
+Archiving .pio\build\tasmota32\lib5f6\libAdafruit_SH1106-gemu-1.0.a
+Archiving .pio\build\tasmota32\lib0ae\libHttpClientLight.a
+Archiving .pio\build\tasmota32\liba14\libtls_mini.a
+Archiving .pio\build\tasmota32\lib9d3\libams.a
+Compiling .pio\build\tasmota32\libbdf\Epaper_42-gemu-1.0\epd4in2.cpp.o
+Compiling .pio\build\tasmota32\lib5f3\ILI9341-gemu-1.0\ILI9341_2.cpp.o
+Compiling .pio\build\tasmota32\libc8f\LedControl\LedMatrix.cpp.o
+Compiling .pio\build\tasmota32\lib6b3\Xlatb_RA8876-gemu-1.0\RA8876.cpp.o
+Archiving .pio\build\tasmota32\libc8f\libLedControl.a
+Archiving .pio\build\tasmota32\lib5f3\libILI9341-gemu-1.0.a
+Archiving .pio\build\tasmota32\libbdf\libEpaper_42-gemu-1.0.a
+Archiving .pio\build\tasmota32\libbf3\libEpaper_29-gemu-1.0.a
+Compiling .pio\build\tasmota32\lib2a0\Adafruit_SSD1351-gemu-1.0\SSD1351.cpp.o
+Compiling .pio\build\tasmota32\lib289\UDisplay\uDisplay.cpp.o
+Archiving .pio\build\tasmota32\lib289\libUDisplay.a
+Archiving .pio\build\tasmota32\lib2a0\libAdafruit_SSD1351-gemu-1.0.a
+Archiving .pio\build\tasmota32\lib6b3\libXlatb_RA8876-gemu-1.0.a
+Linking .pio\build\tasmota32\firmware.elf
+Retrieving maximum program size .pio\build\tasmota32\firmware.elf
+Checking size .pio\build\tasmota32\firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [==        ]  22.5% (used 73600 bytes from 327680 bytes)
+Flash: [=======   ]  71.5% (used 2109873 bytes from 2949120 bytes)
+Building .pio\build\tasmota32\firmware.bin
+esptool.py v4.6.2
+Creating esp32 image...
+Merged 25 ELF sections
+Successfully created esp32 image.
+esp32_create_combined_bin([".pio\build\tasmota32\firmware.bin"], [".pio\build\tasmota32\firmware.elf"])
+Read partitions from  partitions/esp32_partition_app2880k_fs320k.csv
+# Name,     Type,   SubType,   Offset,    Size,   Flags
+nvs         data    nvs        0x9000     0x5000
+otadata     data    ota        0xe000     0x2000
+safeboot    app     factory    0x10000    0xD0000
+app0        app     ota_0      0xE0000    0x2D0000
+spiffs      data    spiffs     0x3B0000   0x50000
+Creating filesystem with content:
+No files added -> will NOT create littlefs.bin and NOT overwrite fs partition!
+safeboot binary already in place.
+    Offset | File
+ -  0x1000 | D:\Tasmota-development-arendst-13.0.0.2A\.pio\build\tasmota32\bootloader.bin
+ -  0x8000 | D:\Tasmota-development-arendst-13.0.0.2A\.pio\build\tasmota32\partitions.bin
+ -  0xe000 | C:\Users\Station\.platformio\packages\framework-arduinoespressif32\tools\partitions\boot_app0.bin
+ -  0x10000 | C:\Users\Station\.platformio\packages\framework-arduinoespressif32\variants/tasmota/tasmota32-safeboot.bin
+ - 0xe0000 | D:\Tasmota-development-arendst-13.0.0.2A\.pio\build\tasmota32/firmware.bin
+esptool.py v4.6.2
+Wrote 0x2e4880 bytes to file D:\Tasmota-development-arendst-13.0.0.2A\.pio\build\tasmota32/firmware.factory.bin, ready to flash to offset 0x0
+bin_map_copy([".pio\build\tasmota32\firmware.bin"], [".pio\build\tasmota32\firmware.elf"])
+map_gzip([".pio\build\tasmota32\firmware.bin"], [".pio\build\tasmota32\firmware.elf"])
+firm_metrics([".pio\build\tasmota32\firmware.bin"], [".pio\build\tasmota32\firmware.elf"])
+C:\Users\Station\.platformio\penv\Scripts\python.exe -m tasmota_metrics "D:\Tasmota-development-arendst-13.0.0.2A\.pio\build\tasmota32\firmware.map"
+Total sizes:
+Used static DRAM:   73600 bytes (  50980 remain, 59.1% used)
+      .data size:   23472 bytes
+      .bss  size:   50128 bytes
+Used static IRAM:   93162 bytes (  37910 remain, 71.1% used)
+      .text size:   92135 bytes
+   .vectors size:    1027 bytes
+Used Flash size : 2013639 bytes
+           .text: 1368487 bytes
+         .rodata:  644896 bytes
+Total image size: 2130273 bytes (.bin may be padded larger)
+==================================================================================== [SUCCESS] Took 164.21 seconds ====================================================================================
+
+Environment    Status    Duration
+-------------  --------  ------------
+tasmota32      SUCCESS   00:02:44.211
+===================================================================================== 1 succeeded in 00:02:44.211 ===================================================================================== 
