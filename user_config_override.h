@@ -86,18 +86,11 @@ Examples :
 
 // !!! Remember that your changes GOES AT THE BOTTOM OF THIS FILE right before the last #endif !!!
 */
-
 //byHofeBY unterhalb eingetragen
 
-// Schnelle Prozessorwahl ESP8266 oser ESP32 mit universal Port deffiniton
-//#define USER_TEMPLATE "{\"NAME\":\"ESP8266\",\"GPIO\":[1,1,1,1,1,1,0,0,1,1,1,1,1,1],\"FLAG\":0,\"BASE\":18}"  // [Template] Set JSON template
+// Schnelle Prozessorwahl
+//#define USER_TEMPLATE "{\"NAME\":\"Generic\",\"GPIO\":[1,1,1,1,1,1,1,1,1,1,1,1,1,1],\"FLAG\":0,\"BASE\":18}"  // [Template] Set JSON template
 #define USER_TEMPLATE "{\"NAME\":\"ESP32\",\"GPIO\":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\"FLAG\":0,\"BASE\":1}"
-
-// -- HTTP ----------------------------------------
-//#undef WEB_SERVER
-// #define WEB_SERVER             2                 // [WebServer] Web server (0 = Off, 1 = Start as User, 2 = Start as Admin)
-//#undef WEB_PASSWORD
-// #define WEB_PASSWORD           ""                // [WebPassword] Web server Admin mode Password for WEB_USERNAME (empty string = Disable)
 
 //#undef  GUI_SHOW_HOSTNAME
 //#define GUI_SHOW_HOSTNAME      true	// [SetOption53] Show hostname and IP address in GUI main menu
@@ -107,18 +100,23 @@ Examples :
 // driver needs to be the highest numbered driver (currently 127)
 // ESP32 internal Hall Effect sensor connected to both GPIO36 and GPIO39
 // To enable set both as following
-// GPIO36 as HallEffect 1
-// GPIO39 as HallEffect 2
-// Setoption146 1 // für CPU Temperatur & Hall anzeigen
-// SO146 1 // Alternativbefehl für CPU Temperatur & Hall anzeigen
+// GPIO36 as HallEffect 1 und GPIO39 as HallEffect 2 einstellen
+// Temperatursensor CPU    anzeigen mit "SetOption146 1" in Kommandokonsole
+// Temperatursensor CPU ausschalten mit "SetOption146 0" in Kommandokonsole
+// Temperatursensor&Hall in CPU   aktivieren mit "SetSensor127 1" in Kommandokonsole
+// Temperatursensor&Hall in CPU deaktivieren mit "SetSensor127 0" in Kommandokonsole
+// siehe auch https://tasmota.github.io/docs/ESP32/#cpu-temperature-sensor
 
 // -- Time - Up to three NTP servers in your region
  #undef NTP_SERVER1
-#define NTP_SERVER1	"192.53.103.108"	// ntpserver1 192.53.103.108 [SML-LeserESP32; fritz.box oder besser die IP] 
+#define NTP_SERVER1	"192.53.103.108"	// [fritz.box besser die IP] 
  #undef NTP_SERVER2
-#define NTP_SERVER2	"192.53.103.104"	// ntpserver2 192.53.103.104 ptbtime1.ptb.de[192.53.103.108] ptbtime2.ptb.de[192.53.103.104] ptbtime3.ptb.de[192.53.103.103]
+#define NTP_SERVER2	"192.53.103.104"	// ptbtime1.ptb.de[192.53.103.108] ptbtime2.ptb.de[192.53.103.104] ptbtime3.ptb.de[192.53.103.103]
  #undef NTP_SERVER3
-#define NTP_SERVER3	"0.de.pool.ntp.org"	// ntpserver3 0.de.pool.ntp.org [NtpServerPool]
+#define NTP_SERVER3	"0.de.pool.ntp.org"	// [NtpServerPool]
+
+ #undef MDNS_ENABLED
+#define MDNS_ENABLED	true
 
 // -- Time - Start Daylight Saving Time and timezone offset from UTC in minutes
  #undef TIME_DST_HEMISPHERE
@@ -150,29 +148,25 @@ Examples :
 
 // -- Application ---------------------------------
  #undef APP_TIMEZONE
-#define APP_TIMEZONE           99	// timezone 99 [Timezone] +1 hour (Amsterdam) (-13 .. 14 = hours from UTC, 99 = use TIME_DST/TIME_STD)
+#define APP_TIMEZONE           99	// [Timezone] +1 hour (Amsterdam) (-13 .. 14 = hours from UTC, 99 = use TIME_DST/TIME_STD)
 
 // -- Location ------------------------------------
  #undef LATITUDE
-#define LATITUDE	49.845915	// latitude 49.845915 [Latitude] This example location Creußen/Gemeinde to be used with sunrise and sunset. Look in Routing SW.
+#define LATITUDE	49.845915	// [Latitude] Your location Creußen/Gemeinde to be used with sunrise and sunset
  #undef LONGITUDE
-#define LONGITUDE	11.626169	// Longitude 11.626169 [Longitude] This example location Creußen/Gemeinde to be used with sunrise and sunset. Look in Routing SW.
+#define LONGITUDE	11.626169	// [Longitude] Your location Creußen/Gemeinde to be used with sunrise and sunset
 
 // -- Setup your own Wifi settings  ---------------
  #undef STA_SSID1
-//#define STA_SSID1	"IhreSSID1"	// [Ssid1] Wifi SSID
 #define STA_SSID1	""
 
  #undef STA_PASS1
-//#define STA_PASS1	"IhrPasswort1"	// [Password1] Wifi password
 #define STA_PASS1         ""
 
  #undef STA_SSID2
-//#define STA_SSID2	"IhreSSID2"		// [Ssid2] Wifi SSID
 #define STA_SSID2         ""
 
  #undef STA_PASS2
-//#define STA_PASS2	"IhrPasswort2"	// [Password2] Wifi password
 #define STA_PASS2         ""
 
 // -- Localization --------------------------------
@@ -180,91 +174,110 @@ Examples :
  #undef MY_LANGUAGE
 #define MY_LANGUAGE	de_DE	// German in Germany
 
-// #undef FIRMWARE_IR	// IR Bringt Fehler bei Aktivierung im Compilerlauf !
-//#define FIRMWARE_IR	// Create tasmota-ir with IR full protocols activated, and many sensors disabled
+// #undef FIRMWARE_IR
+//#define FIRMWARE_IR		// Create tasmota-ir with IR full protocols activated, and many sensors disabled
 
-#undef USE_IR_REMOTE	// lässt sich compilieren aber noch ungetestet.
-#define USE_IR_REMOTE	// Send IR remote commands using library IRremoteESP8266 and ArduinoJson (+4k code, 0k3 mem, 48 iram)
-#undef USE_IR_RECEIVE
-#define USE_IR_RECEIVE	// Support for IR receiver (+5k5 code, 264 iram)
-
-// -- One wire Temperature sensors ----------------------------
-#undef USE_DS18x20
+// -- One wire sensors ----------------------------
+ #undef USE_DS18x20
 #define USE_DS18x20		// Add support for DS18x20 sensors with id sort, single scan and read retry (+2k6 code)
-#undef W1_PARASITE_POWER
+ #undef W1_PARASITE_POWER
 #define W1_PARASITE_POWER	// Optimize for parasite powered sensors
-#undef DS18x20_USE_ID_ALIAS
+ #undef DS18x20_USE_ID_ALIAS
 #define DS18x20_USE_ID_ALIAS	// Add support aliasing for DS18x20 sensors. See comments in xsns_05 files (+0k5 code)
 
 //#ifdef USE_I2C		// Moegliche I2S Geraete Treiber siehe my_user_config.h
-// Treiber welche zu deaktivieren sind
-#undef USE_VEML6070
-//#define USE_VEML6070			//I2CDriver12 0 [I2cDriver12] Enable VEML6070 sensor (I2C addresses 0x38 and 0x39) (+1k5 code)
-#undef USE_VEML6070_RSET 
-//#define USE_VEML6070_RSET 270000	// VEML6070, Rset in Ohm used on PCB board, default 270K = 270000ohm, range for this sensor: 220K ... 1Meg
-#undef USE_VEML6070_SHOW_RAW
-//#define USE_VEML6070_SHOW_RAW		// VEML6070, shows the raw value of UV-A
-#undef USE_APDS9960
-//#define USE_APDS9960			// [I2cDriver21] Enable APDS9960 Proximity Sensor (I2C address 0x39). Disables SHT and VEML6070 (+4k7 code)
-#undef USE_APDS9960_GESTURE
-//#define USE_APDS9960_GESTURE		// Enable APDS9960 Gesture feature (+2k code)
-#undef USE_APDS9960_PROXIMITY
-//#define USE_APDS9960_PROXIMITY	// Enable APDS9960 Proximity feature (>50 code)
-#undef USE_APDS9960_COLOR
-//#define USE_APDS9960_COLOR		// Enable APDS9960 Color feature (+0.8k code)
-#undef USE_APDS9960_STARTMODE
-//#define USE_APDS9960_STARTMODE 0	// Default to enable Gesture mode
-#undef USE_ADE7953
-//#define USE_ADE7953			// [I2cDriver7] Enable ADE7953 Energy monitor as used on Shelly 2.5 (I2C address 0x38) (+1k5)
+ #undef USE_VEML6070
+//#define USE_VEML6070
+ #undef USE_VEML6070_RSET
+//#define USE_VEML6070_RSET    270000
+ #undef USE_VEML6070_SHOW_RAW
+//#define USE_VEML6070_SHOW_RAW
 
-#undef RTC_NTP_SERVER
-#define RTC_NTP_SERVER		// Enable NTP-RTC Server Service by Command "RtcNtpServer 1" also without RTC Chip DS3231
-#undef USE_RTC_CHIPS
+ #undef USE_APDS9960
+//#define USE_APDS9960
+ #undef USE_APDS9960_GESTURE
+//#define USE_APDS9960_GESTURE
+ #undef USE_APDS9960_PROXIMITY
+//#define USE_APDS9960_PROXIMITY
+ #undef USE_APDS9960_COLOR
+//#define USE_APDS9960_COLOR
+ #undef USE_APDS9960_STARTMODE
+//#define USE_APDS9960_STARTMODE  0
+
+ #undef USE_DISPLAY_MODES1TO5
+//#define USE_DISPLAY_MODES1TO5
+ #undef USE_DISPLAY_LCD
+//#define USE_DISPLAY_LCD
+ #undef USE_DISPLAY_SSD1306
+//#define USE_DISPLAY_SSD1306
+ #undef USE_DISPLAY_MATRIX
+//#define USE_DISPLAY_MATRIX
+ #undef USE_DISPLAY_SEVENSEG
+//#define USE_DISPLAY_SEVENSEG
+ #undef USE_DISPLAY_ILI9341
+//#define USE_DISPLAY_ILI9341
+
+ #undef USE_RTC_CHIPS
 #define USE_RTC_CHIPS		// Enable RTC chip support and NTP server - Select only one #undef USE_DS3231
-#undef USE_DS3231
-#define USE_DS3231		// I2C Support für DS1307 oder DS3231 und NTP-Server Funktion (I2C addresse 0x68)
-#undef DS3231_ENABLE_TEMP
-#define DS3231_ENABLE_TEMP	// In DS3231 driver, enable the internal temperature sensor
+ #undef USE_DS3231
+#define USE_DS3231		//I2C Support für DS1307 oder DS3231 und NTP-Server Funktion
+ #undef DS3231_ENABLE_TEMP
+#define DS3231_ENABLE_TEMP	//   In DS3231 driver, enable the internal temperature senso
+// RtcNtpServer<x> // 0 = disabled; 1 = enabled Use Tasmota NTP server when enabled by define RTC_NTP_SERVER
 
 #undef USE_BMP
 #define USE_BMP		// [I2cDriver10] Enable BMP085/BMP180/BMP280/BME280 sensors (ab 8.-€ Cn RH/T/P I2C Sensor addresses 0x76 and 0x77) (+4k4 code)
 #undef USE_BME68X
-//#define USE_BME68X	// Enable support for BME680/BME688 sensor using Bosch BME68x library (ab 11.-€ Cn RH/T/P/IAQ I2C Sensor +6k9 code)
-#undef USE_AHT2x
-#define USE_AHT2x	//I2CDriver43 1 [I2cDriver43] Enable AHT20/AM2301B instead of AHT1x humidity and temperature sensor (ab 1.70€ Cn RH/T 2-5,5V I2C address 0x38) (+0k8 code)
+#define USE_BME680		// Enable support for BME680/BME688 sensor using Bosch BME68x library (ab 11.-€ Cn RH/T/P/IAQ I2C Sensor +6k9 code)
+ #undef USE_AHT2x
+#define USE_AHT2x	// [I2cDriver43] Enable AHT20/AM2301B instead of AHT1x humidity and temperature sensor (ab 1.70€ Cn RH/T 2-5,5V I2C address 0x38) (+0k8 code)
+ #undef USE_HTU
+#define USE_HTU
+ #undef USE_SCD40
+#define USE_SCD40
+ #undef USE_SGP40
+#define USE_SGP40 // [I2cDriver69] Enable SGP40 sensor (I2C address 0x59) (+1k4 code)
 
-#undef USE_INA219
+ #undef USE_INA219
 //#define USE_INA219	// [I2cDriver14] Enable INA219 (I2C address 0x40, 0x41 0x44 or 0x45) Low voltage and current sensor (+1k code)
 //#define INA219_SHUNT_RESISTOR (0.100)	// 0.1 Ohm default shunt resistor, can be overriden in user_config_override or using Sensor13
 
-// MCP23008/MCP23017 8/16Bit I2C zu TTL IO Adapter 
-// 00:00:00.085 TFS: File 'mcp23x.dat' not found wird in Logfile vermekt. evtl. Configfile
-#undef USE_MCP230xx
-#define USE_MCP230xx		// [I2cDriver22] Enable MCP23008/MCP23017 - Must define I2C Address in #define USE_MCP230xx_ADDR below - range 0x20 - 0x27 (+5k1 code)
-#undef USE_MCP230xx_ADDR
+ #undef USE_MCP230xx
+#define USE_MCP230xx	// [I2cDriver22] Enable MCP23008/MCP23017 - Must define I2C Address in #define USE_MCP230xx_ADDR below - range 0x20 - 0x27 (+5k1 code)
+ #undef USE_MCP230xx_ADDR
 #define USE_MCP230xx_ADDR 0x20	// Enable MCP23008/MCP23017 I2C Address to use (Must be within range 0x20 through 0x26 - set according to your wired setup)
-#undef USE_MCP230xx_OUTPUT 
-#define USE_MCP230xx_OUTPUT	// Enable MCP23008/MCP23017 OUTPUT support through sensor29 commands (+2k2 code)
-#undef USE_MCP230xx_DISPLAYOUTPUT
+ #undef USE_MCP230xx_OUTPUT 
+#define USE_MCP230xx_OUTPUT		// Enable MCP23008/MCP23017 OUTPUT support through sensor29 commands (+2k2 code)
+ #undef USE_MCP230xx_DISPLAYOUTPUT
 #define USE_MCP230xx_DISPLAYOUTPUT	// Enable MCP23008/MCP23017 to display state of OUTPUT pins on Web UI (+0k2 code)
 
-// PCF8574 8Bit I2C zu TTL IO Adapter
-#define USE_PCF8574			// [I2cDriver2] Enable PCF8574 I/O Expander (I2C addresses 0x20 - 0x26 and 0x39 - 0x3F) (+2k1 code)
-#define USE_PCF8574_MODE2		// Enable Mode2 virtual relays/buttons/switches (+2k3 code)
-#define USE_PCF8574_SENSOR		// Enable Mode1 inputs and outputs in SENSOR message (+0k2 code)
-#define USE_PCF8574_DISPLAYINPUT	// Enable Mode1 inputs display in Web page (+0k2 code)
-#define USE_PCF8574_MQTTINPUT		// Enable Mode1 MQTT message & rule process on input change detection : stat/%topic%/PCF8574_INP = {"Time":"2021-03-07T16:19:23+01:00","PCF8574-1_INP":{"D1":1}} (+0k5 code)
-#define PCF8574_ADDR1 0x20		// First address to search for PCF8574
-#define PCF8574_ADDR1_COUNT 7		// Number of addresses to search for PCF8574 - Default to 0x20 to 0x26
-#define PCF8574_ADDR2 0x39		// First address to search for PCF8574A
-#define PCF8574_ADDR2_COUNT 6		// Number of addresses to search for PCF8574A - Default to 0x39 to 0x3E
+ #undef USE_PCF8574
+#define USE_PCF8574
+ #undef USE_PCF8574_MODE2
+#define USE_PCF8574_MODE2
+ #undef USE_PCF8574_SENSOR
+#define USE_PCF8574_SENSOR
+ #undef USE_PCF8574_DISPLAYINPUT
+#define USE_PCF8574_DISPLAYINPUT
+ #undef USE_PCF8574_MQTTINPUT
+#define USE_PCF8574_MQTTINPUT
+ #undef PCF8574_ADDR1
+#define PCF8574_ADDR1 0x20
+ #undef PCF8574_ADDR1_COUNT
+#define PCF8574_ADDR1_COUNT 7
+ #undef PCF8574_ADDR2
+#define PCF8574_ADDR2 0x39
+ #undef PCF8574_ADDR2_COUNT
+#define PCF8574_ADDR2_COUNT 6
 
-// PCA9685 16Bit I2C zu TTL PWM IO Adapter z.B.Servomotoren oder LED
-#undef USE_PCA9685
+ #undef USE_PCA9557
+#define USE_PCA9557
+
+ #undef  USE_PCA9685
 #define USE_PCA9685			// [I2cDriver1] Enable PCA9685 I2C HW PWM Driver - Must define I2C Address in #define USE_PCA9685_ADDR below - range 0x40 - 0x47 (+1k4 code)
-#undef USE_PCA9685_ADDR
+ #undef USE_PCA9685_ADDR
 #define USE_PCA9685_ADDR 0x40		// Enable PCA9685 I2C Address to use (Must be within range 0x40 through 0x47 - set according to your wired setup)
-#undef USE_PCA9685_FREQ 
+ #undef USE_PCA9685_FREQ 
 #define USE_PCA9685_FREQ 50		// Define default PWM frequency in Hz to be used (must be within 24 to 1526) - If other value is used, it will rever to 50Hz
 
 // PCA9685 Befehle für die Eingabekonsole
@@ -276,37 +289,49 @@ Examples :
 // driver15 status		// Will return a JSON string containing all the current settings / parameters
 //#endif  // USE_I2C
 
+// ESP8266 und ESP32
+#define USE_EXPRESSION
+
 //#ifdef ESP32
 // -- ESP-NOW Nur ESP32 ! -------------------------
-#undef USE_TASMESH
-#define USE_TASMESH		// Enable Tasmota Mesh using ESP-NOW (+11k code)
+ #undef USE_TASMESH
+//#define USE_TASMESH		// Enable Tasmota Mesh using ESP-NOW (+11k code)
 
-// WiFI Range extender Nur ESP32 ! Commands "RgxClients" "RgxPort"
-// #ifndef USE_WIFI_RANGE_EXTENDER
-#undef USE_WIFI_RANGE_EXTENDER
+// WiFI Range extender  Nur ESP32 ! 
+ #undef USE_WIFI_RANGE_EXTENDER
 #define USE_WIFI_RANGE_EXTENDER
-// #endif
+ #undef USE_WIFI_RANGE_EXTENDER_NAPT
+#define USE_WIFI_RANGE_EXTENDER_NAPT
 
-// -- Matter Protocol -freischalten mit SetOption151 1 -auch SO151 1 ---------
-#undef USE_MATTER_DEVICE
+// Commands für WIFI_RANGE_EXTENDER:
+// RgxSSId WEXTENDER
+// RgxPassword supersecret
+// RgxAddress 192.168.99.1 bis 254
+// RgxState 1
+// RgxNAPT 1
+//
+// RgxClients //listet aktive Client´s auf
+
+// -- Matter Protocol -freischalten mit SetOption151 1 ----------
+ #undef USE_MATTER_DEVICE
 #define USE_MATTER_DEVICE
+ #undef USE_DISCOVERY
+#define USE_DISCOVERY
 // Enable all the crypto required by Matter
-#undef  USE_BERRY_CRYPTO_EC_P256
+ #undef USE_BERRY_CRYPTO_EC_P256
 #define USE_BERRY_CRYPTO_EC_P256
-#undef  USE_BERRY_CRYPTO_HMAC_SHA256
+ #undef USE_BERRY_CRYPTO_HMAC_SHA256
 #define USE_BERRY_CRYPTO_HMAC_SHA256
-#undef  USE_BERRY_CRYPTO_HKDF_SHA256
+ #undef USE_BERRY_CRYPTO_HKDF_SHA256
 #define USE_BERRY_CRYPTO_HKDF_SHA256
-#undef  USE_BERRY_CRYPTO_AES_CCM
+ #undef USE_BERRY_CRYPTO_AES_CCM
 #define USE_BERRY_CRYPTO_AES_CCM
-#undef  USE_BERRY_CRYPTO_AES_CTR
+ #undef USE_BERRY_CRYPTO_AES_CTR
 #define USE_BERRY_CRYPTO_AES_CTR
-#undef  USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256
+ #undef USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256
 #define USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256
-#undef  USE_BERRY_CRYPTO_SPAKE2P_MATTER
+ #undef USE_BERRY_CRYPTO_SPAKE2P_MATTER
 #define USE_BERRY_CRYPTO_SPAKE2P_MATTER
-
-//#endif  // ESP32
 
 // -- KNX IP Protocol -----------------------------
  #undef USE_KNX
@@ -317,6 +342,10 @@ Examples :
 // DOMOTICZ
  #undef USE_DOMOTICZ
 #define USE_DOMOTICZ
+
+// neue Option USE_GPIO_VIEWER:
+ #undef USE_GPIO_VIEWER
+#define USE_GPIO_VIEWER
 
 // -- SML-Zaehler Konfiguration --------------------
  #undef USE_RULES
@@ -330,8 +359,21 @@ Examples :
  #undef SUPPORT_MQTT_EVENT
 #define SUPPORT_MQTT_EVENT	// enables suppoer for subscribe an unsubscribe
 
- #undef USE_SENDMAIL
-#define USE_SENDMAIL		// >m section for sending e-Mail
+// =>sendmail [*;*;*;*;*;<YourName@GMail.com>:Alarm in Betreff] Einbruch Fenster1
+// #undef USE_SENDMAIL
+//#define USE_SENDMAIL		// >m section for sending e-Mail
+// #undef EMAIL_USER
+//#define EMAIL_USER "YourName@GMX.de"
+// #undef EMAIL_PASSWORD
+//#define EMAIL_PASSWORD "YourPW"
+// #undef EMAIL_FROM
+//#define EMAIL_FROM "YourName@GMX.de"
+// #undef EMAIL_SERVER
+//#define EMAIL_SERVER "mail.gmx.net"
+// #undef EMAIL_PORT
+//#define EMAIL_PORT 465
+// #undef MAIL_TIMEOUT
+//#define MAIL_TIMEOUT 2000
 
  #undef USE_SML_M
 #define USE_SML_M		// >M section
@@ -358,21 +400,19 @@ Examples :
  #undef SUPPORT_IF_STATEMENT
 #define SUPPORT_IF_STATEMENT
 
-// Speichern auf FAT System (ESP32)intern als auch auf SD-Karte
+// Speichern auf FAT System intern als auch auf SD-Karte
 // Dateien, welche vorkommen können (IP durch eigene ersetzen)
-// http://192.168.190.21/ufs/AMT681-2023.csv //byHofeBY dies ist meine Logdatei der SML-Zählerwerte
-// http://192.168.190.21/ufs/AMT681-2023B.csv  //byHofeBY dies ist meine Logdatei der SML-Zählerwerte
-// http://192.168.190.21/ufs/_matter_device.json
-// http://192.168.190.21/ufs/_persist.json //hier werden Variablen mit Inhalt gespeichert
-// http://192.168.190.21/ufs/script.txt
-// http://192.168.190.21/ufs/.drvset003
-// http://192.168.190.21/ufs/.settings.lkg
-// http://192.168.190.21/ufs/.settings
+// http://IPv4ofYourDevice/ufs/script.txt
+// _matter_device.json
+// _persist.json
+// .drvset003
+// .settings.lkg
+// .settings
 // Info aus dem Start des ESP32 in Konsole Log:
-// http://192.168.190.21/ufs/.autoconf
-// http://192.168.190.21/ufs/preinit.be
-// http://192.168.190.21/ufs/autoexec.be
-// http://192.168.190.21/ufs/autoexec.bat
+// .autoconf
+// preinit.be
+// autoexec.be
+// autoexec.bat
 
  #undef USE_UFILESYS
 #define USE_UFILESYS
@@ -400,29 +440,25 @@ Examples :
  #undef MAXFILT
 #define MAXFILT 5
 
-// Influx-DB webinterface
- #undef USE_WEBCLIENT_HTTPS
-#define USE_WEBCLIENT_HTTPS
+// erzeugt Compiler Fehler
+// #undef USE_SCRIPT_GLOBVARS
+//define USE_SCRIPT_GLOBVARS
 
-// // erzeugt Fehler
-// // #undef USE_SCRIPT_GLOBVARS
-// //define USE_SCRIPT_GLOBVARS
+// erzeugt Compiler Fehler
+// #undef SCRIPT_FULL_WEBPAGE
+//#define SCRIPT_FULL_WEBPAGE
 
-// // erzeugt Fehler
-// // #undef SCRIPT_FULL_WEBPAGE
-// //#define SCRIPT_FULL_WEBPAGE
+// erzeugt Compiler Fehler
+// #undef USE_WEBSEND_RESPONSE
+//define USE_WEBSEND_RESPONSE
 
-// // erzeugt Fehler
-// // #undef USE_WEBSEND_RESPONSE
-// //define USE_WEBSEND_RESPONSE
+// erzeugt Compiler Fehler
+// #undef USE_ENERGY_SENSOR
+//define USE_ENERGY_SENSOR
 
-// // erzeugt Fehler
-// // #undef USE_ENERGY_SENSOR
-// //define USE_ENERGY_SENSOR
-
-// // erzeugt Fehler
-// // #undef USE_SCRIPT_SUB_COMMAND
-// //define USE_SCRIPT_SUB_COMMAND
+// erzeugt Compiler Fehler
+// #undef USE_SCRIPT_SUB_COMMAND
+//define USE_SCRIPT_SUB_COMMAND
 
  #undef SUPPORT_MQTT_EVENT
 #define SUPPORT_MQTT_EVENT
@@ -436,5 +472,6 @@ Examples :
 //script error must start with >D
 
 //byHofeBY oberhalb eingetragen
+
 
 #endif  // _USER_CONFIG_OVERRIDE_H_
