@@ -16,14 +16,13 @@ Bitte Info falls nicht:
 Deutsche Sprache & Zeitzone incl. DE NTP Client konfiguration
 MQTT
 Zeitplan
-TASMESH Tasmota Mesh
 KNX
 DOMOTICZ
 SCRIPT
 BERRY
 SENDMAIL
 SML Smart Meter Language für Stromzähler auslesen
-ESP32 Internes und SDCARD Filesystem mit http Zugriff zum speichern von Logfiles
+ESP32 und weitere Internes und SDCARD Filesystem mit http Zugriff zum speichern von Logfiles
 Ping Support in Console
 I2C, SPI, I2S, etc.pp
 ESP32 intern Hall und CPU Temperatur Sensor
@@ -42,17 +41,16 @@ SCD40 I2C CO2 Sensor
 SGP40 I2C Luftqualität
 
 und noch viele weitere Treiber und Fuktionen.
-Sehen Sie sich das .\CompilerLog.txt an.
-Im gleichen Ordner liegen die Firmware (.bin) Files, welche man OTA auf den ESP32 einspielen kann.
+Sehen Sie sich das .\CompilerLOG.txt exemplarisch für ESP32 an.
+Im gleichen Ordner liegen die Firmware (.bin) Files, welche man OTA auf den ESP Varianten einspielen kann.
 
 Einmalig ESP32 habe ich zuvor mittels Chrome Browser "https://tasmota.github.io/install/"
 Firmware Grundinstallation installiert.
-Nun kann diese ".\tasmota32.bin" von hier über Oberfläche eingespielt werden.
-Compilieren Sie selbst eine Firmware, so liegt diese ".\build_output\firmware\tasmota32.bin"
+Nun kann diese ".\*.bin" von hier über Oberfläche eingespielt werden.
+Compilieren Sie selbst eine Firmware, so liegt diese ".\build_output\firmware"
 Jeweils nach FW Installtion im WLAN nach "tasmota-xxxxx" suchen und verbinden,
 im Browser 192.168.4.1 öffnen und für Home WLAN Einbindung konfigurieren.
 öffnen Sie nun im Home WLAN die angegebene IP im Home WLAN.
-
 
 Was ich festgestellt habe, das es noch nicht richtig funktioniert:
 MATTER (leider), falls jemand es löst bitte um Info
@@ -77,4 +75,5 @@ unter "Einstellungen -> Gerät konfigurieren" können Sie dann die restlichen GP
 
 zurück ins Hauptmenü um erste Ergebnisse der Sensoren zu sehen und z.B. MQTTY zur Übertragung einzustellen.
 
+Oberfränkische Grüße
 HofeBY
