@@ -28,8 +28,6 @@ I2C, SPI, I2S, etc.pp
 ESP32 intern Hall und CPU Temperatur Sensor
 IR senden und empfangen
 WIFI_RANGE_EXTENDER Einrichtung in user_config_override.h beschrieben
-
-Um die I2C Treiber aufzulisten auf console I2Cdriver auflisten und die Nummer in Datei my_user_config nachsehen.
 DS18x20 auch mit parasite Power T 
 DS3231 RTC mit NTP-Server support (Zeitserver für offline Netzwerke) und internem Temperatursensor I2C
 BMP-085-180-280/BME280 RH/T/P/Taupunkt I2C
@@ -43,6 +41,8 @@ SGP40 I2C Luftqualität
 und noch viele weitere Treiber und Fuktionen.
 Sehen Sie sich das .\CompilerLOG.txt exemplarisch für ESP32 an.
 Im gleichen Ordner liegen die Firmware (.bin) Files, welche man OTA auf den ESP Varianten einspielen kann.
+
+Um die eincompilierten I2C Treiber aufzulisten auf console "I2Cdriver" und die Nummer in Datei my_user_config nachsehen.
 
 Einmalig ESP32 habe ich zuvor mittels Chrome Browser "https://tasmota.github.io/install/"
 Firmware Grundinstallation installiert.
