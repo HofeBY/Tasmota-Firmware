@@ -1,4 +1,4 @@
-ESP32 Firmware Tasmota 13.4.0.2 von https://github.com/arendst/Tasmota wurde unter
+ESP32 Firmware Tasmota development 14.0.0.1 von https://github.com/arendst/Tasmota wurde unter
 "Windows10" mit Microsoft "Visual Studio Code" compiliert.
 Ich verwende zum testen ein AZ-Delivery ESP32 DevKitCv4 Board
 
@@ -7,8 +7,10 @@ sollten auch in neue Source Version angepasst angewendet werden können.
  
 Diverse Dateien wurden hierzu angepasst und liegen in den Unterverzeichnissen.
 Suchbegiff "byHofeBY" in diesen Dateien zeigt an wo ich was geändert habe.
-.\tasmota\user_config_override.h
-.\tasmota\include\tasmota_configurations_ESP32.h
+.\tasmota\user_config_override.h //hier hinein schreibe ich die gewünschte Konfiguration.
+.\tasmota\include\tasmota_configurations_ESP32.h //hier deaktiviere ich unnötige Treiber.
+
+Die Datei .\tasmota\include\my_user_config.h beinhaltet die möglichen Optionen
 
 Folgende Funktionen/Treiber sollten vorhanden sein und funktionieren.
 Bitte Info falls nicht:
@@ -21,6 +23,7 @@ DOMOTICZ
 SCRIPT
 BERRY
 SENDMAIL
+INFLUXDB
 SML Smart Meter Language für Stromzähler auslesen
 ESP32 und weitere Internes und SDCARD Filesystem mit http Zugriff zum speichern von Logfiles
 Ping Support in Console
@@ -31,16 +34,21 @@ WIFI_RANGE_EXTENDER Einrichtung in user_config_override.h beschrieben
 DS18x20 auch mit parasite Power T 
 DS3231 RTC mit NTP-Server support (Zeitserver für offline Netzwerke) und internem Temperatursensor I2C
 BMP-085-180-280/BME280 RH/T/P/Taupunkt I2C
+BME68X I2C RH/T/P/Taupunkt/Luftgüte
 AHT2x z.B. AHT21D RH/T/Taupunkt 2-5,5V I2C ist günstiger zu bekommen
 PCF8574 8Bit I2C zu TTL IO Adapter
-MCP23008/MCP23017 8/16 Bit IO I2C zu TTL IO Adapter
+MCP23008/MCP23017 8/16 Bit IO I2C zu TTL multi IO Adapter
 PCA9685 16xfach HW PWM Driver I2C zu IO Adapter
 SCD40 I2C CO2 Sensor
 SGP40 I2C Luftqualität
+ENS160 I2C VOC Luftgüte Sensor
 
 und noch viele weitere Treiber und Fuktionen.
 Sehen Sie sich das .\CompilerLOG.txt exemplarisch für ESP32 an.
 Im gleichen Ordner liegen die Firmware (.bin) Files, welche man OTA auf den ESP Varianten einspielen kann.
+
+tasmota.bin für ESP8285 & ESP8266
+tasmota32(xx).bin für ESP32 Varianten /(factory) zur Erstinstallation
 
 Um die eincompilierten I2C Treiber aufzulisten auf console "I2Cdriver" und die Nummer in Datei my_user_config nachsehen.
 
@@ -70,6 +78,8 @@ GPIO22 I2C SCL 1 (ist als I2C auf dem Board vorbelegt)
 GPIO36 HallEffect 1 (Interner Hall Sensor für erste Werte) mit Magnet auf Blechschirmung
 GPIO39 HallEffect 2 (Interner Hall Sensor für erste Werte) verändert den Hall Wert.
 Dann in Console "SO146 1" um auch die CPU Temperatur anzuzeigen
+
+I2C Bausteine werden an GPIO21/22 angeschlossen
 
 unter "Einstellungen -> Gerät konfigurieren" können Sie dann die restlichen GPIO´s selbst belegen.
 
