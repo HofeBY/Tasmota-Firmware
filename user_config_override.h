@@ -498,7 +498,8 @@ Examples :
 // autoexec.bat
 
  #undef USE_SCRIPT_FATFS_EXT
-#define USE_SCRIPT_FATFS_EXT #undef USE_UFILESYS
+#define USE_SCRIPT_FATFS_EXT
+ #undef USE_UFILESYS
 #define USE_UFILESYS
  #undef GUI_TRASH_FILE
 #define GUI_TRASH_FILE
