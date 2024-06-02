@@ -1,18 +1,22 @@
- *  Executing task: C:\Users\Station\.platformio\penv\Scripts\platformio.exe run --environment tasmota32 
+BeispielLOG eines ESP32:
 
-Processing tasmota32 (framework: arduino; platform: https://github.com/tasmota/platform-espressif32/releases/download/2024.05.11/platform-espressif32-2024.05.11.zip; board: esp32)
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Verbose mode can be enabled via `-v, --verbose` option
+*  Executing task: C:\Users\Station\.platformio\penv\Scripts\platformio.exe run --environment tasmota32 
+
+Processing tasmota32 (framework: arduino; platform: https://github.com/tasmota/platform-espressif32/releases/download/2024.05.13/platform-espressif32.zip; board: esp32)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Verbose mode can be enabled via `-v, --verbose` option
+Nothing more to solidify
 -DCONFIG_TASMOTA_FLASHMODE_DIO
 *** use provided user_config_override.h as planned ***
 *** use provided platformio_override.ini as planned ***
 *** use provided platformio_tasmota_cenv.ini as planned ***
 CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32.html
-PLATFORM: Espressif 32 (2024.5.11) > Espressif Generic ESP32 >= 4M Flash PSRAM, Tasmota 2880k Code/OTA, 320k FS
+PLATFORM: Espressif 32 (2024.5.13) > Espressif Generic ESP32 >= 4M Flash PSRAM, Tasmota 2880k Code/OTA, 320k FS
 HARDWARE: ESP32 160MHz, 320KB RAM, 4MB Flash
-DEBUG: Current (cmsis-dap) External (cmsis-dap, esp-bridge, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+DEBUG: Current (cmsis-dap) External (cmsis-dap, esp-bridge, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, 
+tumpa)
 PACKAGES:
- - framework-arduinoespressif32 @ 3.0.0+sha.ddb7385
- - tool-esptoolpy @ 4.7.2
+ - framework-arduinoespressif32 @ 3.0.0+sha.14a0ebd
+ - tool-esptoolpy @ 4.7.3
  - tool-mklittlefs @ 3.2.0
  - tool-riscv32-esp-elf-gdb @ 11.2.0+20220823
  - tool-xtensa-esp-elf-gdb @ 11.2.0+20230208
@@ -20,7 +24,7 @@ PACKAGES:
 Converting tasmota.ino
 LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
 LDF Modes: Finder ~ chain, Compatibility ~ strict
-Found 124 compatible libraries
+Found 125 compatible libraries
 Scanning dependencies...
 Dependency Graph
 |-- Adafruit CCS811 Library @ 1.0.0
@@ -34,6 +38,7 @@ Dependency Graph
 |-- ESP8266Audio @ 1.9.5
 |-- Berry @ 7.0
 |-- Berry animation library for WS2812 leds @ 0.1
+|-- Berry custom template @ 0.1
 |-- Berry Matter protocol implementation @ 0.1
 |-- Berry Tasmota mapping @ 1.0
 |-- Berry int64 implementation for 32 bits architecture @ 1.0
@@ -138,15 +143,15 @@ Dependency Graph
 Building in release mode
 Compiling .pio\build\tasmota32\src\tasmota.ino.cpp.o
 Linking .pio\build\tasmota32\firmware.elf
-lto-wrapper.exe: warning: using serial compilation of 30 LTRANS jobs
+lto-wrapper.exe: warning: using serial compilation of 29 LTRANS jobs
 lto-wrapper.exe: note: see the '-flto' option documentation for more information
 Retrieving maximum program size .pio\build\tasmota32\firmware.elf
 Checking size .pio\build\tasmota32\firmware.elf
 Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
-RAM:   [==        ]  23.1% (used 75688 bytes from 327680 bytes)
-Flash: [=======   ]  74.3% (used 2191501 bytes from 2949120 bytes)
+RAM:   [==        ]  22.1% (used 72336 bytes from 327680 bytes)
+Flash: [======    ]  60.5% (used 1785241 bytes from 2949120 bytes)
 Building .pio\build\tasmota32\firmware.bin
-esptool.py v4.7.2
+esptool.py v4.7.3
 Creating esp32 image...
 Merged 27 ELF sections
 Successfully created esp32 image.
@@ -167,27 +172,28 @@ safeboot binary already in place.
  -  0xe000 | C:\Users\Station\.platformio\packages\framework-arduinoespressif32\tools\partitions\boot_app0.bin
  -  0x10000 | D:\Tasmota\variants/tasmota\tasmota32-safeboot.bin
  - 0xe0000 | D:\Tasmota\.pio\build\tasmota32/firmware.bin
-esptool.py v4.7.2
+esptool.py v4.7.3
 SHA digest in image updated
-Wrote 0x2f8ac0 bytes to file D:\Tasmota\.pio\build\tasmota32/firmware.factory.bin, ready to flash to offset 0x0
+Wrote 0x2957d0 bytes to file D:\Tasmota\.pio\build\tasmota32/firmware.factory.bin, ready to flash to offset 0x0
 bin_map_copy([".pio\build\tasmota32\firmware.bin"], [".pio\build\tasmota32\firmware.elf"])
 map_gzip([".pio\build\tasmota32\firmware.bin"], [".pio\build\tasmota32\firmware.elf"])
 firm_metrics([".pio\build\tasmota32\firmware.bin"], [".pio\build\tasmota32\firmware.elf"])
 C:\Users\Station\.platformio\penv\Scripts\python.exe -m tasmota_metrics "D:\Tasmota\.pio\build\tasmota32\firmware.map"
 Total sizes:
-Used static DRAM:   75688 bytes (  48892 remain, 60.8% used)
-      .data size:   25184 bytes
-      .bss  size:   50504 bytes
-Used static IRAM:   92094 bytes (  79938 remain, 53.5% used)
-      .text size:   91067 bytes
+Used static DRAM:   72336 bytes (  52244 remain, 58.1% used)
+      .data size:   25024 bytes
+      .bss  size:   47312 bytes
+Used static IRAM:   91470 bytes (  80562 remain, 53.2% used)
+      .text size:   90443 bytes
    .vectors size:    1027 bytes
-Used Flash size : 2074479 bytes
-           .text: 1407759 bytes
-         .rodata:  666464 bytes
-Total image size: 2191757 bytes (.bin may be padded larger)
-=============================================================================================== [SUCCESS] Took 133.87 seconds ===============================================================================================
+Used Flash size : 1669003 bytes
+           .text: 1361883 bytes
+         .rodata:  306864 bytes
+Total image size: 1785497 bytes (.bin may be padded larger)
+============================================================================= [SUCCESS] Took 135.23 seconds =============================================================================
+
 Environment    Status    Duration
 -------------  --------  ------------
-tasmota32      SUCCESS   00:02:13.866
-================================================================================================ 1 succeeded in 00:02:13.866 ================================================================================================
-*  Terminal will be reused by tasks, press any key to close it. 
+tasmota32      SUCCESS   00:02:15.233
+============================================================================== 1 succeeded in 00:02:15.233 ============================================================================== 
+ *  Terminal will be reused by tasks, press any key to close it. 

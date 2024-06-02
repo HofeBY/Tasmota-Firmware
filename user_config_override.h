@@ -88,32 +88,7 @@ Examples :
 */
 //byHofeBY unterhalb eingetragen
 
-//#define USER_TEMPLATE "{\"NAME\":\"KING-L3\",\"GPIO\":[32,1,1,1,226,225,33,34,224,544,1,1,1,1],\"FLAG\":0,\"BASE\":18}"  // [Template] Set JSON template
-//#define USER_TEMPLATE "{\"NAME\":\"King3G-SML\",\"GPIO\":[32,640,1,608,226,225,33,34,224,544,1,1,1,1],\"FLAG\":0,\"BASE\":18}"  // [Template] Set JSON template
-//#define USER_TEMPLATE "{\"NAME\":\"King3G-SML-i2C\",\"GPIO\":[32,640,36,608,226,225,33,34,224,544,1,1,1,1],\"FLAG\":0,\"BASE\":18}"  // [Template] Set JSON template
-//King3G-SML-i2C als Rolloschalter L1 up; L2 down; L3-Steckdose
-//Timezone 99
-//SetOption80 1
-//ShutterMode 1
-////Restart 1
-//Interlock 1,2
-//Interlock 1
-//ShutterRelay1 1
-//Anpassen der Parameter des Rollo:
-//ShutterOpenDuration1 18 // Laufzeit öffnen Fenster
-//ShutterCloseDuration1 16 //Laufzeit schließen Fenster
-//ShutterOpen1 // öffnen Rollo alternativ "power1 1"
-//ShutterClose1 // schließen Rollo alternativ "power2 1"
-//ShutterPosition1 100 // Position anfahren 100=offen 0=geschlossen
-//
-// Beispiel 3.Relais von IP schalten:
-//http://192.168.190.20/cm?cmnd=Power3%20On oder Off oder Toggle
-//http://192.168.190.20/cm?user=admin&password=joker&cmnd=Power3%20On oder Off oder Toggle
-//
-
-// Treiber die erst mal entfernt gehören, weil sie unsinniger Weise aktiviert wurden
-//#if defined USE_I2C		// Moegliche I2C Geraete Treiber siehe my_user_config.h
-//endif // USE_I2C
+// Treiber die erst mal entfernt gehören, weil sie unsinniger Weise in .\tasmota\my_user_config.h aktiviert wurden
  #undef USE_VEML6070
  #undef USE_VEML6070_RSET
  #undef USE_VEML6070_SHOW_RAW
@@ -131,23 +106,92 @@ Examples :
  #undef USE_AHT1x
  #undef USE_AHT2x
 
-#if defined ESP32-C2
-#define NO_USE_SML_CANBUS
-#endif
+//==========================================================================
+// Auswahl der Unterscheidung SML/SCRIPT oder RULE & MATTER falls CPU ESP32x
+// Entweder USE_SCRIPT oder USE_RULES aktiv wählen !
+ #undef USE_SCRIPT  // SML benötigt SCRIPT, also standardmäßig eingeschaltet
+#define USE_SCRIPT
+ #undef USE_RULES   // Sobald RULES aktiv wird auch MATTER aktiv, es muss SCRIPT & SML deaktiviert werden
+//#define USE_RULES
+ #undef USE_I2C
+#define USE_I2C // Eigentlich bei allen ESP mit I2C Unterstützung
+//==========================================================================
 
-// Einstellungen je nach Prozessorwahl im Compiler
+#if defined USE_SCRIPT // RULES & MATTER weg, aktivieren von MATTER, sofern SCRIPT aktiv ist
+ #undef USE_RULES
+ #undef USE_MATTER_DEVICE
+ #undef SCRIPT_POWER_SECTION
+#define SCRIPT_POWER_SECTION
+ #undef USE_SML_M
+#define USE_SML_M
+ #undef USE_SCRIPT_WEB_DISPLAY
+#define USE_SCRIPT_WEB_DISPLAY
+ #undef USE_SCRIPT_JSON_EXPORT
+#define USE_SCRIPT_JSON_EXPORT
+ #undef USE_SCRIPT_STATUS
+#define USE_SCRIPT_STATUS
+ #undef USE_SCRIPT_GLOBVARS
+#define USE_SCRIPT_GLOBVARS
+ #undef USE_SCRIPT_FATFS_EXT
+#define USE_SCRIPT_FATFS_EXT
+ #undef SML_REPLACE_VARS
+#define SML_REPLACE_VARS
+ #undef USE_SML_SCRIPT_CMD
+#define USE_SML_SCRIPT_CMD
+ #undef SML_MAX_VARS
+#define SML_MAX_VARS
+#endif // USE_SCRIPT 
+
+#if defined USE_RULES // aktivieren von MATTER, deaktivieren von SCRIPT/SML
+ #undef USE_MATTER_DEVICE
+#define USE_MATTER_DEVICE
+ #undef USE_SCRIPT
+ #undef SCRIPT_POWER_SECTION
+ #undef USE_SML_M
+ #undef USE_SCRIPT_WEB_DISPLAY
+ #undef USE_SCRIPT_JSON_EXPORT
+ #undef USE_SCRIPT_STATUS
+ #undef USE_SCRIPT_GLOBVARS
+ #undef USE_SCRIPT_FATFS_EXT
+ #undef SML_REPLACE_VARS
+ #undef USE_SML_SCRIPT_CMD
+ #undef SML_MAX_VARS
+#endif // USE_RULES 
+
+// neue Option USE_GPIO_VIEWER für alle ESP möglich:
+ #undef USE_GPIO_VIEWER
+#define USE_GPIO_VIEWER
+
+//KNX IP Protocol für alle ESP möglich
+ #undef USE_KNX
+#define USE_KNX			// Enable KNX IP Protocol Support (+9.4k code, +3k7 mem)
+ #undef USE_KNX_WEB_MENU
+#define USE_KNX_WEB_MENU	// Enable KNX WEB MENU (+8.3k code, +144 mem)
+
+//DOMOTICZ Protocol für alle ESP möglich
+ #undef USE_DOMOTICZ
+#define USE_DOMOTICZ
+
+//==========================================================================
+// Einstellungen je nach Prozessorwahl im VSC Compiler also tasmota,tasmota32,tasmota32s2,tasmota32c2,tasmota32c3,tasmota32c6,tasmota32s3
  #undef USER_TEMPLATE
+//==========================================================================
 
-#if defined ESP8266
+#if defined ESP8266 // Gültig für ESP8285 und ESP8266 im VSC Compiler also tasmota
 #define USER_TEMPLATE "{\"NAME\":\"Generic\",\"GPIO\":[1,1,1,1,1,1,1,1,1,1,1,1,1,1],\"FLAG\":0,\"BASE\":18}"  // [Template] Set JSON template
+//ESP8266 -DOTA_URL='"http://ota.tasmota.com/tasmota/release/tasmota.bin.gz"'
  #undef OTA_URL
+//#define OTA_URL "https://github.com/HofeBY/Tasmota-Firmware/tasmota.bin"
 #define OTA_URL "http://ota.tasmota.com/tasmota/release/tasmota.bin.gz/tasmota-minimal.bin.gz"
+ #undef USE_MATTER_DEVICE // Matter ist mit ESP8285 & ESP8266 nicht möglich
 #endif  // ESP8266
 
-#if defined ESP32
+#if defined ESP32 // ESP32 Generationen im VSC Compiler also tasmota32,tasmota32s2,tasmota32c2,tasmota32c3,tasmota32c6,tasmota32s3
 #define USER_TEMPLATE "{\"NAME\":\"ESP32\",\"GPIO\":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\"FLAG\":0,\"BASE\":1}"
+//ESP32 -DOTA_URL='"http://ota.tasmota.com/tasmota32/release/tasmota32.bin"'
  #undef OTA_URL
 #define OTA_URL "http://ota.tasmota.com/tasmota32/release/tasmota32-saveboot.bin"
+//#define OTA_URL "https://github.com/HofeBY/Tasmota-Firmware/tasmota32.bin"
 
 // ESP32 CPU Temperature and optional Hall Effect sensor
 // To allow for not updating the global temperature by the ESP32 temperature sensor this
@@ -171,19 +215,31 @@ Examples :
 #define INFLUXDB_TOKEN     ""		// [IfxPassword, IfxToken] Influxdb v1 password or v2 token
 #define INFLUXDB_BUCKET    "db"		// [IfxDatabase, IfxBucket] Influxdb v1 database or v2 bucket
 #define INFLUXDB_RP        ""		// [IfxRP] Influxdb retention policy
+#endif // ESP32 Generationen
 
- #undef USE_RTC_CHIPS
-#define USE_RTC_CHIPS		// Enable RTC chip support and NTP server - Select only one #undef USE_DS3231
- #undef USE_DS3231
-#define USE_DS3231		//I2C Support für DS1307 oder DS3231 und NTP-Server Funktion
- #undef DS3231_ENABLE_TEMP
-#define DS3231_ENABLE_TEMP	//   In DS3231 driver, enable the internal temperature senso
-// RtcNtpServer<x> // 0 = disabled; 1 = enabled Use Tasmota NTP server when enabled by define RTC_NTP_SERVER
-#endif  // ESP32
+#if defined ESP32-S2 // im VSC Compiler also tasmota32s2
+// Prozessorspezifika
+#endif // ESP32-S2
+
+#if defined ESP32-C2 // im VSC Compiler also tasmota32c2
+// Prozessorspezifika
+#define NO_USE_SML_CANBUS // weil er keinen CANBUS hat
+#endif // ESP32-C2
+
+#if defined ESP32-C3 // im VSC Compiler also tasmota32c3
+// Prozessorspezifika
+#endif // ESP32-C3
+
+#if defined ESP32-C6 // im VSC Compiler also tasmota32c6
+// Prozessorspezifika
+#endif // ESP32-C6
+
+#if defined ESP32-S3 // im VSC Compiler also tasmota32s3
+// Prozessorspezifika
+#endif // ESP32-S3
 
 //#undef  GUI_SHOW_HOSTNAME
 //#define GUI_SHOW_HOSTNAME true //[SetOption53] Show hostname and IP address in GUI main menu
-
 
 // -- Time - Up to three NTP servers in your region
  #undef NTP_SERVER1
@@ -229,48 +285,64 @@ Examples :
  #undef APP_TIMEZONE
 #define APP_TIMEZONE 99 // [Timezone] +1 hour (Amsterdam) (-13 .. 14 = hours from UTC, 99 = use TIME_DST/TIME_STD)
 
-// -- Location ------------------------------------
+// -- Location------------------------------------
  #undef LATITUDE
 #define LATITUDE	49.845915	// [Latitude] Your location Creußen/Gemeinde to be used with sunrise and sunset
  #undef LONGITUDE
 #define LONGITUDE	11.626169	// [Longitude] Your location Creußen/Gemeinde to be used with sunrise and sunset
-
-// -- Setup your own Wifi settings  ---------------
- #undef STA_SSID1
-#define STA_SSID1	""
-
- #undef STA_PASS1
-#define STA_PASS1         ""
-
- #undef STA_SSID2
-#define STA_SSID2         ""
-
- #undef STA_PASS2
-#define STA_PASS2         ""
 
 // -- Localization --------------------------------
   // If non selected the default en-GB will be used
  #undef MY_LANGUAGE
 #define MY_LANGUAGE de_DE // German in Germany
 
+// -- Setup your own Wifi settings  ---------------
+ #undef STA_SSID1
+#define STA_SSID1	""
+
+ #undef STA_PASS1
+#define STA_PASS1	""
+
+ #undef STA_SSID2
+#define STA_SSID2	""
+
+ #undef STA_PASS2
+#define STA_PASS2	""
+
+// IR z.Z. nicht zu compilieren TM14.0.0.4
 // #undef FIRMWARE_IR
 //#define FIRMWARE_IR		// Create tasmota-ir with IR full protocols activated, and many sensors disabled
 
 // -- Lights --------------------------------------
+ #undef WS2812_LEDS
 #define WS2812_LEDS            30                // [Pixels] Number of WS2812 LEDs to start with (max is 512)
+ #undef LIGHT_MODE
 #define LIGHT_MODE             true              // [SetOption15] Switch between commands PWM or COLOR/DIMMER/CT/CHANNEL
+ #undef LIGHT_CLOCK_DIRECTION
 #define LIGHT_CLOCK_DIRECTION  false             // [SetOption16] Switch WS2812 clock between clockwise or counter-clockwise
+ #undef LIGHT_COLOR_RADIX
 #define LIGHT_COLOR_RADIX      false             // [SetOption17] Switch between decimal or hexadecimal color output (false = hexadecimal, true = decimal)
+ #undef LIGHT_PAIRS_CO2
 #define LIGHT_PAIRS_CO2        false             // [SetOption18] Enable Pair light signal with CO2 sensor
+ #undef LIGHT_POWER_CONTROL
 #define LIGHT_POWER_CONTROL    false             // [SetOption20] Enable power control in relation to Dimmer/Color/Ct changes
+ #undef LIGHT_CHANNEL_MODE
 #define LIGHT_CHANNEL_MODE     false             // [SetOption68] Enable multi-channels PWM instead of Color PWM
+ #undef LIGHT_SLIDER_POWER
 #define LIGHT_SLIDER_POWER     false             // [SetOption77] Do not power off if slider moved to far left
+ #undef LIGHT_ALEXA_CT_RANGE
 #define LIGHT_ALEXA_CT_RANGE   false             // [SetOption82] Reduced CT range for Alexa
+ #undef LIGHT_PWM_CT_MODE
 #define LIGHT_PWM_CT_MODE      false             // [SetOption92] Set PWM Mode from regular PWM to ColorTemp control (Xiaomi Philips ...) a.k.a. module 48 mode
+ #undef LIGHT_WHITE_BLEND_MODE
 #define LIGHT_WHITE_BLEND_MODE false             // [SetOption105] White Blend Mode - used to be `RGBWWTable` last value `0`, now deprecated in favor of this option
+ #undef LIGHT_VIRTUAL_CT
 #define LIGHT_VIRTUAL_CT       false             // [SetOption106] Virtual CT - Creates a virtual White ColorTemp for RGBW lights
+ #undef LIGHT_VIRTUAL_CT_CW
 #define LIGHT_VIRTUAL_CT_CW    false             // [SetOption107] Virtual CT Channel - signals whether the hardware white is cold CW (true) or warm WW (false)
+ #undef LIGHT_VIRTUAL_CT_POINTS
 #define LIGHT_VIRTUAL_CT_POINTS 3                // Number of reference points for Virtual CT (min 2, default 3)
+ #undef USE_AC_ZERO_CROSS_DIMMER
 #define USE_AC_ZERO_CROSS_DIMMER                 // Requires USE_COUNTER and USE_LIGHT
 
 // -- One wire sensors ----------------------------
@@ -281,7 +353,18 @@ Examples :
  #undef DS18x20_USE_ID_ALIAS
 #define DS18x20_USE_ID_ALIAS	// Add support aliasing for DS18x20 sensors. See comments in xsns_05 files (+0k5 code)
 //Kommandos für DS18x...
-// DS18Alias B33C6CE381BE4D28,Aussen
+// DS18Alias B33C6CE347110815,gotemp // DS-Adressse aus ConsoleLOG
+
+//#if defined USE_I2C // Moegliche I2C Geraete Treiber siehe my_user_config.h
+ #undef USE_RTC_CHIPS
+#define USE_RTC_CHIPS		// Enable RTC chip support and NTP server - Select only one #undef USE_DS3231
+ #undef USE_DS3231
+#define USE_DS3231		//I2C Support für DS1307 oder DS3231 und NTP-Server Funktion
+ #undef DS3231_ENABLE_TEMP
+#define DS3231_ENABLE_TEMP	//   In DS3231 driver, enable the internal temperature senso
+// RtcNtpServer<x> // 0 = disabled; 1 = enabled Use Tasmota NTP server when enabled by define RTC_NTP_SERVER
+ #undef USE_24C256
+#define USE_24C256
 
  #undef USE_BMP
 #define USE_BMP		// [I2cDriver10] Enable BMP085/BMP180/BMP280/BME280 sensors (ab 8.-€ Cn RH/T/P I2C Sensor addresses 0x76 and 0x77) (+4k4 code)
@@ -316,7 +399,6 @@ Examples :
  #undef USE_MCP23XXX_DRV
 #define USE_MCP23XXX_DRV	 // multiple devices [I2cDriver77] Enable MCP23xxx support as virtual switch/button/relay (+3k(I2C)/+5k(SPI) code)
 
-
  #undef USE_PCF8574
 #define USE_PCF8574	// [I2cDriver2] Enable PCF8574 I/O Expander (I2C addresses 0x20 - 0x26 and 0x39 - 0x3F) (+2k1 code)
  #undef USE_PCF8574_MODE2
@@ -346,7 +428,7 @@ Examples :
  #undef USE_PCA9685_FREQ 
 #define USE_PCA9685_FREQ 50	// Define default PWM frequency in Hz to be used (must be within 24 to 1526) - If other value is used, it will rever to 50Hz
 
-// PCA9685 Befehle für die Eingabekonsole
+// PCA9685 Befehle für die Eingabeconsole
 // driver15 pwmf,frequency	// where frequency is the PWM frequency from 24 to 1526 in Hz
 // driver15 pwm,pin,pwmvalue	// where pin = LED pin 0 through 15 and pwmvalue is the pulse width between 0 and 4096
 // driver15 pwm,pin,ON		// Fully turn a specific pin/LED ON
@@ -363,7 +445,7 @@ Examples :
  #undef USE_TASMESH
 //#define USE_TASMESH		// Enable Tasmota Mesh using ESP-NOW (+11k code)
 
-// WiFI Range extender  Nur ESP32 ! 
+// WiFI Range extender  Nur ESP32 !? 
  #undef USE_WIFI_RANGE_EXTENDER
 //#define USE_WIFI_RANGE_EXTENDER
  #undef USE_WIFI_RANGE_EXTENDER_NAPT
@@ -389,12 +471,13 @@ Examples :
 //
 // RgxClients //listet aktive Client´s auf
 //
-//Portweiterleitungen auf 21ESP32 192.168.x.164
-//RgxPort tcp,8082,192.168.164.2,80 Name
+
+#endif  // Ende Only for ESP32 x devices
+
 
 // -- Matter Protocol -freischalten mit SetOption151 1 ----------
- #undef USE_MATTER_DEVICE
-#define USE_MATTER_DEVICE
+//Matter ist nicht mit SML kombinierbar. Deshalb wird SCRIPT deaktiviert, sofern "USE_MATTER_DEVICE" vorhanden ist !!!
+#if defined USE_MATTER_DEVICE	// Only for MATTER devices
  #undef USE_DISCOVERY
 #define USE_DISCOVERY
 // Enable all the crypto required by Matter
@@ -412,31 +495,7 @@ Examples :
 #define USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256
  #undef USE_BERRY_CRYPTO_SPAKE2P_MATTER
 #define USE_BERRY_CRYPTO_SPAKE2P_MATTER
-
-#endif  // Only for ESP32 x devices
-
-// -- KNX IP Protocol -----------------------------
- #undef USE_KNX
-#define USE_KNX			// Enable KNX IP Protocol Support (+9.4k code, +3k7 mem)
- #undef USE_KNX_WEB_MENU
-#define USE_KNX_WEB_MENU	// Enable KNX WEB MENU (+8.3k code, +144 mem)
-
-// DOMOTICZ
- #undef USE_DOMOTICZ
-#define USE_DOMOTICZ
-
-// neue Option USE_GPIO_VIEWER:
- #undef USE_GPIO_VIEWER
-#define USE_GPIO_VIEWER
-
-// -- SML-Zaehler Konfiguration --------------------
- #undef USE_RULES
-
- #undef USE_SCRIPT
-#define USE_SCRIPT
-
- #undef SCRIPT_POWER_SECTION
-#define SCRIPT_POWER_SECTION	// >P section execute on power changes
+#endif  // Only for MATTER devices without SCRIPT
 
  #undef SUPPORT_MQTT_EVENT
 #define SUPPORT_MQTT_EVENT	// enables suppoer for subscribe an unsubscribe
@@ -458,23 +517,8 @@ Examples :
  #undef MAIL_TIMEOUT
 #define MAIL_TIMEOUT 2000
 
- #undef USE_SML_M
-#define USE_SML_M		// >M section
-
  #undef USE_BUTTON_EVENT
 #define USE_BUTTON_EVENT	// >b Section detect button state changes
-
- #undef USE_SCRIPT_WEB_DISPLAY
-#define USE_SCRIPT_WEB_DISPLAY
-
- #undef USE_SCRIPT_JSON_EXPORT
-#define USE_SCRIPT_JSON_EXPORT	// >J section JSON payload
-
- #undef USE_SCRIPT_STATUS
-#define USE_SCRIPT_STATUS	// >U section receive JSON payloads
-
- #undef USE_SCRIPT_GLOBVARS
-#define USE_SCRIPT_GLOBVARS	// >G enables global variables
 
 //https://github.com/arendst/Tasmota/issues/7021
  #undef USE_EXPRESSION
@@ -485,6 +529,7 @@ Examples :
 
 // Speichern auf FAT System intern als auch auf SD-Karte
 // Dateien, welche vorkommen können (IP durch eigene ersetzen)
+// http://192.168.190.21/ufs/AMT681-2024.csv
 // _matter_device.json
 // _persist.json
 // script.txt
@@ -497,27 +542,17 @@ Examples :
 // autoexec.be
 // autoexec.bat
 
- #undef USE_SCRIPT_FATFS_EXT
-#define USE_SCRIPT_FATFS_EXT
  #undef USE_UFILESYS
 #define USE_UFILESYS
+
  #undef GUI_TRASH_FILE
 #define GUI_TRASH_FILE
+
  #undef USE_SDCARD
 #define USE_SDCARD
 
  #undef USE_PING
 #define USE_PING
-
-// -- Variablen in Konsole erlauben ----------------
- #undef SML_REPLACE_VARS
-#define SML_REPLACE_VARS
-
- #undef USE_SML_SCRIPT_CMD
-#define USE_SML_SCRIPT_CMD
-
- #undef SML_MAX_VARS
-#define SML_MAX_VARS 60
 
  #undef MAXSVARS
 #define MAXSVARS 5
@@ -552,7 +587,7 @@ Examples :
  #undef MQTT_EVENT_JSIZE
 #define MQTT_EVENT_JSIZE 400 // (default is 400) 
 
-// Script Basisinhalt
+// Script ursprünglicher Basisinhalt
 //>D
 //script error must start with >D
 

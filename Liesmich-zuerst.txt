@@ -1,36 +1,48 @@
-ESP32 Firmware Tasmota development 14.0.0.1 von https://github.com/arendst/Tasmota wurde unter
+ESP32 Firmware Tasmota development 14.0.0.4 von https://github.com/arendst/Tasmota wurde unter
 "Windows10" mit Microsoft "Visual Studio Code" compiliert.
+https://code.visualstudio.com/download
+Im VSC dann PlattformIO nachinstallieren.
 Ich verwende zum testen ein AZ-Delivery ESP32 DevKitCv4 Board
 
-Der Source kann in Version siehe oben geladen werden und die mitgelieferten Konfigurationsfiles
+Der Source kann in Version siehe oben geladen werden und die bereitgestellten Konfigurationsfiles
 sollten auch in neue Source Version angepasst angewendet werden können.
- 
+my_user_config.h
+tasmota_configurations_ESP32.h
+
 Diverse Dateien wurden hierzu angepasst und liegen in den Unterverzeichnissen.
 Suchbegiff "byHofeBY" in diesen Dateien zeigt an wo ich was geändert habe.
 .\tasmota\user_config_override.h //hier hinein schreibe ich die gewünschte Konfiguration.
-.\tasmota\include\tasmota_configurations_ESP32.h //hier deaktiviere ich unnötige Treiber.
+.\tasmota\include\tasmota_configurations_ESP32.h // hier nach //byHofeBY nachsehen welche ich deaktivierte.
 
-Die Datei .\tasmota\include\my_user_config.h beinhaltet die möglichen Optionen
+Die Datei .\tasmota\include\my_user_config.h beinhaltet die möglichen Treiber Optionen
+
+Ich habe schon mal folgende Versionen compiliert:
+tasmota,tasmota32,tasmota32s2,tasmota32c2,tasmota32c3,tasmota32c6,tasmota32s3
 
 Folgende Funktionen/Treiber sollten vorhanden sein und funktionieren.
-Bitte Info falls nicht:
+Bitte Info falls nicht über "Issues" in github.com/HofeBY/Tasmota-Firmware :
+
+Um die RULE oder RULE-MATTER Varianten compilieren zu können muss zwischen den Zeilen //=========... in 
+user_config_override.h USE_SCRIPT mit // auskommentiert und RULE aktiviert werden.
+
+Dann erneute Compilerläufe und Umbenennung der .bin Firmwares zweck´s Unterscheidung.
 
 Deutsche Sprache & Zeitzone incl. DE NTP Client konfiguration
 MQTT
 Zeitplan
 KNX
 DOMOTICZ
-SCRIPT
+SCRIPT oder [RULES mit MATTER außer ESP82(..)]
 BERRY
 SENDMAIL
 INFLUXDB
-SML Smart Meter Language für Stromzähler auslesen
+SML Smart Meter Language für Stromzähler auslesen alle .bin ohne RULE oder MATTER im Namen
 ESP32 und weitere Internes und SDCARD Filesystem mit http Zugriff zum speichern von Logfiles
 Ping Support in Console
 I2C, SPI, I2S, etc.pp
 ESP32 intern Hall und CPU Temperatur Sensor
 IR senden und empfangen
-WIFI_RANGE_EXTENDER Einrichtung in user_config_override.h beschrieben
+WIFI_RANGE_EXTENDER Einrichtung in user_config_override.h beschrieben z.Z.Sourcecode defekt
 DS18x20 auch mit parasite Power T 
 DS3231 RTC mit NTP-Server support (Zeitserver für offline Netzwerke) und internem Temperatursensor I2C
 BMP-085-180-280/BME280 RH/T/P/Taupunkt I2C
@@ -46,25 +58,23 @@ ENS160 I2C VOC Luftgüte Sensor
 und noch viele weitere Treiber und Fuktionen.
 Sehen Sie sich das .\CompilerLOG.txt exemplarisch für ESP32 an.
 Im gleichen Ordner liegen die Firmware (.bin) Files, welche man OTA auf den ESP Varianten einspielen kann.
+Die (.bin) Files mit RULE oder MATTER im Namen haben kein SML !
 
 tasmota.bin für ESP8285 & ESP8266
 tasmota32(xx).bin für ESP32 Varianten /(factory) zur Erstinstallation
 
 Um die eincompilierten I2C Treiber aufzulisten auf console "I2Cdriver" und die Nummer in Datei my_user_config nachsehen.
 
-Einmalig ESP32 habe ich zuvor mittels Chrome Browser "https://tasmota.github.io/install/"
+Erstmalig zur Erstinstallation des ESP32 habe ich zuvor mittels Chrome Browser "https://tasmota.github.io/install/"
 Firmware Grundinstallation installiert.
-Nun kann diese ".\*.bin" von hier über Oberfläche eingespielt werden.
+Nun kann diese ".\*.bin" von hier über Oberfläche OTA eingespielt werden.
 Compilieren Sie selbst eine Firmware, so liegt diese ".\build_output\firmware"
 Jeweils nach FW Installtion im WLAN nach "tasmota-xxxxx" suchen und verbinden,
 im Browser 192.168.4.1 öffnen und für Home WLAN Einbindung konfigurieren.
 öffnen Sie nun im Home WLAN die angegebene IP im Home WLAN.
 
-Was ich festgestellt habe, das es noch nicht richtig funktioniert:
-MATTER (leider), falls jemand es löst bitte um Info
-
 Ich verwende zum testen ein AZ-Delivery ESP32 DevKitCv4 Board, bei dem ich
-Installiertes Tasmota
+Installiertes Tasmota. Ist nur ein Standardvorschalg, den ich halt so verwende.
 
 unter "Einstellungen -> Sonstige Konfiguration" Haken(Vorlage) aktivieren & speichern
 
