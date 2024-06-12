@@ -768,15 +768,15 @@
 //byHofeBY #define USE_DHT                                  // Add support for DHT11, AM2301 (DHT21, DHT22, AM2302, AM2321) and SI7021 Temperature and Humidity sensor
 //byHofeBY #define USE_MAX31855                             // Add support for MAX31855 K-Type thermocouple sensor using softSPI
 //#define USE_MAX31865                             // Add support for MAX31865 RTD sensors using softSPI
-#define USE_IR_REMOTE                            // Send IR remote commands using library IRremoteESP8266 and ArduinoJson (+4k code, 0k3 mem, 48 iram)
-  #define USE_IR_RECEIVE                         // Support for IR receiver (+5k5 code, 264 iram)
+//byHofeBY #define USE_IR_REMOTE                            // Send IR remote commands using library IRremoteESP8266 and ArduinoJson (+4k code, 0k3 mem, 48 iram)
+//byHofeBY   #define USE_IR_RECEIVE                         // Support for IR receiver (+5k5 code, 264 iram)
 //byHofeBY #define USE_LMT01                                // Add support for TI LMT01 temperature sensor, count pulses on single GPIO (+0k5 code)
 //#define USE_WIEGAND                              // Add support for 24/26/32/34 bit RFID Wiegand interface (D0/D1) (+1k7 code)
 #define USE_SHIFT595                             // Add support for 74xx595 8-bit shift registers (+0k7 code)
 //  #define SHIFT595_INVERT_OUTPUTS false            // [SetOption133] Don't invert outputs of 74x595 shift register
 //  #define SHIFT595_DEVICE_COUNT  1                 // [Shift595DeviceCount] Set the number of connected 74x595 shift registers
-//byHofeBY #define USE_TM1638                               // Add support for TM1638 switches copying Switch1 .. Switch8 (+1k code)
-//byHofeBY #define USE_HX711                                // Add support for HX711 load cell (+1k5 code)
+#define USE_TM1638                               // Add support for TM1638 switches copying Switch1 .. Switch8 (+1k code)
+#define USE_HX711                                // Add support for HX711 load cell (+1k5 code)
 //#define USE_HX711_GUI                            // Add optional web GUI to HX711 as scale (+1k8 code)
 //#define USE_TX20_WIND_SENSOR                     // Add support for La Crosse TX20 anemometer (+2k6/0k8 code)
 //#define USE_TX23_WIND_SENSOR                     // Add support for La Crosse TX23 anemometer (+2k7/1k code)
@@ -790,7 +790,7 @@
 //#define USE_THERMOSTAT                           // Add support for Thermostat
 //byHofeBY #define USE_BP1658CJ                             // Add support for BP1658CJ 5 channel led controller as used in Orein OS0100411267 Bulb
 #define USE_ETHERNET                             // Add support for ethernet (+20k code)
-#define USE_DISPLAY_TM1621_SONOFF                // Add support for TM1621 display driver used by Sonoff POWR3xxD and THR3xxD
+//byHofeBY #define USE_DISPLAY_TM1621_SONOFF                // Add support for TM1621 display driver used by Sonoff POWR3xxD and THR3xxD
 //byHofeBY #define USE_LOX_O2                               // Add support for LuminOx LOX O2 Sensor (+0k8 code)
 
 #ifndef USE_KNX

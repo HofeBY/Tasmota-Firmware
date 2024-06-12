@@ -1,4 +1,4 @@
-ESP32 Firmware Tasmota development 14.0.0.4 von https://github.com/arendst/Tasmota wurde unter
+ESP32 Firmware Tasmota development 14.1.0.2 von https://github.com/arendst/Tasmota wurde unter
 "Windows10" mit Microsoft "Visual Studio Code" compiliert.
 https://code.visualstudio.com/download
 Im VSC dann PlattformIO nachinstallieren.
