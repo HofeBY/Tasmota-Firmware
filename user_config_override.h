@@ -380,6 +380,8 @@ Examples :
 #define USE_SCD40
  #undef USE_SGP40
 #define USE_SGP40       // [I2cDriver69] Enable SGP40 sensor (I2C address 0x59) (+1k4 code)
+ #undef USE_BH1750
+#define USE_BH1750      // [I2cDriver11] Enable BH1750 sensor (I2C address 0x23 or 0x5C) (+0k5 code)
 
  #undef USE_INA219
 //#define USE_INA219	// [I2cDriver14] Enable INA219 (I2C address 0x40, 0x41 0x44 or 0x45) Low voltage and current sensor (+1k code)
