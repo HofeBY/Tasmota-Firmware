@@ -1,0 +1,134 @@
+Das Script ist ein Beispiel für 4*S0 Impuls Zähler und einem SML Zähler Type MT681
+Ist noch nicht fertig, aber als erstes Beispiel sollte es taugen.
+Ich verwende hierfür einen ESP32C6zero https://www.waveshare.com/wiki/ESP32-C6-Zero
+bezogen von
+https://de.aliexpress.com/item/1005006851575663.html?spm=a2g0o.order_list.order_list_main.5.7b785c5f1VQl7o&gatewayAdapt=glo2deu
+Es sind meine Tasmota Varianten ohne "RULE" im Namen geeignet. 
+Nicht an den globalen Variablen stören, ich muss es erst noch zu einem Projekt zusammen verarbeiten.
+CPU Temperatur durch kommando "SO146 1" aktivieren.
+GPIO ist als WS2812 konfiguriert.
+PW steht für Parterre west und ein g davor steht für globale Variable.
+Als Impulszäher wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIO Pad wird ein Impuls gezählt.
+SML nutzt GPIO3 als RxD und GPIO1 als TxD für IR TTL-Adapter.
+Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883.
+
+Hier mein halbgares Script.txt :
+
+>D
+Ar=",77070100"
+;Aq=",77070100100700ff" ; entbehrlich, sobald getestet
+Au="ff@1000,"
+rssi=0
+CPUtemp=0
+fr=0
+res=0
+cnt=0
+str=""
+swesp=0
+g:gPW180=0
+g:gPW280=0
+g:gPW1670=0
+
+;Externe Datenquellen
+g:gotemp=0
+g:gA1670=0
+g:gopress=0
+
+>T
+gPW180=AMT681#PW1_8_0
+gPW280=AMT681#PW2_8_0
+gPW1670=AMT681#A16_7_0
+
+>B
+
+>BS
+->sensor53 r
+
+;http://IPv4-dev/ufs/script.txt im Browser
+;list of all files in root directory in Log
+fr=fo("/" 0)
+for cnt 1 20 1
+res=fr(str fr)
+if res>0
+then
+print %cnt% : %str%
+else
+break
+endif
+next
+fc(fr)
+
+>T
+rssi=WiFi#rssi
+CPUtemp=ESP32#Temperature ;activate with command "SO146 1"
+
+>G
+
+>S
+if upsecs%300==0
+{
+gvr
+}
+
+>J
+; Hier wird via mqtt mit Datum zum Server übermittelt
+,"PWMT681":{"AMT681-ZNr":"1020130008154711"
+,"Archiv-PWMT681":{"PWMT681-ZNr":"1020130008154711"
+,"PWMT681-1_8_0-Y%0year%":%4gPW180%
+,"PWT681-1_8_0-Y%0year%-M%0month%":%4gPW180%
+,"PWMT681-1_8_0-Y%0year%-M%0month%-D%0day%":%4gPW180%
+,"PWMT681-2_8_0-Y%0year%":%4gPW280%
+,"PWMT681-2_8_0-Y%0year%-M%0month%":%4gPW280%
+,"PWMT681-2_8_0-Y%0year%-M%0month%-D%0day%":%4gPW280%
+}
+
+>R
+svars
+print Wir starten den ESP neu.
+
+>W
+bu(swesp "ESP aktiv" "ESP geblockt")
+Timestamp: %tstamp%h {m}
+%dvnm% WLAN IP: %lip% {m}%rssi% %%
+
+swesp = %0swesp% zeigt Schalterlaubnis 
+
+Globale externe Werte:
+gotemp Außentemperatur %1gotemp% °C von 11ESP8266
+gA1670 %1gA1670% W Strom aktuell aus 21ESP32
+gopress Luftdruck %1gopress% hPa aus 20ESP8266
+
+Gesendete globale Werte von %dvnm%:
+gPW180 %4gPW180% kWh
+gPW280 %4gPW280% kWh
+gPW1670 %1gPW1670% W
+
+>M 5
++1,6,c,1,-100,PWKWZ
+1,=h PW Kaltwasser ZNr_2024-553346
+1,1-0:1.8.0*255(@100,Kaltwasser Verbrauch,m³,KWZ,3)
+1,1-0:1.7.0*255(@0.16667,Kaltwasser akt,l,strom,1)
+
++2,7,c,1,-100,PWWWZ
+2,=h PW Warmwasser ZNr_2024-8795543
+2,1-0:1.8.0*255(@100,Warmwasser Verbrauch,m³,WWZ,3)
+2,1-0:1.7.0*255(@0.16667,Warmwasser akt,l,strom,1)
+
++3,9,c,1,-100,HWZ
+3,=h PW Hauswasser ZNr_47110815
+3,1-0:1.8.0*255(@100,Hauswasser Verbrauch,m³,HWZ,3)
+3,1-0:1.7.0*255(@0.16667,Hauswasser akt,l,strom,1)
+
++4,23,c,1,-500,Gas
+4,=h PW Gas ZNr_08154711
+4,1-0:1.8.0*255(@100,Gas Verbrauch,m³,Gas,3)
+4,1-0:1.8.0*255(@8.695,Gas Verb.kWh,kWh,GaskWh,3)
+4,1-0:1.7.0*255(@0.16667,Gas akt Verbrauch,l,strom,2)
+4,1-0:1.7.0*255(@0.11519,Gas akt kW,kW,GaskW,2)
+
++5,5,s,1,9600,PWMT681,3,10
+5,=h PW PWMT681 1020130008154711
+5%Ar%010800%Au%1.8.0 HT&NT Bezug,kWh,PW1_8_0,4
+5%Ar%020800%Au%2.8.0 HT&NT Lieferung,kWh,PW2_8_0,4
+5%Ar%100700ff@1,16.7.0 akt.Leistung,W,PW16_7_0,17
+#
