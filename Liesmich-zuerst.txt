@@ -4,6 +4,10 @@ https://code.visualstudio.com/download
 Im VSC dann PlattformIO nachinstallieren.
 Ich verwende zum testen ein AZ-Delivery ESP32 DevKitCv4 Board
 
+seit TM14.1.0.3 hatte ich Probleme mit dem compilieren und habe das als Fehler gemeldet.
+https://github.com/arendst/Tasmota/issues/21940
+mal sehen wie das gelöst wird.
+
 Der Source kann in Version siehe oben geladen werden und die bereitgestellten Konfigurationsfiles
 sollten auch in neue Source Version angepasst angewendet werden können.
 my_user_config.h
