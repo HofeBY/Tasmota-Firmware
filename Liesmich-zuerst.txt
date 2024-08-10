@@ -1,26 +1,42 @@
-ESP32 Firmware Tasmota development 14.1.0.2 von https://github.com/arendst/Tasmota wurde unter
-"Windows10" mit Microsoft "Visual Studio Code" compiliert.
-https://code.visualstudio.com/download
-Im VSC dann PlattformIO nachinstallieren.
-Ich verwende zum testen ein AZ-Delivery ESP32 DevKitCv4 Board
+Umgebung:
+"Windows10" (bei mir) mit Microsoft "Visual Studio Code" compiliert.
+CompilerLOG.txt zeigt Beispielhaft den Ablauf für einen ESP32 für selber compilierer.
+
+Was muss gemacht werden:
+Firmware Tasmota development 14.1.0.4 oder aktueller von https://github.com/arendst/Tasmota -> 
+<>Code -> Download ZIP herunterladen.
+Tasmota Sourcecode habe ich bei mir nach D:\Tasmota entpackt.
+
+Zum compilieren muss Internetverbindung funktionstüchtig sein !
 
 seit TM14.1.0.3 hatte ich Probleme mit dem compilieren und habe das als Fehler gemeldet.
 https://github.com/arendst/Tasmota/issues/21940
-mal sehen wie das gelöst wird.
+
+Bearbeiten Sie die "platformio_override.ini" folgendermaßen um den Fehler zu umgehen.
+
+[platformio]
+core_dir = c:\.platformio
+workspace_dir = c:\.pio
+
+Die Änderung hat das compilieren wieder ermöglicht.
+
+https://code.visualstudio.com/download
+VSCinstallieren und dann PlattformIO nachinstallieren.
 
 Der Source kann in Version siehe oben geladen werden und die bereitgestellten Konfigurationsfiles
 sollten auch in neue Source Version angepasst angewendet werden können.
-my_user_config.h
-tasmota_configurations_ESP32.h
+my_user_config.h -> D:\Tasmota\tasmota\my_user_config.h
+tasmota_configurations_ESP32.h -> D:\Tasmota\tasmota\include\tasmota_configurations_ESP32.h
 
 Diverse Dateien wurden hierzu angepasst und liegen in den Unterverzeichnissen.
 Suchbegiff "byHofeBY" in diesen Dateien zeigt an wo ich was geändert habe.
-.\tasmota\user_config_override.h //hier hinein schreibe ich die gewünschte Konfiguration.
-.\tasmota\include\tasmota_configurations_ESP32.h // hier nach //byHofeBY nachsehen welche ich deaktivierte.
+D:\Tasmota\tasmota\user_config_override.h //hier hinein schreibe ich die gewünschte Konfiguration.
+D:\Tasmota\tasmota\include\tasmota_configurations_ESP32.h // hier nach //byHofeBY nachsehen welche ich deaktivierte.
 
-Die Datei .\tasmota\include\my_user_config.h beinhaltet die möglichen Treiber Optionen
+Die Datei D:\Tasmota\tasmota\my_user_config.h beinhaltet die möglichen Treiber Optionen zum rüberkopieren in die
+D:\Tasmota\tasmota\my_user_config.h und nicht vergessen ein #undef TREIBERNAME davor zu setzen !
 
-Ich habe schon mal folgende Versionen compiliert:
+Ich habe schon mal folgende Versionen nach meiner Treiberauswahl compiliert:
 tasmota,tasmota32,tasmota32s2,tasmota32c2,tasmota32c3,tasmota32c6,tasmota32s3
 
 Folgende Funktionen/Treiber sollten vorhanden sein und funktionieren.
@@ -30,6 +46,7 @@ Um die RULE oder RULE-MATTER Varianten compilieren zu können muss zwischen den 
 user_config_override.h USE_SCRIPT mit // auskommentiert und RULE aktiviert werden.
 
 Dann erneute Compilerläufe und Umbenennung der .bin Firmwares zweck´s Unterscheidung.
+Beachte, ESP8285/ESP8266 können kein MATTER und daher kann das auch beim Namen fehlen !
 
 Deutsche Sprache & Zeitzone incl. DE NTP Client konfiguration
 MQTT
@@ -58,6 +75,7 @@ PCA9685 16xfach HW PWM Driver I2C zu IO Adapter
 SCD40 I2C CO2 Sensor
 SGP40 I2C Luftqualität
 ENS160 I2C VOC Luftgüte Sensor
+BH1750 I2C Helligeit
 
 und noch viele weitere Treiber und Fuktionen.
 Sehen Sie sich das .\CompilerLOG.txt exemplarisch für ESP32 an.
@@ -77,6 +95,7 @@ Jeweils nach FW Installtion im WLAN nach "tasmota-xxxxx" suchen und verbinden,
 im Browser 192.168.4.1 öffnen und für Home WLAN Einbindung konfigurieren.
 öffnen Sie nun im Home WLAN die angegebene IP im Home WLAN.
 
+=============================================================================================================
 Ich verwende zum testen ein AZ-Delivery ESP32 DevKitCv4 Board, bei dem ich
 Installiertes Tasmota. Ist nur ein Standardvorschalg, den ich halt so verwende.
 

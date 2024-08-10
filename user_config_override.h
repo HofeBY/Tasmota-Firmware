@@ -310,7 +310,7 @@ Examples :
 #define STA_PASS2	""
 
 // IR z.Z. nicht zu compilieren TM14.0.0.4
-// #undef FIRMWARE_IR
+ #undef FIRMWARE_IR
 //#define FIRMWARE_IR		// Create tasmota-ir with IR full protocols activated, and many sensors disabled
 
 // -- Lights --------------------------------------
@@ -366,6 +366,9 @@ Examples :
  #undef USE_24C256
 #define USE_24C256
 
+ #undef USE_BH1750
+#define USE_BH1750 	// [I2cDriver11] Enable BH1750 sensor (I2C address 0x23 or 0x5C) (+0k5 code)
+
  #undef USE_BMP
 #define USE_BMP		// [I2cDriver10] Enable BMP085/BMP180/BMP280/BME280 sensors (ab 8.-€ Cn RH/T/P I2C Sensor addresses 0x76 and 0x77) (+4k4 code)
  #undef USE_BME68X
@@ -380,12 +383,13 @@ Examples :
 #define USE_SCD40
  #undef USE_SGP40
 #define USE_SGP40       // [I2cDriver69] Enable SGP40 sensor (I2C address 0x59) (+1k4 code)
- #undef USE_BH1750
-#define USE_BH1750      // [I2cDriver11] Enable BH1750 sensor (I2C address 0x23 or 0x5C) (+0k5 code)
 
  #undef USE_INA219
 //#define USE_INA219	// [I2cDriver14] Enable INA219 (I2C address 0x40, 0x41 0x44 or 0x45) Low voltage and current sensor (+1k code)
 //#define INA219_SHUNT_RESISTOR (0.100)	// 0.1 Ohm default shunt resistor, can be overriden in user_config_override or using Sensor13
+
+ #undef USE_BH1750
+#define USE_BH1750 	// [I2cDriver11] Enable BH1750 sensor (I2C address 0x23 or 0x5C) (+0k5 code)
 
 // I2C Driver Nr 22 only one device usable
  #undef USE_MCP230xx
