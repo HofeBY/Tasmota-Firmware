@@ -6,9 +6,9 @@ https://de.aliexpress.com/item/1005006851575663.html?spm=a2g0o.order_list.order_
 Es sind meine Tasmota Varianten ohne "RULE" im Namen geeignet. 
 Nicht an den globalen Variablen stören, ich muss es erst noch zu einem Projekt zusammen verarbeiten.
 CPU Temperatur durch kommando "SO146 1" aktivieren.
-GPIO ist als WS2812 konfiguriert.
+GPIO8 ist als WS2812 konfiguriert.
 PW steht für Parterre west und ein g davor steht für globale Variable.
-Als Impulszäher wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIO Pad wird ein Impuls gezählt.
+Als Impulszäher wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIOx Pad wird ein Impuls gezählt.
 SML nutzt GPIO3 als RxD und GPIO1 als TxD für IR TTL-Adapter.
 Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883.
 
@@ -91,7 +91,7 @@ bu(swesp "ESP aktiv" "ESP geblockt")
 Timestamp: %tstamp%h {m}
 %dvnm% WLAN IP: %lip% {m}%rssi% %%
 
-swesp = %0swesp% zeigt Schalterlaubnis 
+swesp = %0swesp% ;zeigt Schalterlaubnis 
 
 Globale externe Werte:
 gotemp Außentemperatur %1gotemp% °C von 11ESP8266
