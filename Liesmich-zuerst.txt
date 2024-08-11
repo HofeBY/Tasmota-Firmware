@@ -1,18 +1,31 @@
-Umgebung:
-"Windows10" (bei mir) mit Microsoft "Visual Studio Code" compiliert.
-CompilerLOG.txt zeigt Beispielhaft den Ablauf für einen ESP32 für selber compilierer.
+Meine Gründe für die Erstellung einer eigenen Tasmota Version:
+FW noch nicht im aktuellsten development Version erhältlich, also selber compilieren.
+FW ist nicht in eigener Muttersprache erhältlich.
+FW ist nicht an Standort angepasst. -> Sonnen-auf/-untergang, Zeitzone, Individualisierung
+FW lässt sich Aufgrund unnötiger Treiber nicht/&mehr OTA flashen, oder ist prinzipiell zu
+groß für Flashspeicher.
+FW enthält Treiber, von denen Sie wissen, das Sie diese niemals benötigen.
+FW enthält nicht die gewünschten Funktionsunterstützung.Script oder RULE-MATTER,
+alle mit berry, KNX, Domotiz, globale Variablen, Dateisystem, GPIO Viewer,
+& weitere Protokolle.
 
-Was muss gemacht werden:
+Meine verwendete Entwicklungsumgebung:
+"Windows10" (bei mir) mit Microsoft "Visual Studio Code" compiliert.
+CompilerLOG.txt zeigt Beispielhaft den Ablauf für einen ESP32 für selber compilierer als Vergleich.
+
+Was muss gemacht werden ?
 Firmware Tasmota development 14.1.0.4 oder aktueller von https://github.com/arendst/Tasmota -> 
 <>Code -> Download ZIP herunterladen.
-Tasmota Sourcecode habe ich bei mir nach D:\Tasmota entpackt.
+Tasmota Sourcecode habe ich bei mir nach D:\Tasmota als Basisverzeichnis entpackt.
+evtl. entpacken und dann halt umbenennen, weil die PATH länge evtl. probleme bereitet.
 
-Zum compilieren muss Internetverbindung funktionstüchtig sein !
+Zum compilieren muss Internetverbindung funktionstüchtig & aktiv sein !
+ping -t 141.1.1.1
 
 seit TM14.1.0.3 hatte ich Probleme mit dem compilieren und habe das als Fehler gemeldet.
 https://github.com/arendst/Tasmota/issues/21940
 
-Bearbeiten Sie die "platformio_override.ini" folgendermaßen um den Fehler zu umgehen.
+Bearbeiten Sie die "D:\Tasmota\tasmota\platformio_override.ini" folgendermaßen um den Fehler zu vermeiden.
 
 [platformio]
 core_dir = c:\.platformio
@@ -21,17 +34,27 @@ workspace_dir = c:\.pio
 Die Änderung hat das compilieren wieder ermöglicht.
 
 https://code.visualstudio.com/download
-VSCinstallieren und dann PlattformIO nachinstallieren.
+VSCinstallieren&starten und dann PlattformIO nachinstallieren.
 
-Der Source kann in Version siehe oben geladen werden und die bereitgestellten Konfigurationsfiles
-sollten auch in neue Source Version angepasst angewendet werden können.
-my_user_config.h -> D:\Tasmota\tasmota\my_user_config.h
-tasmota_configurations_ESP32.h -> D:\Tasmota\tasmota\include\tasmota_configurations_ESP32.h
+Nach Grundinstallation habe ich erst mal diese CPU Varianten durch compiliert, um
+Entwicklungsumgebung unverändert funktionstüchtig zu machen.
+tasmota,tasmota32,tasmota32s2,tasmota32c2,tasmota32c3,tasmota32c6,tasmota32s3
+
+Nun passe ich mir die Tasmota Version an:
+Der Source kann in möglicher neueren Version siehe oben geladen werden und die
+bereitgestellten Konfigurationsfiles sollten auch in neue Source Version angepasst
+angewendet werden können. 
+Sie können Ihre wichtigsten Einstellungen in erstem File unterhalb anpassen
+siehe MY_LANGUAGE, LATITUDE, LONGITUDE, APP_TIMEZONE aus
+D:\Tasmota\tasmota\my_user_config.h lesen & Werte in MeineAngebotene/Ihre angepasste my_user_config.h eintragen.
+
+my_user_config.h -> D:\Tasmota\tasmota\my_user_config.h kopieren.
+tasmota_configurations_ESP32.h -> D:\Tasmota\tasmota\include\tasmota_configurations_ESP32.h anpassen/bearbeiten.
 
 Diverse Dateien wurden hierzu angepasst und liegen in den Unterverzeichnissen.
-Suchbegiff "byHofeBY" in diesen Dateien zeigt an wo ich was geändert habe.
+Suchbegiff "by HofeBY" in diesen Dateien zeigt an wo ich was geändert habe.
 D:\Tasmota\tasmota\user_config_override.h //hier hinein schreibe ich die gewünschte Konfiguration.
-D:\Tasmota\tasmota\include\tasmota_configurations_ESP32.h // hier nach //byHofeBY nachsehen welche ich deaktivierte.
+D:\Tasmota\tasmota\include\tasmota_configurations_ESP32.h // hier nach //"by HofeBY" nachsehen welche ich deaktivierte.
 
 Die Datei D:\Tasmota\tasmota\my_user_config.h beinhaltet die möglichen Treiber Optionen zum rüberkopieren in die
 D:\Tasmota\tasmota\my_user_config.h und nicht vergessen ein #undef TREIBERNAME davor zu setzen !
@@ -48,12 +71,13 @@ user_config_override.h USE_SCRIPT mit // auskommentiert und RULE aktiviert werde
 Dann erneute Compilerläufe und Umbenennung der .bin Firmwares zweck´s Unterscheidung.
 Beachte, ESP8285/ESP8266 können kein MATTER und daher kann das auch beim Namen fehlen !
 
-Deutsche Sprache & Zeitzone incl. DE NTP Client konfiguration
+Das liefern meine zuvor entleerten & neu gefüllten Varianten:
+Deutsche Sprache & Zeitzone & Heimatstadt incl. DE NTP Server konfiguration
 MQTT
 Zeitplan
 KNX
 DOMOTICZ
-SCRIPT oder [RULES mit MATTER außer ESP82(..)]
+SCRIPT oder [RULES mit MATTER aber außer ESP82(..)]
 BERRY
 SENDMAIL
 INFLUXDB
@@ -61,23 +85,23 @@ SML Smart Meter Language für Stromzähler auslesen alle .bin ohne RULE oder MAT
 ESP32 und weitere Internes und SDCARD Filesystem mit http Zugriff zum speichern von Logfiles
 Ping Support in Console
 I2C, SPI, I2S, etc.pp
-ESP32 intern Hall und CPU Temperatur Sensor
-IR senden und empfangen
-WIFI_RANGE_EXTENDER Einrichtung in user_config_override.h beschrieben z.Z.Sourcecode defekt
+ESP32 intern Hall & CPU Temperatur Sensor
+IR senden und empfangen (z.Z.fehlerhafte compilation, daher deaktiv)
+WIFI_RANGE_EXTENDER Einrichtung in user_config_override.h beschrieben (z.Z.Sourcecode defekt, daher deaktiv)
 DS18x20 auch mit parasite Power T 
 DS3231 RTC mit NTP-Server support (Zeitserver für offline Netzwerke) und internem Temperatursensor I2C
 BMP-085-180-280/BME280 RH/T/P/Taupunkt I2C
-BME68X I2C RH/T/P/Taupunkt/Luftgüte
+BME68X RH/T/P/Taupunkt/Luftgüte I2C
 AHT2x z.B. AHT21D RH/T/Taupunkt 2-5,5V I2C ist günstiger zu bekommen
-PCF8574 8Bit I2C zu TTL IO Adapter
-MCP23008/MCP23017 8/16 Bit IO I2C zu TTL multi IO Adapter
-PCA9685 16xfach HW PWM Driver I2C zu IO Adapter
-SCD40 I2C CO2 Sensor
-SGP40 I2C Luftqualität
-ENS160 I2C VOC Luftgüte Sensor
-BH1750 I2C Helligeit
+PCF8574 8Bit zu TTL IO Adapter I2C
+MCP23008/MCP23017 8/16 Bit IO zu TTL multi IO Adapter I2C
+PCA9685 16xfach HW PWM Driver zu IO Adapter I2C
+SCD40 CO2 Sensor I2C
+SGP40 Luftqualität I2C
+ENS160 VOC Luftgüte Sensor I2C
+BH1750 Helligeit I2C
 
-und noch viele weitere Treiber und Fuktionen.
+und noch viele weitere Treiber und Funktionen.
 Sehen Sie sich das .\CompilerLOG.txt exemplarisch für ESP32 an.
 Im gleichen Ordner liegen die Firmware (.bin) Files, welche man OTA auf den ESP Varianten einspielen kann.
 Die (.bin) Files mit RULE oder MATTER im Namen haben kein SML !
