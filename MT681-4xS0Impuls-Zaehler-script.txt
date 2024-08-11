@@ -75,7 +75,7 @@ gvr
 ,"PWMT681":{"AMT681-ZNr":"1020130008154711"
 ,"Archiv-PWMT681":{"PWMT681-ZNr":"1020130008154711"
 ,"PWMT681-1_8_0-Y%0year%":%4gPW180%
-,"PWT681-1_8_0-Y%0year%-M%0month%":%4gPW180%
+,"PWMT681-1_8_0-Y%0year%-M%0month%":%4gPW180%
 ,"PWMT681-1_8_0-Y%0year%-M%0month%-D%0day%":%4gPW180%
 ,"PWMT681-2_8_0-Y%0year%":%4gPW280%
 ,"PWMT681-2_8_0-Y%0year%-M%0month%":%4gPW280%
