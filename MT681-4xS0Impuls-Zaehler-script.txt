@@ -1,43 +1,67 @@
-Das Script ist ein Beispiel für 4*S0 Impuls Zähler und einem SML Zähler Type MT681
-Ist noch nicht fertig, aber als erstes Beispiel sollte es taugen.
+Das Script ist ein Beispiel für 4*S0 Impuls Zähler und einem SML Zähler Type MT681 auf einer ESP32(x) CPU
+
+Ist noch nicht ganz fertig, aber als erstes Beispiel sollte es taugen.
+
 Ich verwende hierfür einen ESP32C6zero https://www.waveshare.com/wiki/ESP32-C6-Zero
 bezogen von
 https://de.aliexpress.com/item/1005006851575663.html?spm=a2g0o.order_list.order_list_main.5.7b785c5f1VQl7o&gatewayAdapt=glo2deu
-Es sind meine Tasmota Varianten ohne "RULE" im Namen geeignet. 
-Nicht an den globalen Variablen stören, ich muss es erst noch zu einem Projekt zusammen verarbeiten.
-CPU Temperatur durch kommando "SO146 1" aktivieren.
-GPIO8 ist als WS2812 konfiguriert.
-PW steht für Parterre west und ein g davor steht für globale Variable.
-Als Impulszäher wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIOx Pad wird ein Impuls gezählt.
-SML nutzt GPIO3 als RxD und GPIO1 als TxD für IR TTL-Adapter.
-Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883.
 
-Hier mein halbgares Script.txt :
+Es sind meine Tasmota Varianten ohne "RULE" im Namen geeignet.  Bei diesem also tasmota32c6(.factory).bin
+
+CPU Temperatur durch Kommando "SO146 1" aktivieren.
+GPIO8 ist als WS2812 konfiguriert.
+PW steht für Parterre West und ein g davor steht für globale Variable, welche direkt an lokale Tasmota Geräte übermittelt wird.
+
+Vier Impulszähler wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIOx Pad wird ein Impuls gezählt.
+SML nutzt GPIO3 als RxD und GPIO1 als TxD für IR TTL-Adapter.
+
+Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883.
+Die Zählerwerte werden via mqtty an z.B. (wie bei mir) IOBroker übertragen.
+Zusätzlich werden einige weitere Wert zusätzlich via mqtty übermittelt.
+
+Es werden globale Variablen mit Wert sowohl gesendet, als auch empfangen, wenn diese von anderen ESP´s versendet wird.
+Globale Variablen eignen sich hierzu, da kein großer Konfigurationsaufwand entsteht und der Sender die Empfäger nicht einbinden muss.
+
+Zählerstartwerte werden täglich um 0:00h in eine PWZaehler-JAHR.CSV Datei auf Chipinternem Filesystem (320k Byte) geschrieben.
+Also jedes Jahr eine weitere. Bitte rechtzeitig vor Überfüllung die alten Dateien rauskopieren.
+
+Weitere Optionen siehe Beschreibung Liesmich-zuerst.txt :
+Ich habe einen DS3231(mit internem Temperatursensor) an I²C Bus mit einkompiliert, damit der SML ESP32(x) eine lokale
+NTP Zeitbasis ermöglicht & auch als NTP Server für weitere LAN Teilnehmer dienen kann.
+
+Anleitung siehe :
+https://tasmota.github.io/docs/Smart-Meter-Interface
+https://tasmota.github.io/docs/Scripting-Language/
+
+Hier mein vorläufiges Script.txt :
 
 >D
-Ar=",77070100"
-;Aq=",77070100100700ff" ; entbehrlich, sobald getestet
-Au="ff@1000,"
 rssi=0
 CPUtemp=0
 fr=0
 res=0
 cnt=0
 str=""
+hr=0
+dy=0
+yr=0
 swesp=0
+
+;Zähler Variablen evtl. Startwert setzen.
+PWKWZ=0
+PWWWZ=0
+HWZ=0
+Gas=0
+Ar=",77070100"
+Au="ff@1000,"
+g:gPW1670=0
 g:gPW180=0
 g:gPW280=0
-g:gPW1670=0
 
 ;Externe Datenquellen
 g:gotemp=0
 g:gA1670=0
 g:gopress=0
-
->T
-gPW180=AMT681#PW1_8_0
-gPW280=AMT681#PW2_8_0
-gPW1670=AMT681#A16_7_0
 
 >B
 
@@ -61,6 +85,13 @@ fc(fr)
 >T
 rssi=WiFi#rssi
 CPUtemp=ESP32#Temperature ;activate with command "SO146 1"
+gPW1670=PWMT681#PW16_7_0
+gPW180=PWMT681#PW1_8_0
+gPW280=PWMT681#PW2_8_0
+PWKWZ=PWKWZ#KWZ
+PWWWZ=PWWWZ#WWZ
+HWZ=HWZ#HWZ
+Gas=Gas#Gas
 
 >G
 
@@ -70,38 +101,59 @@ if upsecs%300==0
 gvr
 }
 
+;0:00h Tagesstart Variablen in Datei PWZaehler-JAHR.CSV schreiben
+hr=hours
+if chg[hr]>0
+and hr==0
+then
+fr=fo("/PWZaehler-"+s(0year)+".csv" 2)
+res=fw(s(0year)+s(0month)+s(0day) fr)
+res=fw(";"+s(3gPW180)+";"+s(3gPW280) fr)
+res=fw(";"+s(3PWKWZ)+";"+s(3PWWWZ) fr)
+res=fw(";"+s(3HWZ)+";"+s(3Gas) fr)
+res=fw("\r\n" fr)
+fc(fr)
+svars
+endif ;Day
+
 >J
-; Hier wird via mqtt mit Datum zum Server übermittelt
-,"PWMT681":{"AMT681-ZNr":"1020130008154711"
+; Hier wird via mqtt ergänzende Werte mit Datum zum Server übermittelt ;vor Zeile und Wert wird weggelassen ;-) day
+,"PWMT681":{"PWMT681-ZNr":"1020130008154711"}
 ,"Archiv-PWMT681":{"PWMT681-ZNr":"1020130008154711"
-,"PWMT681-1_8_0-Y%0year%":%4gPW180%
-,"PWMT681-1_8_0-Y%0year%-M%0month%":%4gPW180%
-,"PWMT681-1_8_0-Y%0year%-M%0month%-D%0day%":%4gPW180%
-,"PWMT681-2_8_0-Y%0year%":%4gPW280%
-,"PWMT681-2_8_0-Y%0year%-M%0month%":%4gPW280%
-,"PWMT681-2_8_0-Y%0year%-M%0month%-D%0day%":%4gPW280%
+,"PWMT681-1_8_0-Y%0year%":%3gPW180%
+,"PWMT681-1_8_0-Y%0year%-M%0month%":%3gPW180%
+,"PWMT681-1_8_0-Y%0year%-M%0month%-D%0day%":%3gPW180%
+,"PWMT681-2_8_0-Y%0year%":%3gPW280%
+,"PWMT681-2_8_0-Y%0year%-M%0month%":%3gPW280%
+,"PWMT681-2_8_0-Y%0year%-M%0month%-D%0day%":%3gPW280%
 }
 
 >R
-svars
-print Wir starten den ESP neu.
+svars ;speichern der Variablen um Zählverluste zu vermeiden
+print Wir starten den ESP %dvnm% neu.
 
 >W
 bu(swesp "ESP aktiv" "ESP geblockt")
 Timestamp: %tstamp%h {m}
 %dvnm% WLAN IP: %lip% {m}%rssi% %%
 
-swesp = %0swesp% ;zeigt Schalterlaubnis 
+swesp = %0swesp% zeigt Schalterlaubnis Schaltbutton
 
-Globale externe Werte:
+Variablen von %dvnm%:
+PWKWZ %3PWKWZ% m³
+PWWWZ %3PWWWZ% m³
+HWZ %3HWZ% m³
+Gas %3Gas% m³
+
+Gesendete globale Variablen von %dvnm%:
+gPW1670 %1gPW1670% W
+gPW180 %4gPW180% kWh
+gPW280 %4gPW280% kWh
+
+Globale externe Variablen:
 gotemp Außentemperatur %1gotemp% °C von 11ESP8266
 gA1670 %1gA1670% W Strom aktuell aus 21ESP32
 gopress Luftdruck %1gopress% hPa aus 20ESP8266
-
-Gesendete globale Werte von %dvnm%:
-gPW180 %4gPW180% kWh
-gPW280 %4gPW280% kWh
-gPW1670 %1gPW1670% W
 
 >M 5
 +1,6,c,1,-100,PWKWZ
@@ -128,7 +180,7 @@ gPW1670 %1gPW1670% W
 
 +5,5,s,1,9600,PWMT681,3,10
 5,=h PW PWMT681 1020130008154711
+5,77070100100700ff@1,16.7.0 akt.Leistung,W,PW16_7_0,17
 5%Ar%010800%Au%1.8.0 HT&NT Bezug,kWh,PW1_8_0,4
 5%Ar%020800%Au%2.8.0 HT&NT Lieferung,kWh,PW2_8_0,4
-5%Ar%100700ff@1,16.7.0 akt.Leistung,W,PW16_7_0,17
 #
