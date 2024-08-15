@@ -14,7 +14,7 @@ Meine verwendete Entwicklungsumgebung:
 CompilerLOG.txt zeigt Beispielhaft den Ablauf für einen ESP32 für selber compilierer als Vergleich.
 
 Was muss gemacht werden ?
-Firmware Tasmota development 14.1.0.4 oder aktueller von https://github.com/arendst/Tasmota -> 
+Firmware Tasmota development 14.2.0.1 oder aktueller von https://github.com/arendst/Tasmota -> 
 <>Code -> Download ZIP herunterladen.
 Tasmota Sourcecode habe ich bei mir nach D:\Tasmota als Basisverzeichnis entpackt.
 evtl. entpacken und dann halt umbenennen, weil die PATH länge evtl. probleme bereitet.
@@ -118,6 +118,8 @@ Compilieren Sie selbst eine Firmware, so liegt diese ".\build_output\firmware"
 Jeweils nach FW Installtion im WLAN nach "tasmota-xxxxx" suchen und verbinden,
 im Browser 192.168.4.1 öffnen und für Home WLAN Einbindung konfigurieren.
 öffnen Sie nun im Home WLAN die angegebene IP im Home WLAN.
+
+Für die SML SCRIPT Anwender empfehle ich mein Beispiel MT681-4xS0Impuls-Zaehler-script.txt .
 
 =============================================================================================================
 Ich verwende zum testen ein AZ-Delivery ESP32 DevKitCv4 Board, bei dem ich
