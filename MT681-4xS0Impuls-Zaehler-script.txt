@@ -28,7 +28,7 @@ Sollte entsprechend Werte beim Zählereingang auslösen.
 Nun, da die S0 Impulszählereingänge als funktionstüchtig geprüft sind, möchten Wir den entsprechenden Zählereingang mit dem
 aktuellen Wert auf dem Zähler abgleichen.
 Meine Zähler machen 10 l / Impuls & haben somit 100 Impulse pro m³
-Berechnung jeweiliger NeuerWert=100*Zählerablesewert (m³)
+Berechnung jeweiliger NeuerWert=100*Zählerablesewert (m³) mit Nachkommastellen. NeuerWert werden Nachkommastellen abgeschnitten !
 
 hierzu verwenden wir das Kommando "sensor53 cX NeuerWert" eingegeben unter "Werkzeuge/Konsole/Befehl eingeben" ->
 
@@ -36,6 +36,7 @@ sensor53 c1 NeuerWert ENTER
 sensor53 c2 NeuerWert ENTER
 sensor53 c3 NeuerWert ENTER
 sensor53 c4 NeuerWert ENTER
+->Werkzeuge->Hauptmenü->Neustart
 
 Hoffentlich passen wie bei mir die Zählerstände.
 
