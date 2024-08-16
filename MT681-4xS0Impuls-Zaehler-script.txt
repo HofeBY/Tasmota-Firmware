@@ -1,4 +1,5 @@
 Das Script ist ein Beispiel für 4*S0 Impuls Zähler und einem SML Zähler Type MT681 auf einer ESP32(x) CPU
+Wenn man das Chipinterne Speichern entfernt, dann ist es auch für ESP 8285/8266 geeignet.  
 
 Ist noch nicht ganz fertig, aber als erstes Beispiel sollte es taugen.
 
@@ -8,25 +9,63 @@ https://de.aliexpress.com/item/1005006851575663.html?spm=a2g0o.order_list.order_
 
 Es sind meine Tasmota Varianten ohne "RULE" im Namen geeignet.  Bei diesem also tasmota32c6(.factory).bin
 
-CPU Temperatur durch Kommando "SO146 1" aktivieren.
-GPIO8 ist als WS2812 konfiguriert.
+CPU Temperatur durch Kommando "SO146 1" aktivieren. ( ESP32(x) CPU )
+GPIO8 ist bei ESP32C6zero als WS2812 konfiguriert.
+
 PW steht für Parterre West und ein g davor steht für globale Variable, welche direkt an lokale Tasmota Geräte übermittelt wird.
 
-Vier Impulszähler wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIOx Pad wird ein Impuls gezählt.
+Vier S0 Impulszähler wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIOx Pad wird ein Impuls gezählt.
 SML nutzt GPIO3 als RxD und GPIO1 als TxD für IR TTL-Adapter.
+In meinem Beispiel haben die S0 Impulszähler 10 l / Impulse.
+Nachdem Sie unter "Werkzeuge/Script konfigurieren" den Haken bei "Script aktivieren" gestzt haben sollten Sie das gesamten Inhalt
+incl. ">D" per "Cut´nPaste" einfügen und "speichern" nicht vergessen.
 
-Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883.
+So, nun sollten sie wie im Bild wie "MT681-4xS0Impuls-Zaehler-script.jpg" aussehen. O, ein paar Werte werden noch fehlen.
+Jetzt folgen das prüfen der S0 Signaleingänge indem man den jeweiligen GPIO 6,7,9,23 jeweils gegen GND tastet.
+Sollte entsprechend Werte beim Zählereingang auslösen.
+
+Nun, da die S0 Impulszählereingänge als funktionstüchtig geprüft sind, möchten Wir den entsprechenden Zählereingang mit dem
+aktuellen Wert auf dem Zähler abgleichen.
+hierzu verwenden wir "counterX NeuerWert" eingegeben unter "Werkzeuge/Konsole/Befehl eingeben" -> counter1 ENTER -> "Command not found"
+gleiches mit 2-4. Hierzu sei bemerkt, das Tasmota sofern kein "Counter x" Eingang in "Einstellungen/Geräteeinstellungen" eingestellt hat
+die zugehörigen Kommandos "Werkzeuge/Konsole/Befehl eingeben" z.B. "counter1" auch nicht bereitstellt.
+Fehlerumgehung:
+Stellen Sie unter "Einstellungen/Geräteeinstellungen/
+"IO GPIO6 ->Counter ->1"
+"IO GPIO7 ->Counter ->2"
+"IO GPIO9 ->Counter ->3"
+"IO GPIO23 ->Counter ->4" ein.
+->Speichern & nach Reboot ist die Zählerseite verhunzt. Nicht schlimm !
+
+Nun wieder "Werkzeuge/Konsole/Befehl eingeben"
+"counter1 NeuerWertCounter1" wobei ja Meine Zähler 10 l / Impuls haben & somit 100 Impulse pro m³ 10150
+"counter2 NeuerWertCounter2" ditto. vorher 8048
+"counter3 NeuerWertCounter3" ditto. vorher 18198
+"counter4 NeuerWertCounter4" ditto. vorher 320450
+einzustellen sind. Also NeuerWertCounterX=100*Zählerablesewert (m³)
+-> "Werkzeuge" -> "Hauptmenü"
+Kontrolle auf der Haupseite Zähler(1 bis 4) !
+
+Wir stellen die Ansicht unter "Einstellungen/Geräteeinstellungen/"
+"IO GPIO6 ->none"
+"IO GPIO7 ->none"
+"IO GPIO9 ->none"
+"IO GPIO23 ->none"
+ ein. ->Speichern & nach Reboot ist die Zählerseite
+hoffentlich wie bei mir OK und die Zählerstände passen. Ansonsten zurück unterhalb "Nicht schlimm !"
+
+Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883 installiert.
 Die Zählerwerte werden via mqtty an z.B. (wie bei mir) IOBroker übertragen.
 Zusätzlich werden einige weitere Wert zusätzlich via mqtty übermittelt.
 
 Es werden globale Variablen mit Wert sowohl gesendet, als auch empfangen, wenn diese von anderen ESP´s versendet wird.
 Globale Variablen eignen sich hierzu, da kein großer Konfigurationsaufwand entsteht und der Sender die Empfäger nicht einbinden muss.
 
-Zählerstartwerte werden täglich um 0:00h in eine PWZaehler-JAHR.CSV Datei auf Chipinternem Filesystem (320k Byte) geschrieben.
-Also jedes Jahr eine weitere. Bitte rechtzeitig vor Überfüllung die alten Dateien rauskopieren.
+Tages Zählerstartwerte werden um 0:00h in eine PWZaehler-JAHR.CSV Datei auf Chipinternem Filesystem (320k Byte) geschrieben.
+Also jedes Jahr eine weitere. Bitte rechtzeitig vor Überfüllung die alten Dateien rauskopieren ca.10Jahre.
 
 Weitere Optionen siehe Beschreibung Liesmich-zuerst.txt :
-Ich habe einen DS3231(mit internem Temperatursensor) an I²C Bus mit einkompiliert, damit der SML ESP32(x) eine lokale
+Ich habe einen DS3231(mit internem Temperatursensor) an I²C Bus mit einkompiliert, damit der SML ESP eine lokale
 NTP Zeitbasis ermöglicht & auch als NTP Server für weitere LAN Teilnehmer dienen kann.
 
 Anleitung siehe :
@@ -101,6 +140,14 @@ if upsecs%300==0
 gvr
 }
 
+if upsecs%tper==0 {
+knx(26 gPW1670) ;KNX TX1
+;knx(27 sml[2]) ;KNX TX2
+;knx(28 sml[3]) ;KNX TX3
+;knx(29 sml[3]) ;KNX TX4
+;knx(30 sml[3]) ;KNX TX5
+}
+
 ;0:00h Tagesstart Variablen in Datei PWZaehler-JAHR.CSV schreiben
 hr=hours
 if chg[hr]>0
@@ -109,8 +156,8 @@ then
 fr=fo("/PWZaehler-"+s(0year)+".csv" 2)
 res=fw(s(0year)+s(0month)+s(0day) fr)
 res=fw(";"+s(3gPW180)+";"+s(3gPW280) fr)
-res=fw(";"+s(3PWKWZ)+";"+s(3PWWWZ) fr)
-res=fw(";"+s(3HWZ)+";"+s(3Gas) fr)
+res=fw(";"+s(2PWKWZ)+";"+s(2PWWWZ) fr)
+res=fw(";"+s(2HWZ)+";"+s(2Gas) fr)
 res=fw("\r\n" fr)
 fc(fr)
 svars
@@ -140,10 +187,10 @@ Timestamp: %tstamp%h {m}
 swesp = %0swesp% zeigt Schalterlaubnis Schaltbutton
 
 Variablen von %dvnm%:
-PWKWZ %3PWKWZ% m³
-PWWWZ %3PWWWZ% m³
-HWZ %3HWZ% m³
-Gas %3Gas% m³
+PWKWZ %2PWKWZ% m³
+PWWWZ %2PWWWZ% m³
+HWZ %2HWZ% m³
+Gas %2Gas% m³
 
 Gesendete globale Variablen von %dvnm%:
 gPW1670 %1gPW1670% W
@@ -158,25 +205,25 @@ gopress Luftdruck %1gopress% hPa aus 20ESP8266
 >M 5
 +1,6,c,1,-100,PWKWZ
 1,=h PW Kaltwasser ZNr_2024-553346
-1,1-0:1.8.0*255(@100,Kaltwasser Verbrauch,m³,KWZ,3)
+1,1-0:1.8.0*255(@100,Kaltwasser Verbrauch,m³,KWZ,2)
 1,1-0:1.7.0*255(@0.16667,Kaltwasser akt,l,strom,1)
 
 +2,7,c,1,-100,PWWWZ
 2,=h PW Warmwasser ZNr_2024-8795543
-2,1-0:1.8.0*255(@100,Warmwasser Verbrauch,m³,WWZ,3)
+2,1-0:1.8.0*255(@100,Warmwasser Verbrauch,m³,WWZ,2)
 2,1-0:1.7.0*255(@0.16667,Warmwasser akt,l,strom,1)
 
 +3,9,c,1,-100,HWZ
 3,=h PW Hauswasser ZNr_47110815
-3,1-0:1.8.0*255(@100,Hauswasser Verbrauch,m³,HWZ,3)
+3,1-0:1.8.0*255(@100,Hauswasser Verbrauch,m³,HWZ,2)
 3,1-0:1.7.0*255(@0.16667,Hauswasser akt,l,strom,1)
 
 +4,23,c,1,-500,Gas
 4,=h PW Gas ZNr_08154711
-4,1-0:1.8.0*255(@100,Gas Verbrauch,m³,Gas,3)
+4,1-0:1.8.0*255(@100,Gas Verbrauch,m³,Gas,2)
 4,1-0:1.8.0*255(@8.695,Gas Verb.kWh,kWh,GaskWh,3)
 4,1-0:1.7.0*255(@0.16667,Gas akt Verbrauch,l,strom,2)
-4,1-0:1.7.0*255(@0.11519,Gas akt kW,kW,GaskW,2)
+4,1-0:1.7.0*255(@0.11519,Gas akt kW,kW,GaskW,3)
 
 +5,5,s,1,9600,PWMT681,3,10
 5,=h PW PWMT681 1020130008154711
