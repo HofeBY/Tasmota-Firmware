@@ -15,13 +15,18 @@ CPU Temperatur durch Kommando "SO146 1" aktivieren. ( ESP32(x) CPU )
 
 PW steht für Parterre West und ein g davor steht für globale Variable, welche direkt an lokale Tasmota Geräte übermittelt wird.
 
-Vier S0 Impulszähler wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIOx Pad wird ein Impuls gezählt.
-SML nutzt GPIO3 als RxD und GPIO1 als TxD für IR TTL-Adapter.
-In meinem Beispiel haben die S0 Impulszähler 10 l / Impuls.
 Nachdem Sie unter "Werkzeuge/Script konfigurieren" den Haken bei "Script aktivieren" gestzt haben sollten Sie das gesamten Inhalt
-incl. ">D" per "Cut´nPaste" einfügen und "speichern" nicht vergessen.
+incl. ">D" per "Cut´nPaste" einfügen.
+Nun sollten Sie in Section ">M" die jeweilige "ZNr...." gegen die Ihrer Zähler eintragen. (Kann auch später nachgeholt werden)
+"speichern" nicht vergessen !
+
+In meinem Beispiel haben die S0 Impulszähler 10 l / Impuls.
+Für die vier S0 Impulszähler wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIOx Pad wird ein Impuls gezählt.
+
+SML nutzt GPIO3 als RxD und GPIO1 als TxD für IR TTL-Adapter.
 
 So, nun sollten sie wie im Bild wie "MT681-4xS0Impuls-Zaehler-script.jpg" aussehen. Ein paar Werte werden noch fehlen.
+
 Jetzt folgt das Prüfen der S0 Signaleingänge in dem man den jeweiligen GPIO 6,7,9,23 jeweils gegen GND tastet.
 Sollte entsprechend Werte beim jeweiligen Zählereingang auslösen.
 
@@ -31,7 +36,7 @@ Wir merken Uns die Zählerstände und entfernen die Stromversorgung des ESP.
 Nach ein paar Sekunden Stromversorgung wieder einstecken & Zählerstände auf Startseite vergleichen.
 Richtig bemerkt, es fehlen Zählerwerte !
 
-Nun möchten Wir den entsprechenden Zählereingang mit dem aktuellen Wert auf dem Zähler gleich einstellen.
+Nun möchten Wir den entsprechenden Zählereingang mit dem aktuellen Wert auf dem physischen Zähler gleich einstellen.
 
 Meine Zähler machen 10 l / Impuls & haben somit 100 Impulse pro m³
 Berechnung jeweiliger NeuerWertX=100*Zählerablesewert (m³) mit Nachkommastellen.
@@ -45,11 +50,12 @@ sensor53 c3 NeuerWert3 ENTER
 sensor53 c4 NeuerWert4 ENTER
 ->Werkzeuge->Hauptmenü->Neustart
 
-Hoffentlich passen wie bei mir die Zählerstände.
+Hoffentlich passen wie bei mir die Zählerstände auch nach dem "Neustart".
 
 Anmerkung zu S0 Impulseingängen werden über die Zeit aufsummiert, aber nicht selbststädig in den
-nicht flüchtigen Speicher geflascht. Das ist anders als bei Schaltelementen, Relais zuständen.
-erst ein kommando "svars" speicht diese veränderten flüchtigen Werte ab.
+nicht flüchtigen Speicher geflascht !
+Das ist anders als bei Schaltelementen, Relais zuständen.
+Erst ein Kommando "svars" speicht diese veränderten flüchtigen Werte ab.
 siehe Section >R bei Reboot oder >S im Fall der "PWZaehler-20??.CSV" Speicherung um 0:00h .
 Es bedeutet auch, das wenn man die Stromversorgung unterbricht, das noch nicht gespeicherte flüchtige Zählerwerte
 (S0 Impulse) verloren gehen ! Also erst "Neustart", dann ausstecken !
@@ -57,6 +63,7 @@ Es bedeutet auch, das wenn man die Stromversorgung unterbricht, das noch nicht g
 Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883 installiert.
 Die Zählerwerte werden via mqtty an z.B. (wie bei mir) IOBroker übertragen.
 Zusätzlich werden einige weitere Wert zusätzlich via mqtty übermittelt.(z.B. Archiv-...)
+Einstellungen "IOBroker Instanz Sonoff" siehe "IOBroker-Instanz-Sonoff-Einstellungen.jpg"
 
 Es werden globale Variablen mit Wert sowohl gesendet, als auch empfangen, wenn diese von anderen ESP´s versendet wird.
 Globale Variablen eignen sich hierzu, da kein großer Konfigurationsaufwand entsteht und der Sender die Empfäger nicht einbinden muss.
