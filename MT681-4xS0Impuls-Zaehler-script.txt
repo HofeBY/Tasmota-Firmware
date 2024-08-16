@@ -54,23 +54,38 @@ Wir stellen die Ansicht unter "Einstellungen/Geräteeinstellungen/"
  ein. ->Speichern & nach Reboot ist die Zählerseite
 hoffentlich wie bei mir OK und die Zählerstände passen. Ansonsten zurück unterhalb "Nicht schlimm !"
 
+Anmerkung zu S0 Impulseingänge werden über die Zeit aufsummiert, aber nicht selbststädig in den
+nicht flüchtigen Speicher geflascht. Das ist anders als bei Schaltelementen, Relais zuständen.
+erst ein kommando "svars" speicht diese veränderten flüchtigen Werte ab.
+siehe Section >R bei Reboot oder >S im Fall der "PWZaehler-20??.CSV" Speicherung um 0:00h .
+Es bedeutet auch, das wenn man die Stromversorgung unterbricht, das noch nicht gespeicherte flüchtige Zählerwerte
+(S0 Impulse) verloren gehen ! Also erst Reboot, dann ausstecken !
+
 Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883 installiert.
 Die Zählerwerte werden via mqtty an z.B. (wie bei mir) IOBroker übertragen.
-Zusätzlich werden einige weitere Wert zusätzlich via mqtty übermittelt.
+Zusätzlich werden einige weitere Wert zusätzlich via mqtty übermittelt.(z.B. Archiv-...)
 
 Es werden globale Variablen mit Wert sowohl gesendet, als auch empfangen, wenn diese von anderen ESP´s versendet wird.
 Globale Variablen eignen sich hierzu, da kein großer Konfigurationsaufwand entsteht und der Sender die Empfäger nicht einbinden muss.
 
-Tages Zählerstartwerte werden um 0:00h in eine PWZaehler-JAHR.CSV Datei auf Chipinternem Filesystem (320k Byte) geschrieben.
-Also jedes Jahr eine weitere. Bitte rechtzeitig vor Überfüllung die alten Dateien rauskopieren ca.10Jahre.
+Tages Zählerstartwerte werden um 0:00h in eine "PWZaehler-JAHR.CSV" Datei auf Chipinternem Filesystem (320k Byte) geschrieben.
+Also jedes Jahr eine weitere Datei. Bitte rechtzeitig vor Überfüllung die alten Dateien rauskopieren geschätzt ca.10Jahre.
 
-Weitere Optionen siehe Beschreibung Liesmich-zuerst.txt :
+Nach ein paar Tagen mit funktionstüchtigem SML Leser mit 4xS0 Impulszählern sehen wir Uns das "Archiv-..." Verzeichnis auf dem IOBroker an.
+Uns wird schnell kalr, das das tägliche loggen der Tageszählerwerte xx1.8.0 und xx2.8.0 eine Menge Einträgen verursacht.
+Zum ersten prüfen ob alles funktioniert ja ganz schön, aber am Jahresende wären mehr als 700 Einträge zu löschen.
+Deshalb empfehle ich Section ">J" die Zeilen mit "day" am Zeilenanfang mit einem ";" zu speichern.
+Ab jetzt gibt´s nur noch Monatliche/Jährliche Werte. 
+
+Weitere Sensor Optionen siehe Beschreibung Liesmich-zuerst.txt :
 Ich habe einen DS3231(mit internem Temperatursensor) an I²C Bus mit einkompiliert, damit der SML ESP eine lokale
-NTP Zeitbasis ermöglicht & auch als NTP Server für weitere LAN Teilnehmer dienen kann.
+NTP Zeitbasis ermöglicht & auch als NTP Server für weitere LAN Teilnehmer dienen kann.(+Temperaturmessung Zählerschrank)
 
 Anleitung siehe :
 https://tasmota.github.io/docs/Smart-Meter-Interface
 https://tasmota.github.io/docs/Scripting-Language/
+möglicher Reed für Gaszähler:
+https://www.conrad.de/de/p/pic-ms-328-3-reed-kontakt-1-schliesser-200-v-dc-140-v-ac-1-a-10-w-503533.html?refresh=true
 
 Hier mein vorläufiges Script.txt :
 
@@ -145,7 +160,7 @@ if upsecs%tper==0 {
 ;knx(27 sml[2]) ;KNX TX2
 ;knx(28 sml[3]) ;KNX TX3
 ;knx(29 sml[3]) ;KNX TX4
-;knx(30 gPW1670) ;KNX TX5
+;knx(30 gPW1670);KNX TX5
 }
 
 ;0:00h Tagesstart Variablen in Datei PWZaehler-JAHR.CSV schreiben
