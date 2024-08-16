@@ -5,7 +5,8 @@ Ist noch nicht ganz fertig, aber als erstes Beispiel sollte es taugen.
 
 Ich verwende hierfür einen ESP32C6zero https://www.waveshare.com/wiki/ESP32-C6-Zero
 bezogen von
-https://de.aliexpress.com/item/1005006851575663.html?spm=a2g0o.order_list.order_list_main.5.7b785c5f1VQl7o&gatewayAdapt=glo2deu
+https://de.aliexpress.com/item/10050068515756
+63.html?spm=a2g0o.order_list.order_list_main.5.7b785c5f1VQl7o&gatewayAdapt=glo2deu
 
 Es sind meine Tasmota Varianten ohne "RULE" im Namen geeignet.  Bei diesem also tasmota32c6(.factory).bin
 
@@ -26,40 +27,24 @@ Sollte entsprechend Werte beim Zählereingang auslösen.
 
 Nun, da die S0 Impulszählereingänge als funktionstüchtig geprüft sind, möchten Wir den entsprechenden Zählereingang mit dem
 aktuellen Wert auf dem Zähler abgleichen.
-hierzu verwenden wir "counterX NeuerWert" eingegeben unter "Werkzeuge/Konsole/Befehl eingeben" -> counter1 ENTER -> "Command not found"
-gleiches mit 2-4. Hierzu sei bemerkt, das Tasmota sofern kein "Counter x" Eingang in "Einstellungen/Geräteeinstellungen" eingestellt hat
-die zugehörigen Kommandos "Werkzeuge/Konsole/Befehl eingeben" z.B. "counter1" auch nicht bereitstellt.
-Fehlerumgehung:
-Stellen Sie unter "Einstellungen/Geräteeinstellungen/
-"IO GPIO6 ->Counter ->1"
-"IO GPIO7 ->Counter ->2"
-"IO GPIO9 ->Counter ->3"
-"IO GPIO23 ->Counter ->4" ein.
-->Speichern & nach Reboot ist die Zählerseite verhunzt. Nicht schlimm !
+Meine Zähler machen 10 l / Impuls & haben somit 100 Impulse pro m³
+Berechnung jeweiliger NeuerWert=100*Zählerablesewert (m³)
 
-Nun wieder "Werkzeuge/Konsole/Befehl eingeben"
-"counter1 NeuerWertCounter1" wobei ja Meine Zähler 10 l / Impuls haben & somit 100 Impulse pro m³ 10150
-"counter2 NeuerWertCounter2" ditto. vorher 8048
-"counter3 NeuerWertCounter3" ditto. vorher 18198
-"counter4 NeuerWertCounter4" ditto. vorher 320450
-einzustellen sind. Also NeuerWertCounterX=100*Zählerablesewert (m³)
--> "Werkzeuge" -> "Hauptmenü"
-Kontrolle auf der Haupseite Zähler(1 bis 4) !
+hierzu verwenden wir das Kommando "sensor53 cX NeuerWert" eingegeben unter "Werkzeuge/Konsole/Befehl eingeben" ->
 
-Wir stellen die Ansicht unter "Einstellungen/Geräteeinstellungen/"
-"IO GPIO6 ->none"
-"IO GPIO7 ->none"
-"IO GPIO9 ->none"
-"IO GPIO23 ->none"
- ein. ->Speichern & nach Reboot ist die Zählerseite
-hoffentlich wie bei mir OK und die Zählerstände passen. Ansonsten zurück unterhalb "Nicht schlimm !"
+sensor53 c1 NeuerWert ENTER
+sensor53 c2 NeuerWert ENTER
+sensor53 c3 NeuerWert ENTER
+sensor53 c4 NeuerWert ENTER
 
-Anmerkung zu S0 Impulseingänge werden über die Zeit aufsummiert, aber nicht selbststädig in den
+Hoffentlich passen wie bei mir die Zählerstände.
+
+Anmerkung zu S0 Impulseingängen werden über die Zeit aufsummiert, aber nicht selbststädig in den
 nicht flüchtigen Speicher geflascht. Das ist anders als bei Schaltelementen, Relais zuständen.
 erst ein kommando "svars" speicht diese veränderten flüchtigen Werte ab.
 siehe Section >R bei Reboot oder >S im Fall der "PWZaehler-20??.CSV" Speicherung um 0:00h .
 Es bedeutet auch, das wenn man die Stromversorgung unterbricht, das noch nicht gespeicherte flüchtige Zählerwerte
-(S0 Impulse) verloren gehen ! Also erst Reboot, dann ausstecken !
+(S0 Impulse) verloren gehen ! Also erst "Neustart", dann ausstecken !
 
 Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883 installiert.
 Die Zählerwerte werden via mqtty an z.B. (wie bei mir) IOBroker übertragen.
@@ -68,11 +53,12 @@ Zusätzlich werden einige weitere Wert zusätzlich via mqtty übermittelt.(z.B. 
 Es werden globale Variablen mit Wert sowohl gesendet, als auch empfangen, wenn diese von anderen ESP´s versendet wird.
 Globale Variablen eignen sich hierzu, da kein großer Konfigurationsaufwand entsteht und der Sender die Empfäger nicht einbinden muss.
 
-Tages Zählerstartwerte werden um 0:00h in eine "PWZaehler-JAHR.CSV" Datei auf Chipinternem Filesystem (320k Byte) geschrieben.
-Also jedes Jahr eine weitere Datei. Bitte rechtzeitig vor Überfüllung die alten Dateien rauskopieren geschätzt ca.10Jahre.
+Tages Zählerstartwerte werden um 0:00h in eine "PWZaehler-JAHR.CSV" Datei auf Chip internem Filesystem (320k Byte) geschrieben.
+Also jedes Jahr eine weitere Datei und Täglichen neuem Eintrag.
+Bitte rechtzeitig vor Überfüllung die alten Dateien rauskopieren geschätzt ca.10Jahre.
 
 Nach ein paar Tagen mit funktionstüchtigem SML Leser mit 4xS0 Impulszählern sehen wir Uns das "Archiv-..." Verzeichnis auf dem IOBroker an.
-Uns wird schnell kalr, das das tägliche loggen der Tageszählerwerte xx1.8.0 und xx2.8.0 eine Menge Einträgen verursacht.
+Uns wird schnell klar, das das tägliche loggen der Tageszählerwerte xx1.8.0 und xx2.8.0 eine Menge Einträgen verursacht.
 Zum ersten prüfen ob alles funktioniert ja ganz schön, aber am Jahresende wären mehr als 700 Einträge zu löschen.
 Deshalb empfehle ich Section ">J" die Zeilen mit "day" am Zeilenanfang mit einem ";" zu speichern.
 Ab jetzt gibt´s nur noch Monatliche/Jährliche Werte. 
