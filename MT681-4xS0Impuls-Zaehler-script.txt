@@ -11,24 +11,31 @@ https://de.aliexpress.com/item/10050068515756
 Es sind meine Tasmota Varianten ohne "RULE" im Namen geeignet.  Bei diesem also tasmota32c6(.factory).bin
 
 CPU Temperatur durch Kommando "SO146 1" aktivieren. ( ESP32(x) CPU )
-GPIO8 ist bei ESP32C6zero als WS2812 konfiguriert.
+->Einstellungen->Geräteeinstellungen->GPIO8 ist bei ESP32C6zero als WS2812 konfiguriert.
 
 PW steht für Parterre West und ein g davor steht für globale Variable, welche direkt an lokale Tasmota Geräte übermittelt wird.
 
 Vier S0 Impulszähler wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIOx Pad wird ein Impuls gezählt.
 SML nutzt GPIO3 als RxD und GPIO1 als TxD für IR TTL-Adapter.
-In meinem Beispiel haben die S0 Impulszähler 10 l / Impulse.
+In meinem Beispiel haben die S0 Impulszähler 10 l / Impuls.
 Nachdem Sie unter "Werkzeuge/Script konfigurieren" den Haken bei "Script aktivieren" gestzt haben sollten Sie das gesamten Inhalt
 incl. ">D" per "Cut´nPaste" einfügen und "speichern" nicht vergessen.
 
-So, nun sollten sie wie im Bild wie "MT681-4xS0Impuls-Zaehler-script.jpg" aussehen. O, ein paar Werte werden noch fehlen.
-Jetzt folgen das prüfen der S0 Signaleingänge indem man den jeweiligen GPIO 6,7,9,23 jeweils gegen GND tastet.
-Sollte entsprechend Werte beim Zählereingang auslösen.
+So, nun sollten sie wie im Bild wie "MT681-4xS0Impuls-Zaehler-script.jpg" aussehen. Ein paar Werte werden noch fehlen.
+Jetzt folgt das Prüfen der S0 Signaleingänge in dem man den jeweiligen GPIO 6,7,9,23 jeweils gegen GND tastet.
+Sollte entsprechend Werte beim jeweiligen Zählereingang auslösen.
 
-Nun, da die S0 Impulszählereingänge als funktionstüchtig geprüft sind, möchten Wir den entsprechenden Zählereingang mit dem
-aktuellen Wert auf dem Zähler abgleichen.
+Nun, da die S0 Impulszählereingänge als funktionstüchtig geprüft sind, wagen wir den ersten Versuch.
+
+Wir merken Uns die Zählerstände und entfernen die Stromversorgung des ESP.
+Nach ein paar Sekunden Stromversorgung wieder einstecken & Zählerstände auf Startseite vergleichen.
+Richtig bemerkt, es fehlen Zählerwerte !
+
+Nun möchten Wir den entsprechenden Zählereingang mit dem aktuellen Wert auf dem Zähler gleich einstellen.
+
 Meine Zähler machen 10 l / Impuls & haben somit 100 Impulse pro m³
-Berechnung jeweiliger NeuerWertX=100*Zählerablesewert (m³) mit Nachkommastellen. NeuerWertX werden Nachkommastellen abgeschnitten !
+Berechnung jeweiliger NeuerWertX=100*Zählerablesewert (m³) mit Nachkommastellen.
+NeuerWertX werden Nachkommastellen abgeschnitten !
 
 hierzu verwenden wir das Kommando "sensor53 cX NeuerWertX" eingegeben unter "Werkzeuge/Konsole/Befehl eingeben" ->
 
