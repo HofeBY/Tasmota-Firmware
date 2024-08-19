@@ -52,16 +52,19 @@ sensor53 c4 NeuerWert4 ENTER
 
 Hoffentlich passen wie bei mir die Zählerstände auch nach dem "Neustart".
 
+Mein Gas Zähler hat bei 100 Impulsen (1m³) einen Wärmeenergie Wert von 11,5kWh/m³ .
+Vergleichen Sie das mit Ihrer Gasrechnung, evtl. Berechnung beim 4.Zähler anpassen.
+
 Anmerkung zu S0 Impulseingängen werden über die Zeit aufsummiert, aber nicht selbststädig in den
-nicht flüchtigen Speicher geflascht !
+nicht flüchtigen Speicher geflasht !
 Das ist anders als bei Schaltelementen, Relais zuständen.
 Erst ein Kommando "svars" speicht diese veränderten flüchtigen Werte ab.
 siehe Section >R bei Reboot oder >S im Fall der "PWZaehler-20??.CSV" Speicherung um 0:00h .
 Es bedeutet auch, das wenn man die Stromversorgung unterbricht, das noch nicht gespeicherte flüchtige Zählerwerte
-(S0 Impulse) verloren gehen ! Also erst "Neustart", dann ausstecken !
+(S0 Impulse) verloren gehen ! Also erst "Neustart", dann ausstecken ! Ansonsten korrigieren siehe oberhalb.
 
 Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883 installiert.
-Die Zählerwerte werden via mqtty an z.B. (wie bei mir) IOBroker übertragen.
+Die Zählerwerte werden via mqtty an einen Broker z.B. IOBroker übertragen.
 Zusätzlich werden einige weitere Wert zusätzlich via mqtty übermittelt.(z.B. Archiv-...)
 Einstellungen "IOBroker Instanz Sonoff" siehe "IOBroker-Instanz-Sonoff-Einstellungen.jpg"
 
@@ -75,18 +78,20 @@ Bitte rechtzeitig vor Überfüllung die alten Dateien rauskopieren geschätzt ca
 Nach ein paar Tagen mit funktionstüchtigem SML Leser mit 4xS0 Impulszählern sehen wir Uns das "Archiv-..." Verzeichnis auf dem IOBroker an.
 Uns wird schnell klar, das das tägliche loggen der Tageszählerwerte xx1.8.0 und xx2.8.0 eine Menge Einträgen verursacht.
 Zum ersten prüfen ob alles funktioniert ja ganz schön, aber am Jahresende wären mehr als 700 Einträge zu löschen.
-Deshalb empfehle ich Section ">J" die Zeilen mit "day" am Zeilenanfang mit einem ";" zu speichern.
+Deshalb empfehle ich Section ">J" die Zeilen mit "day" am Zeilenanfang mit einem ";" ergänzt zu speichern.
 Ab jetzt gibt´s nur noch Monatliche/Jährliche Werte. 
 
 Weitere Sensor Optionen siehe Beschreibung Liesmich-zuerst.txt :
 Ich habe einen DS3231(mit internem Temperatursensor) an I²C Bus mit einkompiliert, damit der SML ESP eine lokale
-NTP Zeitbasis ermöglicht & auch als NTP Server für weitere LAN Teilnehmer dienen kann.(+Temperaturmessung Zählerschrank)
+NTP Zeitbasis ermöglicht & auch als NTP Server für weitere LAN Teilnehmer dienen kann.(+Temperaturmessung im Zählerschrank)
+Das macht Ihn gegen nur temporär vorhandener Internetverbindung (NTP Zeitsynchronikation) unempfindlich.
 
 Anleitung siehe :
 https://tasmota.github.io/docs/Smart-Meter-Interface
 https://tasmota.github.io/docs/Scripting-Language/
 möglicher Reed für Gaszähler:
 https://www.conrad.de/de/p/pic-ms-328-3-reed-kontakt-1-schliesser-200-v-dc-140-v-ac-1-a-10-w-503533.html?refresh=true
+https://www.thingiverse.com/thing:5175961#google_vignette
 
 Hier mein vorläufiges Script.txt :
 
@@ -168,7 +173,7 @@ if upsecs%tper==0 {
 hr=hours
 if chg[hr]>0
 and hr==0
-then
+{
 fr=fo("/PWZaehler-"+s(0year)+".csv" 2)
 res=fw(s(0year)+s(0month)+s(0day) fr)
 res=fw(";"+s(3gPW180)+";"+s(3gPW280) fr)
@@ -177,7 +182,7 @@ res=fw(";"+s(2HWZ)+";"+s(2Gas) fr)
 res=fw("\r\n" fr)
 fc(fr)
 svars
-endif ;Day
+} ;Day
 
 >J
 ; Hier wird via mqtt ergänzende Werte mit Datum zum Server übermittelt ;vor Zeile und Wert wird weggelassen ;-) day
