@@ -1,5 +1,5 @@
-# Tasmota-Firmware
-Einige meiner compilierten Tasmota 14.2.0.1 Firmware Images in deutsch.
+# Tasmota-Firmware in Deutsch 14.2.0.1 
+Einige meiner compilierten Tasmota Firmware Images in deutsch.
 
 Es sind die Konfigurationsfiles mitgeliefert, damit Sie z.B. an Ihre Sprache und Gegebenheiten anpassen können.
 
