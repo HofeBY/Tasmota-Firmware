@@ -18,7 +18,7 @@ Dies sind meine compilierten Tasmota Firmware Images basierend auf dem Code des 
 Diese wurden unter Windows 10 mit Microsoft Visual Studio Code erstellt.
 Alle Rechte bleiben bei den Rechtinhabern.
 
-============================================================================================================================
+==============================================================
 
 Some of my compiled Tasmota 14.2.0.1 firmware images in German.
 
