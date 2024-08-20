@@ -2,7 +2,8 @@
 Einige meiner compilierten Tasmota 14.2.0.1 Firmware Images in deutsch.
 
 Es sind die Konfigurationsfiles mitgeliefert, damit Sie z.B. an Ihre Sprache und Gegebenheiten anpassen können.
-Lesen Sie dazu "Liesmich-zuerst.txt"
+
+Lesen Sie dazu "Liesmich-zuerst.txt" um Ihre optimierte Variante compilieren zu können.
 
 Alle Varianten enthalten Berry, KNX, Timer, Domoticz, GPIOViewer, diverse I²C/DS18B20/SPI Treiber
 
