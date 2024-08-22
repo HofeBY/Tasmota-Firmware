@@ -126,6 +126,7 @@ g:gopress=0
 >B
 
 >BS
+dp1,2
 ->sensor53 r
 
 ;http://IPv4-dev/ufs/script.txt im Browser
@@ -175,7 +176,7 @@ if chg[hr]>0
 and hr==0
 {
 fr=fo("/PWZaehler-"+s(0year)+".csv" 2)
-res=fw(s(0year)+s(0month)+s(0day) fr)
+res=fw(s(4.0year)+s(2.0month)+s(2.0day) fr)
 res=fw(";"+s(3gPW180)+";"+s(3gPW280) fr)
 res=fw(";"+s(2PWKWZ)+";"+s(2PWWWZ) fr)
 res=fw(";"+s(2HWZ)+";"+s(2Gas) fr)
