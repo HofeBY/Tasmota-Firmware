@@ -168,6 +168,7 @@ if upsecs%tper==0 {
 ;knx(28 sml[3]) ;KNX TX3
 ;knx(29 sml[3]) ;KNX TX4
 ;knx(30 gPW1670);KNX TX5
+;=>WebSend [192.168.178.9] Power on ; 1. Relais an bei IP
 }
 
 ;0:00h Tagesstart Variablen in Datei PWZaehler-JAHR.CSV schreiben

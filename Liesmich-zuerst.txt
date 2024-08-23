@@ -14,7 +14,7 @@ Meine verwendete Entwicklungsumgebung:
 CompilerLOG.txt zeigt Beispielhaft den Ablauf für einen ESP32 für selber compilierer als Vergleich.
 
 Was muss gemacht werden ?
-Firmware Tasmota development 14.2.0.1 oder aktueller von https://github.com/arendst/Tasmota -> 
+Firmware Tasmota development 14.2.0.2 oder aktueller von https://github.com/arendst/Tasmota -> 
 <>Code -> Download ZIP herunterladen.
 Tasmota Sourcecode habe ich bei mir nach D:\Tasmota als Basisverzeichnis entpackt.
 evtl. entpacken und dann halt umbenennen, weil die PATH länge evtl. probleme bereitet.
