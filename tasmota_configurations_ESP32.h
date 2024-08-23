@@ -729,7 +729,7 @@
 //by HofeBY #define USE_PN532_HSU                            // Add support for PN532 using HSU (Serial) interface (+1k8 code, 140 bytes mem)
 //#define USE_ZIGBEE                               // Enable serial communication with Zigbee CC2530 flashed with ZNP
 //by HofeBY #define USE_RDM6300                              // Add support for RDM6300 125kHz RFID Reader (+0k8)
-//by HofeBY #define USE_IBEACON                              // Add support for bluetooth LE passive scan of ibeacon devices (uses HM17 module)
+#define USE_IBEACON                              // Add support for bluetooth LE passive scan of ibeacon devices (uses HM17 module)
 //#define USE_GPS                                  // Add support for GPS and NTP Server for becoming Stratus 1 Time Source (+ 3.1kb flash, +132 bytes RAM)
 
 //#define USE_BLE_ESP32                            // (ESP32 only) Add support for native BLE on ESP32 - use new driver
@@ -775,7 +775,7 @@
 #define USE_SHIFT595                             // Add support for 74xx595 8-bit shift registers (+0k7 code)
 //  #define SHIFT595_INVERT_OUTPUTS false            // [SetOption133] Don't invert outputs of 74x595 shift register
 //  #define SHIFT595_DEVICE_COUNT  1                 // [Shift595DeviceCount] Set the number of connected 74x595 shift registers
-#define USE_TM1638                               // Add support for TM1638 switches copying Switch1 .. Switch8 (+1k code)
+//by HofeBY #define USE_TM1638                               // Add support for TM1638 switches copying Switch1 .. Switch8 (+1k code)
 //by HofeBY #define USE_HX711                                // Add support for HX711 load cell (+1k5 code)
 //#define USE_HX711_GUI                            // Add optional web GUI to HX711 as scale (+1k8 code)
 //#define USE_TX20_WIND_SENSOR                     // Add support for La Crosse TX20 anemometer (+2k6/0k8 code)
@@ -788,10 +788,10 @@
 //by HofeBY #define USE_HRE                                  // Add support for Badger HR-E Water Meter (+1k4 code)
 //#define USE_A4988_STEPPER                        // Add support for A4988/DRV8825 stepper-motor-driver-circuit (+10k5 code)
 //#define USE_THERMOSTAT                           // Add support for Thermostat
-#define USE_BP1658CJ                             // Add support for BP1658CJ 5 channel led controller as used in Orein OS0100411267 Bulb
+//by HofeBY #define USE_BP1658CJ                             // Add support for BP1658CJ 5 channel led controller as used in Orein OS0100411267 Bulb
 #define USE_ETHERNET                             // Add support for ethernet (+20k code)
-//by HofeBY #define USE_DISPLAY_TM1621_SONOFF                // Add support for TM1621 display driver used by Sonoff POWR3xxD and THR3xxD
-#define USE_LOX_O2                               // Add support for LuminOx LOX O2 Sensor (+0k8 code)
+#define USE_DISPLAY_TM1621_SONOFF                // Add support for TM1621 display driver used by Sonoff POWR3xxD and THR3xxD
+//by HofeBY #define USE_LOX_O2                               // Add support for LuminOx LOX O2 Sensor (+0k8 code)
 
 #ifndef USE_KNX
 #define USE_KNX                                  // Enable KNX IP Protocol Support (+23k code, +3k3 mem)
