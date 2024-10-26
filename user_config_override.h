@@ -107,7 +107,7 @@ Examples :
  #undef USE_AHT2x
 
 //==========================================================================
-// Auswahl der Unterscheidung SML/SCRIPT oder RULE & MATTER falls CPU ESP32x
+// Auswahl der Unterscheidung SML/SCRIPT oder RULE falls CPU ESP32x
 // Entweder USE_SCRIPT oder USE_RULES aktiv wählen !
  #undef USE_SCRIPT  // SML benötigt SCRIPT, also standardmäßig eingeschaltet
 #define USE_SCRIPT
@@ -117,9 +117,10 @@ Examples :
 #define USE_I2C // Eigentlich bei allen ESP mit I2C Unterstützung
 //==========================================================================
 
-#if defined USE_SCRIPT // RULES & MATTER weg, aktivieren von MATTER, sofern SCRIPT aktiv ist
+#if defined USE_SCRIPT
  #undef USE_RULES
  #undef USE_MATTER_DEVICE
+#define USE_MATTER_DEVICE
  #undef SCRIPT_POWER_SECTION
 #define SCRIPT_POWER_SECTION
  #undef USE_SML_M
@@ -142,7 +143,7 @@ Examples :
 #define SML_MAX_VARS
 #endif // USE_SCRIPT 
 
-#if defined USE_RULES // aktivieren von MATTER, deaktivieren von SCRIPT/SML
+#if defined USE_RULES
  #undef USE_MATTER_DEVICE
 #define USE_MATTER_DEVICE
  #undef USE_SCRIPT
@@ -566,32 +567,27 @@ Examples :
  #undef MAXFILT
 #define MAXFILT 5
 
-// erzeugt Compiler Fehler
-// #undef USE_SCRIPT_GLOBVARS
-//define USE_SCRIPT_GLOBVARS
+ #undef USE_SCRIPT_GLOBVARS
+#define USE_SCRIPT_GLOBVARS
 
-// erzeugt Compiler Fehler
-// #undef SCRIPT_FULL_WEBPAGE
-//#define SCRIPT_FULL_WEBPAGE
+ #undef SCRIPT_FULL_WEBPAGE
+#define SCRIPT_FULL_WEBPAGE
 
-// erzeugt Compiler Fehler
-// #undef USE_WEBSEND_RESPONSE
-//define USE_WEBSEND_RESPONSE
+ #undef USE_WEBSEND_RESPONSE
+#define USE_WEBSEND_RESPONSE
 
-// erzeugt Compiler Fehler
-// #undef USE_ENERGY_SENSOR
-//define USE_ENERGY_SENSOR
+ #undef USE_ENERGY_SENSOR
+#define USE_ENERGY_SENSOR
 
-// erzeugt Compiler Fehler
-// #undef USE_SCRIPT_SUB_COMMAND
-//define USE_SCRIPT_SUB_COMMAND
+ #undef USE_SCRIPT_SUB_COMMAND
+#define USE_SCRIPT_SUB_COMMAND
 
  #undef SUPPORT_MQTT_EVENT
 #define SUPPORT_MQTT_EVENT
  #undef MQTT_EVENT_MSIZE
 #define MQTT_EVENT_MSIZE 256 // (default is 256)
  #undef MQTT_EVENT_JSIZE
-#define MQTT_EVENT_JSIZE 400 // (default is 400) 
+#define MQTT_EVENT_JSIZE 400 // (default is 400)
 
 // Script ursprünglicher Basisinhalt
 //>D
