@@ -8,27 +8,31 @@ bezogen von
 https://de.aliexpress.com/item/10050068515756
 63.html?spm=a2g0o.order_list.order_list_main.5.7b785c5f1VQl7o&gatewayAdapt=glo2deu
 
-Es sind meine Tasmota Varianten ohne "RULE" im Namen geeignet.  Bei diesem also tasmota32c6(.factory).bin
+Die passende deutschsprachige Tasmota Version finden Sie unter //github.com/HofeBY und ich verwende die,
+welche kein RULE im Namen trägt. Bei diesem also tasmota32c6(.factory).bin
 
 CPU Temperatur durch Kommando "SO146 1" aktivieren. ( ESP32(x) CPU )
 ->Einstellungen->Geräteeinstellungen->GPIO8 ist bei ESP32C6zero als WS2812 konfiguriert.
+Für die 4*Impuls & 2*TTL GPIO´s in ->Einstellungen->Geräteeinstellungen->GPIO6/7/9/23/1/3 muss "none" eingetragen sein!
+
+Nachdem Sie unter "->Werkzeuge->Script konfigurieren" den Haken bei "Script aktivieren" gesetzt haben sollten Sie den gesamten Inhalt
+incl. ">D" per "Cut&Paste" siehe unterhalb "Hier mein vorläufiges Script.txt" einfügen.
+
+Nun sollten Sie in Section ">M" die jeweilige "ZNr...." gegen die Ihrer Zähler eintragen. (Kann auch später nachgeholt werden)
+"speichern" nicht vergessen !
+Die Belegung dieser GPIO´s für Impulszähler & TTL-RxD/TxD geschieht in der Script.txt.
 
 PW steht für Parterre West und ein g davor steht für globale Variable, welche direkt an lokale Tasmota Geräte übermittelt wird.
 
-Nachdem Sie unter "Werkzeuge/Script konfigurieren" den Haken bei "Script aktivieren" gestzt haben sollten Sie das gesamten Inhalt
-incl. ">D" per "Cut´nPaste" einfügen.
-Nun sollten Sie in Section ">M" die jeweilige "ZNr...." gegen die Ihrer Zähler eintragen. (Kann auch später nachgeholt werden)
-"speichern" nicht vergessen !
+In meinem Beispiel haben die 4*S0 Impulszähler 10 l / Impuls.
+Für die vier S0 Impulszähler wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels Drahtbrücke von GND an GPIOx Pad wird ein Impuls gezählt.
 
-In meinem Beispiel haben die S0 Impulszähler 10 l / Impuls.
-Für die vier S0 Impulszähler wurden die GPIO 6,7,9,23 Rückseite verwendet, mittels GND an GPIOx Pad wird ein Impuls gezählt.
-
-SML nutzt GPIO3 als RxD und GPIO1 als TxD für IR TTL-Adapter.
+SML nutzt GPIO3 als RxD und GPIO1 als TxD für IR TTL-Adapter und wird im script.txt belegt.
 
 So, nun sollten sie wie im Bild wie "MT681-4xS0Impuls-Zaehler-script.jpg" aussehen. Ein paar Werte werden noch fehlen.
 
-Jetzt folgt das Prüfen der S0 Signaleingänge in dem man den jeweiligen GPIO 6,7,9,23 jeweils gegen GND tastet.
-Sollte entsprechend Werte beim jeweiligen Zählereingang auslösen.
+Jetzt folgt das Prüfen der S0 Signaleingänge in dem man den jeweiligen GPIO 6,7,9,23 mit Drahtbrücke jeweils gegen GND tastet.
+Das sollte entsprechend Werte beim jeweiligen Zählereingang einen neuen Zählwert auslösen.
 
 Nun, da die S0 Impulszählereingänge als funktionstüchtig geprüft sind, wagen wir den ersten Versuch.
 
@@ -50,18 +54,22 @@ sensor53 c3 NeuerWert3 ENTER
 sensor53 c4 NeuerWert4 ENTER
 ->Werkzeuge->Hauptmenü->Neustart
 
-Hoffentlich passen wie bei mir die Zählerstände auch nach dem "Neustart".
+Hoffentlich passen wie bei mir die Zählerstände auch noch nach dem "Neustart".
 
 Mein Gas Zähler hat bei 100 Impulsen (1m³) einen Wärmeenergie Wert von 11,5kWh/m³ .
 Vergleichen Sie das mit Ihrer Gasrechnung, evtl. Berechnung beim 4.Zähler anpassen.
 
 Anmerkung zu S0 Impulseingängen werden über die Zeit aufsummiert, aber nicht selbststädig in den
 nicht flüchtigen Speicher geflasht !
-Das ist anders als bei Schaltelementen, Relais zuständen.
-Erst ein Kommando "svars" speicht diese veränderten flüchtigen Werte ab.
+Beim Anwenden von "Neustart" ohne Unterbrechung der Stromversorgung hat es aber ja doch gespeichert.
+Kann man durch Spannungsversorgungs Unterbrechung ja erneut prüfen.
+
+Erklärung: 
+Erst ein Kommando "svars" speichert diese veränderten flüchtigen Zählerwerte ab.
 siehe Section >R bei Reboot oder >S im Fall der "PWZaehler-20??.CSV" Speicherung um 0:00h .
 Es bedeutet auch, das wenn man die Stromversorgung unterbricht, das noch nicht gespeicherte flüchtige Zählerwerte
-(S0 Impulse) verloren gehen ! Also erst "Neustart", dann ausstecken ! Ansonsten korrigieren siehe oberhalb.
+(S0 Impulse) verloren gehen ! Also erst "Neustart", dann ausstecken !
+Ansonsten wird korrigieren der Zählerwerte siehe oberhalb fällig.
 
 Mein mqtty Broker ist IOBroker mit Instanz "sonoff" Port 1883 installiert.
 Die Zählerwerte werden via mqtty an einen Broker z.B. IOBroker übertragen.
@@ -73,7 +81,7 @@ Globale Variablen eignen sich hierzu, da kein großer Konfigurationsaufwand ents
 
 Tages Zählerstartwerte werden um 0:00h in eine "PWZaehler-JAHR.CSV" Datei auf Chip internem Filesystem (320k Byte) geschrieben.
 Also jedes Jahr eine weitere Datei und Täglichen neuem Eintrag.
-Bitte rechtzeitig vor Überfüllung die alten Dateien rauskopieren geschätzt ca.10Jahre.
+Bitte rechtzeitig vor Überfüllung die alten Dateien rauskopieren geschätzt mehr als ca.10Jahre.
 
 Nach ein paar Tagen mit funktionstüchtigem SML Leser mit 4xS0 Impulszählern sehen wir Uns das "Archiv-..." Verzeichnis auf dem IOBroker an.
 Uns wird schnell klar, das das tägliche loggen der Tageszählerwerte xx1.8.0 und xx2.8.0 eine Menge Einträgen verursacht.
@@ -128,20 +136,6 @@ g:gopress=0
 >BS
 dp1,2
 ->sensor53 r
-
-;http://IPv4-dev/ufs/script.txt im Browser
-;list of all files in root directory in Log
-fr=fo("/" 0)
-for cnt 1 20 1
-res=fr(str fr)
-if res>0
-then
-print %cnt% : %str%
-else
-break
-endif
-next
-fc(fr)
 
 >T
 rssi=WiFi#rssi

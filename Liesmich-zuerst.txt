@@ -2,11 +2,11 @@ Meine Gründe für die Erstellung einer eigenen Tasmota Version:
 FW noch nicht im aktuellsten development Version erhältlich, also selber compilieren.
 FW ist nicht in eigener Muttersprache erhältlich.
 FW ist nicht an Standort angepasst. -> Sonnen-auf/-untergang, Zeitzone, Individualisierung
-FW lässt sich Aufgrund unnötiger Treiber nicht/&mehr OTA flashen, oder ist prinzipiell zu
+FW lässt sich Aufgrund unnötiger Treiber nicht/& mehr OTA flashen, oder ist prinzipiell zu
 groß für Flashspeicher.
 FW enthält Treiber, von denen Sie wissen, das Sie diese niemals benötigen.
-FW enthält nicht die gewünschten Funktionsunterstützung.Script oder RULE-MATTER,
-alle mit berry, KNX, Domotiz, globale Variablen, Dateisystem, GPIO Viewer,
+FW enthält nicht die gewünschten Funktionsunterstützung.SCRIPT oder RULE,
+alle mit berry, KNX, Domotiz, MATTER(ESP32(x)), globale Variablen, Dateisystem, GPIO Viewer,
 & weitere Protokolle.
 
 Meine verwendete Entwicklungsumgebung:
@@ -14,7 +14,7 @@ Meine verwendete Entwicklungsumgebung:
 CompilerLOG.txt zeigt Beispielhaft den Ablauf für einen ESP32 für selber compilierer als Vergleich.
 
 Was muss gemacht werden ?
-Firmware Tasmota development 14.2.0.2 oder aktueller von https://github.com/arendst/Tasmota -> 
+Firmware Tasmota development 14.3.0.1 oder aktueller von https://github.com/arendst/Tasmota -> 
 <>Code -> Download ZIP herunterladen.
 Tasmota Sourcecode habe ich bei mir nach D:\Tasmota als Basisverzeichnis entpackt.
 evtl. entpacken und dann halt umbenennen, weil die PATH länge evtl. probleme bereitet.
@@ -25,20 +25,20 @@ ping -t 141.1.1.1
 seit TM14.1.0.3 hatte ich Probleme mit dem compilieren und habe das als Fehler gemeldet.
 https://github.com/arendst/Tasmota/issues/21940
 
-Bearbeiten Sie die "D:\Tasmota\tasmota\platformio_override.ini" folgendermaßen um den Fehler zu vermeiden.
+Bearbeiten Sie die "D:\Tasmota\platformio_override.ini" folgendermaßen um den Fehler zu vermeiden.
 
 [platformio]
-core_dir = c:\.platformio
-workspace_dir = c:\.pio
+core_dir = D:\.plio
+workspace_dir = D:\.pio
 
 Die Änderung hat das compilieren wieder ermöglicht.
 
 https://code.visualstudio.com/download
-VSCinstallieren&starten und dann PlattformIO nachinstallieren.
+VSC installieren&starten und dann PlattformIO nachinstallieren.
 
 Nach Grundinstallation habe ich erst mal diese CPU Varianten durch compiliert, um
 Entwicklungsumgebung unverändert funktionstüchtig zu machen.
-tasmota,tasmota32,tasmota32s2,tasmota32c2,tasmota32c3,tasmota32c6,tasmota32s3
+tasmota,tasmota-2M(experimentell),tasmota-4M,tasmota32,tasmota32s2,tasmota32c2,tasmota32c3,tasmota32c6,tasmota32s3
 
 Nun passe ich mir die Tasmota Version an:
 Der Source kann in möglicher neueren Version siehe oben geladen werden und die
@@ -60,34 +60,37 @@ Die Datei D:\Tasmota\tasmota\my_user_config.h beinhaltet die möglichen Treiber 
 D:\Tasmota\tasmota\my_user_config.h und nicht vergessen ein #undef TREIBERNAME davor zu setzen !
 
 Ich habe schon mal folgende Versionen nach meiner Treiberauswahl compiliert:
-tasmota,tasmota32,tasmota32s2,tasmota32c2,tasmota32c3,tasmota32c6,tasmota32s3
+tasmota,tasmota-2M(experimentell),tasmota-4M,tasmota32,tasmota32s2,tasmota32c2,tasmota32c3,tasmota32c6,tasmota32s3
 
 Folgende Funktionen/Treiber sollten vorhanden sein und funktionieren.
 Bitte Info falls nicht über "Issues" in github.com/HofeBY/Tasmota-Firmware :
 
-Um die RULE oder RULE-MATTER Varianten compilieren zu können muss zwischen den Zeilen //=========... in 
-user_config_override.h USE_SCRIPT mit // auskommentiert und RULE aktiviert werden.
+Um die mit SCRIPT oder RULE Varianten compilieren zu können muss zwischen den Zeilen //=========... in 
+user_config_override.h das jeweils ungewünschte  USE_SCRIPT oder RULE mit // auskommentiert deaktiviert werden.
 
 Dann erneute Compilerläufe und Umbenennung der .bin Firmwares zweck´s Unterscheidung.
-Beachte, ESP8285/ESP8266 können kein MATTER und daher kann das auch beim Namen fehlen !
+Beachte, ESP8285/ESP8266 können kein MATTER ! Das muss ein ESP32(x) in Vertretung erledigen.
 
 Das liefern meine zuvor entleerten & neu gefüllten Varianten:
 Deutsche Sprache & Zeitzone & Heimatstadt incl. DE NTP Server konfiguration
 MQTT
 Zeitplan
-KNX
+KNX mit TX1-TX9 Messwerte auch mit SCRIPT an KNX broker
+MATTER & BERRY bei ESP32(x) Varianten, nicht bei ESP8285/ESP8266
 DOMOTICZ
-SCRIPT oder [RULES mit MATTER aber außer ESP82(..)]
-BERRY
+SCRIPT(mit erweitertem Dateisystem) und RULES beide mit MATTER
 SENDMAIL
 INFLUXDB
-SML Smart Meter Language für Stromzähler auslesen alle .bin ohne RULE oder MATTER im Namen
+SerialBridge an CPU lokales Gerät
+Seriell TCPBridge TCP Remote an CPU lokales Gerät
+ModBus-Serial-Bridge TCP Remote an CPU lokales Gerät ModBus Gerät
+SML Smart Meter Language für Stromzähler auslesen alle .bin ohne RULE im Namen
 ESP32 und weitere Internes und SDCARD Filesystem mit http Zugriff zum speichern von Logfiles
 Ping Support in Console
 I2C, SPI, I2S, etc.pp
 ESP32 intern Hall & CPU Temperatur Sensor
-IR senden und empfangen (z.Z.fehlerhafte compilation, daher deaktiv)
-WIFI_RANGE_EXTENDER Einrichtung in user_config_override.h beschrieben (z.Z.Sourcecode defekt, daher deaktiv)
+IR senden und empfangen von mir ungeprüft
+WIFI_RANGE_EXTENDER
 DS18x20 auch mit parasite Power T 
 DS3231 RTC mit NTP-Server support (Zeitserver für offline Netzwerke) und internem Temperatursensor I2C
 BMP-085-180-280/BME280 RH/T/P/Taupunkt I2C
@@ -98,16 +101,22 @@ MCP23008/MCP23017 8/16 Bit IO zu TTL multi IO Adapter I2C
 PCA9685 16xfach HW PWM Driver zu IO Adapter I2C
 SCD40 CO2 Sensor I2C
 SGP40 Luftqualität I2C
-ENS160 VOC Luftgüte Sensor I2C
+ENS160 VOC Luftgüte Sensor I2C mit unter mit AHT21 auf einer Platine
 BH1750 Helligeit I2C
 
+tasmota				von 2,7->8 kByte SCRIPT, kein Dateisystem möglich
+tasmota-2M(experimentell)	von 2,7->8 kByte SCRIPT, 1MByte Dateisystem, nur selbst zu compilieren
+tasmota-4M			von 2,7->8 kByte SCRIPT, 2MByte Dateisystem
+
+ESP32(x)			von 8->16 kByte SCRIPT, 2()MByte Dateisystem
+
 und noch viele weitere Treiber und Funktionen.
-Sehen Sie sich das .\CompilerLOG.txt exemplarisch für ESP32 an.
-Im gleichen Ordner liegen die Firmware (.bin) Files, welche man OTA auf den ESP Varianten einspielen kann.
-Die (.bin) Files mit RULE oder MATTER im Namen haben kein SML !
+Im Ordner liegen die Firmware (.bin) Files, welche man OTA auf den ESP Varianten einspielen kann.
+Ohne RULE im Namen ist mit SCRIPT und MATTER.
+Die mit RULE sind mit MATTER aber ohne SCRIPT.
 
 tasmota.bin für ESP8285 & ESP8266
-tasmota32(xx).bin für ESP32 Varianten /(factory) zur Erstinstallation
+tasmota32(x).bin für ESP32 Varianten /(factory) zur Erstinstallation
 
 Um die eincompilierten I2C Treiber aufzulisten auf console "I2Cdriver" und die Nummer in Datei my_user_config nachsehen.
 
@@ -123,7 +132,7 @@ Für die SML SCRIPT Anwender empfehle ich mein Beispiel MT681-4xS0Impuls-Zaehler
 
 =============================================================================================================
 Ich verwende zum testen ein AZ-Delivery ESP32 DevKitCv4 Board, bei dem ich
-Installiertes Tasmota. Ist nur ein Standardvorschalg, den ich halt so verwende.
+Installiertes Tasmota. Ist nur ein Standardvorschlag, den ich halt so verwende.
 
 unter "Einstellungen -> Sonstige Konfiguration" Haken(Vorlage) aktivieren & speichern
 
@@ -143,6 +152,12 @@ I2C Bausteine werden an GPIO21/22 angeschlossen
 unter "Einstellungen -> Gerät konfigurieren" können Sie dann die restlichen GPIO´s selbst belegen.
 
 zurück ins Hauptmenü um erste Ergebnisse der Sensoren zu sehen und z.B. MQTTY zur Übertragung einzustellen.
+
+Verbesserungen melden Sie an HofeBY unter:
+github.com/arendst/Tasmota/discussions
+https://github.com/arendst/Tasmota/discussions/22004#discussioncomment-10454400
+forum.creationx.de/forum
+https://forum.creationx.de/index.php?user/5142-hofeby/
 
 Oberfränkische Grüße
 HofeBY
