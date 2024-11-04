@@ -1,4 +1,4 @@
-# Tasmota-Firmware in Deutsch 14.3.0.1
+# Tasmota-Firmware in Deutsch 14.3.0.4
 Einige meiner compilierten Tasmota Firmware Images in deutsch.
 
 Es sind die Konfigurationsfiles mitgeliefert, damit Sie z.B. an Ihre Sprache und Gegebenheiten anpassen können.
@@ -20,7 +20,7 @@ Alle Rechte bleiben bei den Rechtinhabern.
 
 ==============================================================
 
-Some of my compiled Tasmota 14.3.0.1 firmware images in German.
+Some of my compiled Tasmota 14.3.0.4 firmware images in German.
 
 The configuration files are included so that you can adapt them to your language and circumstances, for example.
 
