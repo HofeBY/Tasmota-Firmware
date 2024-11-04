@@ -9,7 +9,7 @@ https://de.aliexpress.com/item/10050068515756
 63.html?spm=a2g0o.order_list.order_list_main.5.7b785c5f1VQl7o&gatewayAdapt=glo2deu
 
 Die passende deutschsprachige Tasmota Version finden Sie unter //github.com/HofeBY und ich verwende die,
-welche kein RULE im Namen trägt. Bei diesem also tasmota32c6(.factory).bin
+welche kein RULES im Namen trägt. Bei diesem also tasmota32c6(.factory).bin
 
 CPU Temperatur durch Kommando "SO146 1" aktivieren. ( ESP32(x) CPU )
 ->Einstellungen->Geräteeinstellungen->GPIO8 ist bei ESP32C6zero als WS2812 konfiguriert.
