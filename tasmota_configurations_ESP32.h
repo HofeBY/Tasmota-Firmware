@@ -60,6 +60,7 @@
 #undef USE_TELEGRAM                              // Disable support for Telegram protocol (+49k code, +7.0k mem and +4.8k additional during connection handshake)
 //#undef USE_MQTT_TLS                              // Disable TLS support won't work as the MQTTHost is not set
 #undef USE_KNX                                   // Disable KNX IP Protocol Support
+#undef USE_DALI                                  // Disable support for DALI gateway (+5k code)
 //#undef USE_WEBSERVER                             // Disable Webserver
 #undef USE_GPIO_VIEWER                           // Enable GPIO Viewer to see realtime GPIO states (+5k6 code)
 #undef USE_ENHANCED_GUI_WIFI_SCAN                // Disable wifi scan output with BSSID (+0k5 code)
@@ -515,6 +516,9 @@
 
 #define USE_ENHANCED_GUI_WIFI_SCAN
 
+#undef USE_ENERGY_SENSOR                        // Disable support for energy sensors
+#undef USE_SHUTTER                              // Disable support for shutter
+#undef USE_IR_REMOTE                            // Disable support for IR Remote
 #undef USE_ARMTRONIX_DIMMERS                    // Disable support for Armtronix Dimmers (+1k4 code)
 #undef USE_PS_16_DZ                             // Disable support for PS-16-DZ Dimmer (+2k code)
 #undef USE_SONOFF_IFAN                          // Disable support for Sonoff iFan02 and iFan03 (+2k code)
@@ -579,16 +583,16 @@
 //byHofeBY #define ROTARY_V1                                // Add support for Rotary Encoder as used in MI Desk Lamp
 
 //byHofeBY #define USE_TUYA_MCU                             // Add support for Tuya Serial MCU
-//byHofeBY #ifndef TUYA_DIMMER_ID
-//byHofeBY   #define TUYA_DIMMER_ID       0                 // Default dimmer Id
-//byHofeBY #endif
-//byHofeBY #undef USE_ARMTRONIX_DIMMERS                    // Disable support for Armtronix Dimmers (+1k4 code)
+#ifndef TUYA_DIMMER_ID
+  #define TUYA_DIMMER_ID       0                 // Default dimmer Id
+#endif
+#undef USE_ARMTRONIX_DIMMERS                    // Disable support for Armtronix Dimmers (+1k4 code)
 //#undef USE_PS_16_DZ                             // Disable support for PS-16-DZ Dimmer (+2k code)
-//byHofeBY #undef USE_SONOFF_IFAN                          // Disable support for Sonoff iFan02 and iFan03 (+2k code)
+#undef USE_SONOFF_IFAN                          // Disable support for Sonoff iFan02 and iFan03 (+2k code)
 #define USE_BUZZER                               // Add support for a buzzer (+0k6 code)
 //#undef USE_ARILUX_RF                            // Disable support for Arilux RF remote controller (+0k8 code, 252 iram (non 2.3.0))
 #define USE_DEEPSLEEP                            // Add support for deepsleep (+1k code)
-//byHofeBY #undef USE_EXS_DIMMER                           // Disable support for EX-Store WiFi Dimmer
+#undef USE_EXS_DIMMER                           // Disable support for EX-Store WiFi Dimmer
 //#define USE_HOTPLUG                              // Add support for sensor HotPlug
 //#undef USE_DEVICE_GROUPS                        // Disable support for device groups (+5k6 code)
 //#undef USE_PWM_DIMMER                           // Disable support for MJ-SD01/acenx/NTONPOWER PWM dimmers (+4k5 code)
@@ -597,10 +601,10 @@
 //byHofeBY #undef USE_SHELLY_DIMMER                        // Disable support for Shelly Dimmer (+3k code)
 
 #define USE_LIGHT_PALETTE                        // Add support for color palette (+0k9 code)
-#define USE_LIGHT_ARTNET                         // Add support for DMX/ArtNet via UDP on port 6454 (+3.5k code)
-//byHofeBY #ifdef CONFIG_IDF_TARGET_ESP32C3
-//byHofeBY #define USE_MAGIC_SWITCH                         // Add Sonoff MagicSwitch support as implemented in Sonoff Basic R4
-//byHofeBY #endif
+//byHofeBY #define USE_LIGHT_ARTNET                         // Add support for DMX/ArtNet via UDP on port 6454 (+3.5k code)
+#ifdef CONFIG_IDF_TARGET_ESP32C3
+#define USE_MAGIC_SWITCH                         // Add Sonoff MagicSwitch support as implemented in Sonoff Basic R4
+#endif
 
 //byHofeBY #define USE_DS18x20                              // Add support for DS18x20 sensors with id sort, single scan and read retry (+1k3 code)
 
@@ -694,7 +698,7 @@
 //  #define USE_BM8563                           // [I2cDriver59] Enable BM8563 RTC - found in M5Stack - support both I2C buses on ESP32 (I2C address 0x51) (+2.5k code)
 //  #define USE_PCF85363                         // [I2cDriver66] Enable PCF85363 RTC - found Shelly 3EM (I2C address 0x51) (+0k7 code)
 
-#define USE_SPI                                // Hardware SPI using GPIO12(MISO), GPIO13(MOSI) and GPIO14(CLK) in addition to two user selectable GPIOs(CS and DC)
+//byHofeBY #define USE_SPI                                // Hardware SPI using GPIO12(MISO), GPIO13(MOSI) and GPIO14(CLK) in addition to two user selectable GPIOs(CS and DC)
 //#define USE_RC522                              // Add support for MFRC522 13.56Mhz Rfid reader (+6k code)
 //#define USE_MCP2515                            // Add support for can bus using MCP2515 (+7k code)
 //#define USE_CANSNIFFER                         // Add support for can bus sniffer using MCP2515 (+5k code)
@@ -722,14 +726,14 @@
 //byHofeBY #define USE_SR04                                 // Add support for HC-SR04 ultrasonic devices (+1k code)
 //#define USE_ME007                                // Add support for ME007 ultrasonic devices (+1k5 code)
 //#define USE_DYP                                  // Add support for DYP ME-007 ultrasonic distance sensor, serial port version (+0k5 code)
-#define USE_SERIAL_BRIDGE                        // Add support for software Serial Bridge (+2k code)
-#define USE_MODBUS_BRIDGE                        // Add support for software Modbus Bridge (+3k code)
+//byHofeBY #define USE_SERIAL_BRIDGE                        // Add support for software Serial Bridge (+2k code)
+//byHofeBY #define USE_MODBUS_BRIDGE                        // Add support for software Modbus Bridge (+3k code)
 //byHofeBY #define USE_MP3_PLAYER                           // Use of the DFPlayer Mini MP3 Player RB-DFR-562 commands: play, volume and stop
 //#define USE_AZ7798                               // Add support for AZ-Instrument 7798 CO2 datalogger
 //byHofeBY #define USE_PN532_HSU                            // Add support for PN532 using HSU (Serial) interface (+1k8 code, 140 bytes mem)
 //#define USE_ZIGBEE                               // Enable serial communication with Zigbee CC2530 flashed with ZNP
 //byHofeBY #define USE_RDM6300                              // Add support for RDM6300 125kHz RFID Reader (+0k8)
-#define USE_IBEACON                              // Add support for bluetooth LE passive scan of ibeacon devices (uses HM17 module)
+//byHofeBY #define USE_IBEACON                              // Add support for bluetooth LE passive scan of ibeacon devices (uses HM17 module)
 //#define USE_GPS                                  // Add support for GPS and NTP Server for becoming Stratus 1 Time Source (+ 3.1kb flash, +132 bytes RAM)
 
 //#define USE_BLE_ESP32                            // (ESP32 only) Add support for native BLE on ESP32 - use new driver
@@ -773,7 +777,7 @@
   #define USE_IR_RECEIVE                         // Support for IR receiver (+5k5 code, 264 iram)
 //byHofeBY #define USE_LMT01                                // Add support for TI LMT01 temperature sensor, count pulses on single GPIO (+0k5 code)
 //#define USE_WIEGAND                              // Add support for 24/26/32/34 bit RFID Wiegand interface (D0/D1) (+1k7 code)
-#define USE_SHIFT595                             // Add support for 74xx595 8-bit shift registers (+0k7 code)
+//byHofeBY #define USE_SHIFT595                             // Add support for 74xx595 8-bit shift registers (+0k7 code)
 //  #define SHIFT595_INVERT_OUTPUTS false            // [SetOption133] Don't invert outputs of 74x595 shift register
 //  #define SHIFT595_DEVICE_COUNT  1                 // [Shift595DeviceCount] Set the number of connected 74x595 shift registers
 //byHofeBY #define USE_TM1638                               // Add support for TM1638 switches copying Switch1 .. Switch8 (+1k code)
@@ -791,12 +795,13 @@
 //#define USE_THERMOSTAT                           // Add support for Thermostat
 //byHofeBY #define USE_BP1658CJ                             // Add support for BP1658CJ 5 channel led controller as used in Orein OS0100411267 Bulb
 #define USE_ETHERNET                             // Add support for ethernet (+20k code)
-#define USE_DISPLAY_TM1621_SONOFF                // Add support for TM1621 display driver used by Sonoff POWR3xxD and THR3xxD
-#define USE_LOX_O2                               // Add support for LuminOx LOX O2 Sensor (+0k8 code)
+//byHofeBY #define USE_DISPLAY_TM1621_SONOFF                // Add support for TM1621 display driver used by Sonoff POWR3xxD and THR3xxD
+//byHofeBY #define USE_LOX_O2                               // Add support for LuminOx LOX O2 Sensor (+0k8 code)
 
 #ifndef USE_KNX
 #define USE_KNX                                  // Enable KNX IP Protocol Support (+23k code, +3k3 mem)
 #endif
+#define USE_DALI                                 // Add support for DALI gateway (+5k code)
 
 #endif // FIRMWARE_TASMOTA32
 

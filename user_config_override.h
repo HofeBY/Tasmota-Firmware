@@ -103,8 +103,7 @@ Examples :
  #undef USE_DISPLAY_MATRIX
  #undef USE_DISPLAY_SEVENSEG
  #undef USE_DISPLAY_ILI9341
- #undef USE_AHT1x
- #undef USE_AHT2x
+ #undef USE_ESP32_SW_SERIAL
 
 //==========================================================================
 // Auswahl der Unterscheidung SML/SCRIPT oder RULE falls CPU ESP32x
@@ -116,6 +115,78 @@ Examples :
  #undef USE_I2C
 #define USE_I2C // Eigentlich bei allen ESP mit I2C Unterstützung
 //==========================================================================
+
+// Language Localization look in my_user_config.h
+// If non selected the default en-GB will be used
+// af_AF bg_BG ca_AD cs_CZ de_DE el_GR en_GB es_ES fr_FR fy_NL he_HE hu_HU it_IT ko_KO
+// nl_NL pl_PL pt_BR pt_PT ro_RO ru_RU sk_SK sv_SE tr_TR uk_UA vi_VN zh_CN zh_TW
+ #undef MY_LANGUAGE
+#define MY_LANGUAGE de_DE
+
+// -- Application ---------------------------------
+//Timezone 99 // muss auf Console einmalig gesetzt werden
+ #undef APP_TIMEZONE
+#define APP_TIMEZONE 99 // [Timezone] +1 hour (Amsterdam) (-13 .. 14 = hours from UTC, 99 = use TIME_DST/TIME_STD)
+
+// -- Time - Up to three NTP servers in your region,
+// in Germany it is ptbtime(1-3).ptb.de official Cäsiumin Clock in Mainflingen near by Frankfurt
+// maybe your router is able to offer ntp service
+ #undef NTP_SERVER1
+#define NTP_SERVER1	"192.53.103.108"	// [fritz.box besser die IP] 
+ #undef NTP_SERVER2
+#define NTP_SERVER2	"192.53.103.104"	// ptbtime1.ptb.de[192.53.103.108] ptbtime2.ptb.de[192.53.103.104] ptbtime3.ptb.de[192.53.103.103]
+ #undef NTP_SERVER3
+#define NTP_SERVER3	"0.de.pool.ntp.org"	// [NtpServerPool] 0.de.pool.ntp.org
+
+ #undef MDNS_ENABLED
+#define MDNS_ENABLED	true
+
+// -- Time - Start Daylight Saving Time and timezone offset from UTC in minutes
+ #undef TIME_DST_HEMISPHERE
+#define TIME_DST_HEMISPHERE    North	// [TimeDst] Hemisphere (0 or North, 1 or South)
+ #undef TIME_DST_WEEK
+#define TIME_DST_WEEK          Last	// Week of month (0 or Last, 1 or First, 2 or Second, 3 or Third, 4 or Fourth)
+ #undef TIME_DST_DAY
+#define TIME_DST_DAY           Sun	// Day of week (1 or Sun, 2 or Mon, 3 or Tue, 4 or Wed, 5 or Thu, 6 or Fri, 7 or Sat)
+ #undef TIME_DST_MONTH
+#define TIME_DST_MONTH         Mar	// Month (1 or Jan, 2 or Feb, 3 or Mar, 4 or Apr, 5 or May, 6 or Jun, 7 or Jul, 8 or Aug, 9 or Sep, 10 or Oct, 11 or Nov, 12 or Dec)
+ #undef TIME_DST_HOUR
+#define TIME_DST_HOUR          2	// Hour (0 to 23)
+ #undef TIME_DST_OFFSET
+#define TIME_DST_OFFSET        +120	// Offset from UTC in minutes (-780 to +780)
+
+// -- Time - Start Standard Time and timezone offset from UTC in minutes
+ #undef TIME_STD_HEMISPHERE
+#define TIME_STD_HEMISPHERE    North	// [TimeStd] Hemisphere (0 or North, 1 or South)
+ #undef TIME_STD_WEEK
+#define TIME_STD_WEEK          Last	// Week of month (0 or Last, 1 or First, 2 or Second, 3 or Third, 4 or Fourth)
+ #undef TIME_STD_DAY
+#define TIME_STD_DAY           Sun	// Day of week (1 or Sun, 2 or Mon, 3 or Tue, 4 or Wed, 5 or Thu, 6 or Fri, 7 or Sat)
+ #undef TIME_STD_MONTH
+#define TIME_STD_MONTH         Oct	// Month (1 or Jan, 2 or Feb, 3 or Mar, 4 or Apr, 5 or May, 6 or Jun, 7 or Jul, 8 or Aug, 9 or Sep, 10 or Oct, 11 or Nov, 12 or Dec)
+ #undef TIME_STD_HOUR
+#define TIME_STD_HOUR          3	// Hour (0 to 23)
+ #undef TIME_STD_OFFSET
+#define TIME_STD_OFFSET        +60	// Offset from UTC in minutes (-780 to +780)
+
+// -- Location------------------------------------
+ #undef LATITUDE
+#define LATITUDE	49.845915	// [Latitude] Your location Creußen/Gemeinde to be used with sunrise and sunset
+ #undef LONGITUDE
+#define LONGITUDE	11.626169	// [Longitude] Your location Creußen/Gemeinde to be used with sunrise and sunset
+
+// -- Setup your own up to two Wifi settings  ---------------
+ #undef STA_SSID1
+ #undef STA_PASS1
+
+#define STA_SSID1	""
+#define STA_PASS1	""
+
+ #undef STA_SSID2
+ #undef STA_PASS2
+
+#define STA_SSID2	""
+#define STA_PASS2	""
 
 #if defined USE_SCRIPT
  #undef USE_RULES
@@ -241,75 +312,6 @@ Examples :
 
 //#undef  GUI_SHOW_HOSTNAME
 //#define GUI_SHOW_HOSTNAME true //[SetOption53] Show hostname and IP address in GUI main menu
-
-// -- Time - Up to three NTP servers in your region
- #undef NTP_SERVER1
-#define NTP_SERVER1	"192.53.103.108"	// [fritz.box besser die IP] 
- #undef NTP_SERVER2
-#define NTP_SERVER2	"192.53.103.104"	// ptbtime1.ptb.de[192.53.103.108] ptbtime2.ptb.de[192.53.103.104] ptbtime3.ptb.de[192.53.103.103]
- #undef NTP_SERVER3
-#define NTP_SERVER3	"0.de.pool.ntp.org"	// [NtpServerPool]
-
- #undef MDNS_ENABLED
-#define MDNS_ENABLED	true
-
-// -- Time - Start Daylight Saving Time and timezone offset from UTC in minutes
- #undef TIME_DST_HEMISPHERE
-#define TIME_DST_HEMISPHERE    North	// [TimeDst] Hemisphere (0 or North, 1 or South)
- #undef TIME_DST_WEEK
-#define TIME_DST_WEEK          Last	// Week of month (0 or Last, 1 or First, 2 or Second, 3 or Third, 4 or Fourth)
- #undef TIME_DST_DAY
-#define TIME_DST_DAY           Sun	// Day of week (1 or Sun, 2 or Mon, 3 or Tue, 4 or Wed, 5 or Thu, 6 or Fri, 7 or Sat)
- #undef TIME_DST_MONTH
-#define TIME_DST_MONTH         Mar	// Month (1 or Jan, 2 or Feb, 3 or Mar, 4 or Apr, 5 or May, 6 or Jun, 7 or Jul, 8 or Aug, 9 or Sep, 10 or Oct, 11 or Nov, 12 or Dec)
- #undef TIME_DST_HOUR
-#define TIME_DST_HOUR          2	// Hour (0 to 23)
- #undef TIME_DST_OFFSET
-#define TIME_DST_OFFSET        +120	// Offset from UTC in minutes (-780 to +780)
-
-// -- Time - Start Standard Time and timezone offset from UTC in minutes
- #undef TIME_STD_HEMISPHERE
-#define TIME_STD_HEMISPHERE    North	// [TimeStd] Hemisphere (0 or North, 1 or South)
- #undef TIME_STD_WEEK
-#define TIME_STD_WEEK          Last	// Week of month (0 or Last, 1 or First, 2 or Second, 3 or Third, 4 or Fourth)
- #undef TIME_STD_DAY
-#define TIME_STD_DAY           Sun	// Day of week (1 or Sun, 2 or Mon, 3 or Tue, 4 or Wed, 5 or Thu, 6 or Fri, 7 or Sat)
- #undef TIME_STD_MONTH
-#define TIME_STD_MONTH         Oct	// Month (1 or Jan, 2 or Feb, 3 or Mar, 4 or Apr, 5 or May, 6 or Jun, 7 or Jul, 8 or Aug, 9 or Sep, 10 or Oct, 11 or Nov, 12 or Dec)
- #undef TIME_STD_HOUR
-#define TIME_STD_HOUR          3	// Hour (0 to 23)
- #undef TIME_STD_OFFSET
-#define TIME_STD_OFFSET        +60	// Offset from UTC in minutes (-780 to +780)
-
-// -- Application ---------------------------------
-//Timezone 99 // muss auf Console einmalig gesetzt werden
- #undef APP_TIMEZONE
-#define APP_TIMEZONE 99 // [Timezone] +1 hour (Amsterdam) (-13 .. 14 = hours from UTC, 99 = use TIME_DST/TIME_STD)
-
-// -- Location------------------------------------
- #undef LATITUDE
-#define LATITUDE	49.845915	// [Latitude] Your location Creußen/Gemeinde to be used with sunrise and sunset
- #undef LONGITUDE
-#define LONGITUDE	11.626169	// [Longitude] Your location Creußen/Gemeinde to be used with sunrise and sunset
-
-// -- Localization --------------------------------
-  // If non selected the default en-GB will be used
- #undef MY_LANGUAGE
-#define MY_LANGUAGE de_DE // German in Germany
-
-// -- Setup your own Wifi settings  ---------------
- #undef STA_SSID1
-#define STA_SSID1	""
-
- #undef STA_PASS1
-#define STA_PASS1	""
-
- #undef STA_SSID2
-#define STA_SSID2	""
-
- #undef STA_PASS2
-#define STA_PASS2	""
-
 // IR z.Z. nicht zu compilieren TM14.0.0.4
  #undef FIRMWARE_IR
 //#define FIRMWARE_IR		// Create tasmota-ir with IR full protocols activated, and many sensors disabled
